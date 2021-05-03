@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Router associate URL to a module (controller often) and an action (method of the controller) -->  
+<routes>
+  <route url="/" module="Home" action="index" ></route>
+  <route url="/blogpost.html" module="BlogPost" action="index" ></route>
+</routes>
