@@ -1,8 +1,12 @@
 {
     "require": {
-        "monolog/monolog": "1.0.*"
+        "altorouter/altorouter": "1.1.0",
+        "filp/whoops": "^2.12"
     },
     "autoload": {
         "psr-4": {"MyBlog\\": "src/"}
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.2"
     }
 }
