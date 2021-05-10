@@ -2,7 +2,6 @@
 require '../vendor/autoload.php';
 
 define('VIEW_PATH',dirname(__DIR__).'/views');
-define('CONTROLLER_NAMESPACE',"MyBlog\\Controller\\");
 
 // WHOOPS WORKS FOR EXCEPTIONS, WE SHOULD COMMENT THIS CODE IN PRODUCTION
 $whoops = new \Whoops\Run;
@@ -27,7 +26,7 @@ $router->get('/blogPosts', function(){ echo 'Tous les articles'; },'blogPosts');
     </form>
     <?php
 }, 'blogPost')->with('id','([0-9]+)')->with('slug','([a-z\-0-9]+)'); */
-$router->get('/blogPosts/{id}/{slug}',CONTROLLER_NAMESPACE.'BlogPostController#show')->with('id','([0-9]+)')->with('slug','([a-z\-0-9]+)'); ;
+$router->get('/blogPosts/{id}/{slug}','BlogPostController#show')->with('id','([0-9]+)')->with('slug','([a-z\-0-9]+)'); ;
 $router->post('/blogPosts/{id}/{slug}', function($id,$slug){ echo 'Poster pour l\'article '.$id .'<pre>'.print_r($_POST).'</pre>'; },'blogPost_post');
 
 $router->run();
