@@ -1,6 +1,6 @@
 <?php
 
-namespace MyBlog\Router;
+namespace App\Router;
 
 class Router
 {

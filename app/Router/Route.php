@@ -1,10 +1,9 @@
 <?php
 
-namespace MyBlog\Router;
+namespace App\Router;
 
 class Route
 {
-
     private $path; // all the routes we create in index
     private $callable;
     private $matches = [];
@@ -16,15 +15,15 @@ class Route
         $this->callable = $callable;
     }
 
-
     public function call()
     {
         // If we request a controller, we call the controller
         if(is_string($this->callable)){
             $explodeCallable = explode("#",$this->callable);
-            $controllerPath = "MyBlog\\Controller\\".$explodeCallable[0];
-            $controller = new $controllerPath();
+            $explodeName = explode("Controller",$this->callable);
+            $controllerPath = "Controller\\".ucfirst($explodeName[0])."\\".$explodeCallable[0];
             $action = $explodeCallable[1];
+            $controller = new $controllerPath();
             return call_user_func_array([$controller,$action], $this->matches);
         }
         // call callable

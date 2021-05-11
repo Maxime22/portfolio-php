@@ -16,11 +16,21 @@ if($_ENV['APP_ENV']==='dev'){
 // https://openclassrooms.com/fr/courses/1665806-programmez-en-oriente-objet-en-php/1668568-developpement-de-la-bibliotheque
 
 $uri = $_SERVER['REQUEST_URI'];
-$router = new MyBlog\Router\Router($uri);
+$router = new App\Router\Router($uri);
 
 // When i have the URL /post, i want to display the echo
-$router->get('/', function(){ echo 'Homepage'; },'home');
-$router->get('/blogPosts', function(){ echo 'Tous les articles'; },'blogPosts');
+$router->get('/', 'HomeController#index','home');
+$router->get('/blogPosts', 'BlogPostController#index','blogPosts');
+$router->get('/blogPosts/{id}/{slug}','BlogPostController#show')->with('id','([0-9]+)')->with('slug','([a-z\-0-9]+)'); ;
+$router->post('/blogPosts/{id}/{slug}', function($id,$slug){ echo 'Poster pour l\'article '.$id .'<pre>'.print_r($_POST).'</pre>'; },'blogPost_post');
+
+$router->run();
+
+
+
+
+
+
 // $router->get('/blogPosts/{id}/{slug}', function($id,$slug)use($router){ echo $router->url('blogPosts_show',['id'=>$id,'slug'=>$slug]); },'blogPosts_show');
 // we need to send $id and $slug in the same order in the url and in the callable
 /* $router->get('/blogPosts/{id}', function($id){ ?>
@@ -31,7 +41,3 @@ $router->get('/blogPosts', function(){ echo 'Tous les articles'; },'blogPosts');
     </form>
     <?php
 }, 'blogPost')->with('id','([0-9]+)')->with('slug','([a-z\-0-9]+)'); */
-$router->get('/blogPosts/{id}/{slug}','BlogPostController#show')->with('id','([0-9]+)')->with('slug','([a-z\-0-9]+)'); ;
-$router->post('/blogPosts/{id}/{slug}', function($id,$slug){ echo 'Poster pour l\'article '.$id .'<pre>'.print_r($_POST).'</pre>'; },'blogPost_post');
-
-$router->run();
