@@ -5,13 +5,13 @@ namespace App\Router;
 class Router
 {
 
-    private $url;
+    private $httpRequest;
     private $routes = [];
     private $namedRoutes = [];
 
-    public function __construct($url)
+    public function __construct($httpRequest)
     {
-        $this->url = $url;
+        $this->httpRequest = $httpRequest;
     }
 
     public function get(string $path, $callable, string $routeName = null)
@@ -40,12 +40,13 @@ class Router
 
     public function run()
     {
+        $httpMethod=$this->httpRequest->serverRequestMethod();
         // request method is get or post
-        if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
+        if (!isset($this->routes[$httpMethod])) {
             throw new RouterException('REQUEST_METHOD does not exist');
         }
-        foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
-            if ($route->match($this->url)) {
+        foreach ($this->routes[$httpMethod] as $route) {
+            if ($route->match($this->httpRequest->getRequestURI())) {
                 return $route->call();
             }
         }

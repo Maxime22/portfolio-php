@@ -2,6 +2,9 @@
 require '../vendor/autoload.php';
 
 use Symfony\Component\Dotenv\Dotenv;
+use App\Request\HTTPRequest;
+
+$httpRequest = new HTTPRequest();
 
 $dotenv = new Dotenv();
 $dotenv->load(dirname(__DIR__).'/.env');
@@ -13,10 +16,7 @@ if($_ENV['APP_ENV']==='dev'){
     $whoops->register();
 }
 
-// https://openclassrooms.com/fr/courses/1665806-programmez-en-oriente-objet-en-php/1668568-developpement-de-la-bibliotheque
-
-$uri = $_SERVER['REQUEST_URI'];
-$router = new App\Router\Router($uri);
+$router = new App\Router\Router($httpRequest);
 
 // When i have the URL /post, i want to display the echo
 $router->get('/', 'HomeController#index','home');
