@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use App\Response\Response;
+
 class Controller
 {
     private $twig;
@@ -16,6 +18,6 @@ class Controller
 
     protected function render($fileName, $data = [])
     {
-        return $this->twig->load($fileName)->render($data);
+        return new Response($this->twig->load($fileName)->render($data));
     }
 }

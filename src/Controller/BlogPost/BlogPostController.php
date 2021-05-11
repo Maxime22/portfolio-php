@@ -8,7 +8,7 @@ use Controller\Controller;
 class BlogPostController extends Controller{
 
     public function index(){
-        $this->render("Je suis la page d'accueil des articles");
+        return $this->render("blogPost/index.html.twig", []);
     }
 
     public function show($id,$slug){
