@@ -1,12 +1,12 @@
 {
     "require": {
-        "altorouter/altorouter": "1.1.0",
-        "filp/whoops": "^2.12"
+        "symfony/dotenv": "^5.2"
     },
     "autoload": {
         "psr-4": {"MyBlog\\": "src/"}
     },
     "require-dev": {
-        "symfony/var-dumper": "^5.2"
+        "symfony/var-dumper": "^5.2",
+        "filp/whoops": "^2.12"
     }
 }

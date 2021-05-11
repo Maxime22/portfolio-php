@@ -22,7 +22,8 @@ class Route
         // If we request a controller, we call the controller
         if(is_string($this->callable)){
             $explodeCallable = explode("#",$this->callable);
-            $controller = new $explodeCallable[0]();
+            $controllerPath = "MyBlog\\Controller\\".$explodeCallable[0];
+            $controller = new $controllerPath();
             $action = $explodeCallable[1];
             return call_user_func_array([$controller,$action], $this->matches);
         }
