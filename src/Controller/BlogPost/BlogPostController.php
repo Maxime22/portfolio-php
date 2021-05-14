@@ -11,7 +11,6 @@ class BlogPostController extends Controller{
     public function index(){
         $manager = $this->getDatabase()->getManager(BlogPostManager::class);
         $posts = $manager->getPosts();
-        dump($posts);
         return $this->render("blogPost/index.html.twig", []);
     }
 
