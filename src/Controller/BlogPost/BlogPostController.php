@@ -4,10 +4,14 @@
 namespace Controller\BlogPost;
 
 use Controller\Controller;
+use Model\Manager\BlogPost\BlogPostManager;
 
 class BlogPostController extends Controller{
 
     public function index(){
+        $manager = $this->getDatabase()->getManager(BlogPostManager::class);
+        $posts = $manager->getPosts();
+        dump($posts);
         return $this->render("blogPost/index.html.twig", []);
     }
 
