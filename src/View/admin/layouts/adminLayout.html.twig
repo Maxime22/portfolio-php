@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 	<head>
 		<meta charset="UTF-8">
 		<meta content="width=device-width, initial-scale=1" name="viewport">
 		<link rel="stylesheet" type="text/css" href="/css/bootstrapCSS.css">
 		<title>
 			{% block title %}
-				Portfolio
+				Admin
 			{% endblock %}
 		</title>
 	</head>
@@ -15,20 +14,15 @@
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg bg-secondary" id="mainNav">
-				<a class="navbar-brand" href="#">Portfolio</a>
+				<a class="navbar-brand" href="#">Admin</a>
 			</nav>
 		</header>
 
 		{% block body %}{% endblock %}
 
 		<footer class="footer">
-			<div><a href="/admin">Admin</a><div>
-			{# <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-			<!-- Third party plugin JS-->
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-			<!-- Core theme JS-->
-			<!--<script src="../../public/js/bootstrapJS.js"></script>--> #}
+			<div><a href="/admin">Retour à la page admin</a><div>
+			<div><a href="/">Retour à l'accueil</a></div>
 		</footer>
 		{% block javascripts %}{% endblock %}
 	</body>

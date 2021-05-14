@@ -20,8 +20,12 @@ class Route
         // If we request a controller, we call the controller
         if(is_string($this->callable)){
             $explodeCallable = explode("#",$this->callable);
-            $explodeName = explode("Controller",$this->callable);
-            $controllerPath = "Controller\\".ucfirst($explodeName[0])."\\".$explodeCallable[0];
+            if(str_contains($this->callable,"Admin")){
+                $controllerPath = "Controller\\Admin\\".$explodeCallable[0];
+            }else{
+                $explodeName = explode("Controller",$this->callable);
+                $controllerPath = "Controller\\".ucfirst($explodeName[0])."\\".$explodeCallable[0];
+            }
             $action = $explodeCallable[1];
             $controller = new $controllerPath();
             return call_user_func_array([$controller,$action], $this->matches);

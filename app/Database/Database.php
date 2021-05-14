@@ -2,8 +2,6 @@
 
 namespace App\Database;
 
-use Model\Manager\Manager;
-
 class Database
 {
 

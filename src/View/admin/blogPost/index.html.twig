@@ -1,0 +1,29 @@
+{% extends "admin/layouts/adminLayout.html.twig" %}
+
+{% block title %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Gestion des articles</h1>
+		<table class="table table-striped">
+			<tr>
+				<th>Id</th>
+				<th>Titre</th>
+				<th>Chapeau</th>
+				<th>Date de création</th>
+				<th>Actions</th>
+			</tr>
+			{% for post in posts %}
+				<tr>
+					<td>{{ post.id }}</td>
+					<td>{{ post.title }}</td>
+					<td>{{ post.headerPost }}</td>
+					<td>{{ post.creationDate|date("m/d/Y") }}</td>
+					<td></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}
