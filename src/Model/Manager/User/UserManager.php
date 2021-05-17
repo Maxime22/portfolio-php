@@ -1,11 +1,11 @@
 <?php
 
-namespace Model\Manager\BlogPost;
+namespace Model\Manager\User;
 
 use Model\Manager\Manager;
-use Model\Entity\BlogPost\User;
+use Model\Entity\User\User;
 
-class BlogPostManager extends Manager
+class UserManager extends Manager
 {
 
     
