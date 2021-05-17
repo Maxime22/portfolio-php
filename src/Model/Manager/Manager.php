@@ -35,11 +35,6 @@ class Manager{
         return $datas;
     }
 
-    public function insert(string $querySQL, string $class, $params=null)
-    {
-        $this->prepare($querySQL, $class, $params);
-    }
-
     public function delete($querySQL, $id)
     {
         $query = $this->pdo->prepare($querySQL);

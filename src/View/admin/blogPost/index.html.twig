@@ -15,16 +15,19 @@
 				<th>Date de création</th>
 				<th>Actions</th>
 			</tr>
-			{% for post in posts %}
+			{% for blogPost in blogPosts %}
 				<tr>
-					<td>{{ post.id }}</td>
-					<td>{{ post.title }}</td>
-					<td>{{ post.headerPost }}</td>
-					<td>{{ post.creationDate|date("m/d/Y") }}</td>
+					<td>{{ blogPost.id }}</td>
+					<td>{{ blogPost.title }}</td>
+					<td>{{ blogPost.headerPost }}</td>
+					<td>{{ blogPost.creationDate|date("m/d/Y") }}</td>
 					<td>
 						<div>
-							<form method="post" action="/admin/blogPosts/delete/{{ post.id }}" onsubmit="return confirm('{{" Êtes-vous sûr ?"}}')">
-								<button type ="submit" class="btn btn-danger">Supprimer</button>
+							<a class="btn btn-primary" href="/admin/blogPosts/modify/{{ blogPost.id }}">Modifier</a>
+						</div>
+						<div>
+							<form method="post" action="/admin/blogPosts/delete/{{ blogPost.id }}" onsubmit="return confirm('{{" êtes-vous sûr ?"}}')">
+								<button type="submit" class="btn btn-danger">Supprimer</button>
 							</form>
 						</div>
 					</td>

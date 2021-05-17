@@ -20,14 +20,13 @@ class AdminBlogPostController extends Controller
         /**
          * @var BlogPost[]
          */
-        $posts = $blogPostManager->getPosts();
-        return $this->render("admin/blogPost/index.html.twig", ['posts' => $posts, 'flashMessage' => $flashMessage]);
+        $blogPosts = $blogPostManager->getPosts();
+        return $this->render("admin/blogPost/index.html.twig", ['blogPosts' => $blogPosts, 'flashMessage' => $flashMessage]);
     }
 
     public function create()
     {
         $request = $this->getRequest();
-        $request->sessionStart();
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
         $errors = [];
         try {
@@ -55,6 +54,37 @@ class AdminBlogPostController extends Controller
         return $this->render("admin/blogPost/create.html.twig", [
             'errors' => $errors,
             'postDatas' => $request->postTableData() ? $request->postTableData() : null
+        ]);
+    }
+
+    public function modify($id)
+    {
+        $request = $this->getRequest();
+        $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
+        $blogPost = $blogPostManager->getPost($id);
+        $errors = [];
+        try {
+            if ($request->postTableData() && $this->isValidForm($request)) {
+                $lastModificationDate = date('Y-m-d H:i:s');
+                $blogPostManager->updatePost(
+                    [
+                        'title' => $request->postData('title'),
+                        'headerPost' => $request->postData('headerPost'),
+                        'content' => $request->postData('content'),
+                        'lastModificationDate' => $lastModificationDate
+                    ],
+                    $id
+                );
+                $request->setSession('flashMessage', "Article $id modifié");
+                $this->redirect("admin_blogPosts");
+            }
+        } catch (Exception $e) {
+            $errors[] = $e->getMessage();
+        }
+        return $this->render("admin/blogPost/modify.html.twig", [
+            'errors' => $errors,
+            'postDatas' => $request->postTableData() ? $request->postTableData() : $blogPost,
+            'articleId' => $id
         ]);
     }
 

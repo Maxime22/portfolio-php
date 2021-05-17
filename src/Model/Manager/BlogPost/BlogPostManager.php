@@ -28,8 +28,17 @@ class BlogPostManager extends Manager
 
     public function insertPost(array $params)
     {
-        $this->insert(
+        $this->prepare(
             "INSERT INTO blog_post (title, header_post, user_id, content, creation_date) VALUES (:title,:headerPost,:author, :content, :creationDate)",
+            BlogPost::class,
+            $params
+        );
+    }
+
+    public function updatePost(array $params, $id)
+    {
+        $this->prepare(
+            "UPDATE blog_post SET title = :title, header_post = :headerPost, content = :content, last_modification_date = :lastModificationDate WHERE id = $id",
             BlogPost::class,
             $params
         );
