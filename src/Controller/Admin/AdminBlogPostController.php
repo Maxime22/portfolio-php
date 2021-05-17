@@ -47,7 +47,7 @@ class AdminBlogPostController extends Controller
                     ]
                 );
                 $request->setSession('flashMessage', "Article ajouté");
-                $this->redirect("/admin/blogPosts");
+                $this->redirect("admin_blogPosts");
             }
         } catch (Exception $e) {
             $errors[] = $e->getMessage();
@@ -56,6 +56,18 @@ class AdminBlogPostController extends Controller
             'errors' => $errors,
             'postDatas' => $request->postTableData() ? $request->postTableData() : null
         ]);
+    }
+
+    public function delete($id)
+    {
+        $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
+        //if ($request->isAuthentificated()) {
+            $blogPostManager->deletePost($id);
+            // we redirect to the previous page after delete
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+        //}
+        // if no one was connected we redirect to the homepage
+        $this->redirect("homepage");
     }
 
     public function isValidForm($request): bool

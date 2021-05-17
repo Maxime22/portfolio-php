@@ -7,6 +7,7 @@ $router->get('/logout', function (){
 });
 $router->get('/admin/blogPosts/create','AdminBlogPostController#create', 'admin_blogPosts_create_get');
 $router->post('/admin/blogPosts/create','AdminBlogPostController#create', 'admin_blogPosts_create_post');
+$router->post('/admin/blogPosts/delete/{id}','AdminBlogPostController#delete', 'admin_blogPosts_delete_post');
 $router->get('/admin/blogPosts','AdminBlogPostController#index', 'admin_blogPosts');
 // $router->get('/admin/users','AdminUserController#index', 'admin_users');
 // $router->get('/admin/comments','AdminCommentController#index', 'admin_comments');

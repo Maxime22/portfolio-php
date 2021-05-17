@@ -40,4 +40,11 @@ class Manager{
         $this->prepare($querySQL, $class, $params);
     }
 
+    public function delete($querySQL, $id)
+    {
+        $query = $this->pdo->prepare($querySQL);
+        $query->bindValue(':id', $id);
+        $query->execute();
+    }
+
 }

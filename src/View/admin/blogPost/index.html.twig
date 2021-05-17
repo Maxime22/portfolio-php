@@ -21,7 +21,13 @@
 					<td>{{ post.title }}</td>
 					<td>{{ post.headerPost }}</td>
 					<td>{{ post.creationDate|date("m/d/Y") }}</td>
-					<td></td>
+					<td>
+						<div>
+							<form method="post" action="/admin/blogPosts/delete/{{ post.id }}" onsubmit="return confirm('{{" Êtes-vous sûr ?"}}')">
+								<button type ="submit" class="btn btn-danger">Supprimer</button>
+							</form>
+						</div>
+					</td>
 				</tr>
 			{% endfor %}
 		</table>

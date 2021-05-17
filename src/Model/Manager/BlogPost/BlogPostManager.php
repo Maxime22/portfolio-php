@@ -34,4 +34,9 @@ class BlogPostManager extends Manager
             $params
         );
     }
+
+    public function deletePost($id)
+    {
+        $this->delete("DELETE FROM blog_post WHERE id = :id", $id);
+    }
 }

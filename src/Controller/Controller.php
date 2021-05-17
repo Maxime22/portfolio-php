@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use App\Router\Router;
 use App\Database\Database;
 use App\Response\Response;
 use App\Request\HTTPRequest;
@@ -11,11 +12,13 @@ class Controller
     private $twig;
     private $database;
     private $request;
+    private $router;
 
-    public function __construct(HTTPRequest $request)
+    public function __construct(HTTPRequest $request, Router $router)
     {
-        $this->request=$request;
-        $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__).DIRECTORY_SEPARATOR.'View');
+        $this->request = $request;
+        $this->router = $router;
+        $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'View');
         $this->twig = new \Twig\Environment($loader, array(
             'cache' => false,
         ));
@@ -27,24 +30,26 @@ class Controller
         return new Response($this->twig->load($fileName)->render($data));
     }
 
-    public function getDatabase(){
+    public function getDatabase()
+    {
         return $this->database;
     }
 
-    public function getRequest(){
+    public function getRequest()
+    {
         return $this->request;
     }
 
-    public function flashMessage($request){
+    public function flashMessage($request)
+    {
         $flashMessage = $request->getSession('flashMessage');
         // we want to display the message only one time
         $request->unsetSession('flashMessage');
         return $flashMessage;
     }
 
-    protected function redirect(string $url)
+    protected function redirect(string $routeName, $params = [])
     {
-        header("Location: ". $url);
+        header("Location: " . $this->router->url($routeName, $params));
     }
-
 }

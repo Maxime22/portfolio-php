@@ -29,7 +29,7 @@ class Router
         $route = new Route($path, $callable);
         $this->routes[$method][] = $route;
         // If callable is like "BlogController#action", we name the route like that
-        if($routeName === null && is_string($callable)){
+        if ($routeName === null && is_string($callable)) {
             $routeName = $callable;
         }
         if ($routeName) {
@@ -40,21 +40,21 @@ class Router
 
     public function run()
     {
-        $httpMethod=$this->httpRequest->serverRequestMethod();
+        $httpMethod = $this->httpRequest->serverRequestMethod();
         // request method is get or post
         if (!isset($this->routes[$httpMethod])) {
             throw new RouterException('Route with the REQUEST_METHOD does not exist');
         }
         foreach ($this->routes[$httpMethod] as $route) {
             if ($route->match($this->httpRequest->getRequestURI())) {
-                return $route->call($this->httpRequest);
+                return $route->call($this->httpRequest, $this);
             }
         }
         throw new RouterException('No matching routes');
     }
 
     // to generate url in our code based on routeName and params
-    public function url(string $routeName,array $params = [])
+    public function url(string $routeName, array $params = [])
     {
         if (!isset($this->namedRoutes[$routeName])) {
             throw new RouterException('No route matches this name');
