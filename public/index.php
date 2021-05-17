@@ -17,6 +17,8 @@ if ($_ENV['APP_ENV'] === 'dev') {
 }
 
 $router = new App\Router\Router($httpRequest);
+// we start the session
+$httpRequest->sessionStart();
 // we add all the routes
 include dirname(__DIR__).'/app/routes.php';
 

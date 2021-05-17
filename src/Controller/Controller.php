@@ -42,4 +42,9 @@ class Controller
         return $flashMessage;
     }
 
+    protected function redirect(string $url)
+    {
+        header("Location: ". $url);
+    }
+
 }

@@ -2,7 +2,6 @@
 
 $router->get('/login', 'AuthentificationController#login', 'login');
 $router->get('/logout', function (){
-    session_start();
     session_destroy();
     header('Location: /login');
 });

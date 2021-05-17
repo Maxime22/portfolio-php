@@ -33,24 +33,21 @@ class AdminBlogPostController extends Controller
         try {
             if ($request->postTableData() && $this->isValidForm($request)) {
                 // on insere en bdd en créant les bonnes fonctions dans le manager et on renvoie vers la page des articles
-                $title = htmlentities($request->postData('title'));
-                $headerPost = htmlentities($request->postData('headerPost'));
                 // get the id of the user authentificated
                 // TODO : delete 1 here when we have real authentification
                 $author = $_SESSION['auth'] ?? "1";
-                $content = htmlentities($request->postData('content'));
                 $creationDate = date('Y-m-d H:i:s');
                 $blogPostManager->insertPost(
                     [
-                        'title' => $title,
-                        'headerPost' => $headerPost,
+                        'title' => $request->postData('title'),
+                        'headerPost' => $request->postData('headerPost'),
                         'author' => $author,
-                        'content' => $content,
+                        'content' => $request->postData('content'),
                         'creationDate' => $creationDate
                     ]
                 );
                 $request->setSession('flashMessage', "Article ajouté");
-                header('Location: /admin/blogPosts');
+                $this->redirect("/admin/blogPosts");
             }
         } catch (Exception $e) {
             $errors[] = $e->getMessage();
@@ -63,9 +60,9 @@ class AdminBlogPostController extends Controller
 
     public function isValidForm($request): bool
     {
-        $title = htmlentities($request->postData('title'));
-        $headerPost = htmlentities($request->postData('headerPost'));
-        $content = htmlentities($request->postData('content'));
+        $title = $request->postData('title');
+        $headerPost = $request->postData('headerPost');
+        $content = $request->postData('content');
         $returnValue = true;
         if (!$title || strlen($title) < 4) {
             throw new Exception('Titre trop court');
