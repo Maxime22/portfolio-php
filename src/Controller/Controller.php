@@ -19,7 +19,6 @@ class Controller
         $this->twig = new \Twig\Environment($loader, array(
             'cache' => false,
         ));
-        // we create a session variable for twig
         $this->database = new Database();
     }
 
