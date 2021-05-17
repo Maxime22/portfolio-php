@@ -43,11 +43,11 @@ class Router
         $httpMethod=$this->httpRequest->serverRequestMethod();
         // request method is get or post
         if (!isset($this->routes[$httpMethod])) {
-            throw new RouterException('REQUEST_METHOD does not exist');
+            throw new RouterException('Route with the REQUEST_METHOD does not exist');
         }
         foreach ($this->routes[$httpMethod] as $route) {
             if ($route->match($this->httpRequest->getRequestURI())) {
-                return $route->call();
+                return $route->call($this->httpRequest);
             }
         }
         throw new RouterException('No matching routes');

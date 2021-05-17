@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1" name="viewport">
+		<link rel="stylesheet" type="text/css" href="/css/bootstrapCSS.css">
+		<title>
+			{% block title %}
+				Admin
+			{% endblock %}
+		</title>
+	</head>
+
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-lg bg-secondary" id="mainNav">
+				<a class="navbar-brand" href="#">Admin</a>
+			</nav>
+		</header>
+
+		<div class="container">
+			{% if flashMessage %}
+				<div class="alert alert-success">{{ flashMessage }}</div>
+			{% endif %}
+			{% block body %}{% endblock %}
+		</div>
+
+		<footer class="footer">
+			<div>
+				<a href="/admin">Retour à la page admin</a>
+				<div>
+					<div>
+						<a href="/">Retour à l'accueil</a>
+					</div>
+				</footer>
+				{% block javascripts %}{% endblock %}
+			</body>
+		</html>
+	</body>
+</html>

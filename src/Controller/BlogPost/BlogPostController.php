@@ -4,15 +4,26 @@
 namespace Controller\BlogPost;
 
 use Controller\Controller;
+use Model\Manager\BlogPost\BlogPostManager;
 
 class BlogPostController extends Controller{
 
     public function index(){
-        return $this->render("blogPost/index.html.twig", []);
+        // repository in symfo == manager
+        $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
+
+        /**
+         * @var BlogPost[]
+         */
+        $posts = $blogPostManager->getPosts();
+        return $this->render("blogPost/index.html.twig", ['posts'=>$posts]);
     }
 
-    public function show($id,$slug){
-        echo "Je suis l'article numéro $id avec le slug $slug";
+    public function show($id){
+        $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
+        $post = $blogPostManager->getPost($id);
+        return $this->render("blogPost/show.html.twig", ['post'=>$post]);
+
     }
 
 }
