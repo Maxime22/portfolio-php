@@ -1,8 +1,8 @@
 <?php
 
-namespace Model\Entity\BlogPost;
+namespace Model\Entity\User;
 
-class BlogPost
+class User
 {
 
     private $id;
