@@ -13,10 +13,6 @@ class BlogPost
     private $creationDate;
     private $lastModificationDate;
 
-    public function __construct()
-    {
-    }
-
     // GETTERS
     public function getId()
     {

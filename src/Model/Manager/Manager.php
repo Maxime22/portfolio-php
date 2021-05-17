@@ -11,23 +11,33 @@ class Manager{
         $this->pdo=$pdo;
     }
 
-    public function queryBuilder(string $querySQL, string $class){
-        $query = $this->pdo->query($querySQL); 
-        $query->execute();
-        $query->setFetchMode(\PDO::FETCH_CLASS, $class);
+    public function prepare(string $querySQL, string $class, $params=null){       
+        if($params){
+            $query = $this->pdo->prepare($querySQL);
+            $query->execute($params);
+        }else{
+            $query = $this->pdo->query($querySQL);
+            $query->setFetchMode(\PDO::FETCH_CLASS, $class);
+            $query->execute();
+        }
         return $query;
     }
 
     public function queryFetchAll(string $querySQL, string $class)
     {
-        $datas = $this->queryBuilder($querySQL, $class)->fetchAll();
+        $datas = $this->prepare($querySQL, $class)->fetchAll();
         return $datas;
     }
 
     public function queryFetch(string $querySQL, string $class)
     {
-        $datas = $this->queryBuilder($querySQL, $class)->fetch();
+        $datas = $this->prepare($querySQL, $class)->fetch();
         return $datas;
+    }
+
+    public function insert(string $querySQL, string $class, $params=null)
+    {
+        $this->prepare($querySQL, $class, $params);
     }
 
 }

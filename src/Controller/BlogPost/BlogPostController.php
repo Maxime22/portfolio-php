@@ -9,7 +9,7 @@ use Model\Manager\BlogPost\BlogPostManager;
 class BlogPostController extends Controller{
 
     public function index(){
-        // repository == manager
+        // repository in symfo == manager
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
 
         /**

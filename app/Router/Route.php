@@ -15,7 +15,7 @@ class Route
         $this->callable = $callable;
     }
 
-    public function call()
+    public function call($request)
     {
         // If we request a controller, we call the controller
         if(is_string($this->callable)){
@@ -27,7 +27,7 @@ class Route
                 $controllerPath = "Controller\\".ucfirst($explodeName[0])."\\".$explodeCallable[0];
             }
             $action = $explodeCallable[1];
-            $controller = new $controllerPath();
+            $controller = new $controllerPath($request);
             return call_user_func_array([$controller,$action], $this->matches);
         }
         // call callable

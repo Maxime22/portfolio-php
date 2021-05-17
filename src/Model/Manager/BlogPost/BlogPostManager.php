@@ -25,4 +25,13 @@ class BlogPostManager extends Manager
         );
         return $post;
     }
+
+    public function insertPost(array $params)
+    {
+        $this->insert(
+            "INSERT INTO blog_post (title, header_post, user_id, content, creation_date) VALUES (:title,:headerPost,:author, :content, :creationDate)",
+            BlogPost::class,
+            $params
+        );
+    }
 }

@@ -18,12 +18,23 @@
 			</nav>
 		</header>
 
-		{% block body %}{% endblock %}
+		<div class="container">
+			{% if flashMessage %}
+				<div class="alert alert-success">{{ flashMessage }}</div>
+			{% endif %}
+			{% block body %}{% endblock %}
+		</div>
 
 		<footer class="footer">
-			<div><a href="/admin">Retour à la page admin</a><div>
-			<div><a href="/">Retour à l'accueil</a></div>
-		</footer>
-		{% block javascripts %}{% endblock %}
+			<div>
+				<a href="/admin">Retour à la page admin</a>
+				<div>
+					<div>
+						<a href="/">Retour à l'accueil</a>
+					</div>
+				</footer>
+				{% block javascripts %}{% endblock %}
+			</body>
+		</html>
 	</body>
 </html>
