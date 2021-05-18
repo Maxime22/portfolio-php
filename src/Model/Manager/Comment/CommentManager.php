@@ -42,4 +42,13 @@ class CommentManager extends Manager
             $params
         );
     }
+
+    // $id is blogPostId here
+    public function getCommentByBlogPost($id){
+        $comments = $this->queryFetchAll(
+            "SELECT id, title, blog_post_id as 'blogPostId', user_id as 'userId', content, creation_date as 'creationDate', publication_validated as 'publicationValidated' FROM comment WHERE blog_post_id = $id AND publication_validated = 1",
+            Comment::class
+        );
+        return $comments;
+    }
 }

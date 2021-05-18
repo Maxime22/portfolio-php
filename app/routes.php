@@ -2,6 +2,7 @@
 
 // LOGIN
 $router->get('/login', 'AuthentificationController#login', 'login');
+$router->post('/login', 'AuthentificationController#login', 'login_post');
 $router->get('/logout', function () use ($httpRequest){
     $httpRequest->unsetSession('auth');
     session_destroy();

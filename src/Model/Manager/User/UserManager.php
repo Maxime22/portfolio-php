@@ -11,7 +11,7 @@ class UserManager extends Manager
     public function getUserByUsername(string $username)
     {
         return $this->queryFetch(
-            "SELECT id, username, mail, password, roles, creation_date as 'creationDate' FROM user WHERE username='" . $username ."'",
+            "SELECT id, username, mail, password, roles, creation_date as 'creationDate' FROM user WHERE username='" . $username . "'",
             User::class
         );
     }
@@ -19,7 +19,7 @@ class UserManager extends Manager
     public function getUsersByUsername(string $username)
     {
         return $this->queryFetchAll(
-            "SELECT id, username, mail, password, roles, creation_date as 'creationDate' FROM user WHERE username='" . $username ."'",
+            "SELECT id, username, mail, password, roles, creation_date as 'creationDate' FROM user WHERE username='" . $username . "'",
             User::class
         );
     }
@@ -63,5 +63,11 @@ class UserManager extends Manager
         $this->delete("DELETE FROM user WHERE id = :id", $id);
     }
 
-    
+    public function getRolesById($id)
+    {
+        $this->queryFetch(
+            "SELECT roles FROM user WHERE id=$id",
+            User::class
+        );
+    }
 }

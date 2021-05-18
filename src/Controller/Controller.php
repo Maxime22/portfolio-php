@@ -22,6 +22,8 @@ class Controller
         $this->twig = new \Twig\Environment($loader, array(
             'cache' => false,
         ));
+        $this->twig->addGlobal('auth', $request->getSession('auth'));
+        $this->twig->addGlobal('userRoles', $request->getSession('userRoles'));
         $this->database = new Database();
     }
 

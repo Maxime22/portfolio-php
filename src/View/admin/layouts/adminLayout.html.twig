@@ -30,15 +30,44 @@
 		</div>
 
 		<footer class="footer">
-			<div>
-				<a href="/admin">Retour à la page admin</a>
-				<div>
-					<div>
-						<a href="/">Retour à l'accueil</a>
+			<div class="container">
+				<div class="row text-center">
+					<div class="col-lg-6 col-md-6 base_footer_col">
+						<h4>Réseaux sociaux</h4>
+						<div class="base_footerLine"></div>
+						<figure class="base_followLink">
+							<a href="https://www.facebook.com/biolibre2/" target="_blank" rel="noreferrer noopener">
+								<img alt="Facebook Icone" class="base_followLinkImg" src="/images/home/facebook.png">
+							</a>
+						</figure>
+						<figure class="base_followLink">
+							<a href="https://www.instagram.com/_biolibre/?hl=fr" target="_blank" rel="noreferrer noopener">
+								<img alt="Instagram Icone" class="base_followLinkImg" src="/images/home/insta.png">
+							</a>
+						</figure>
+						<figure class="base_followLink">
+							<a href="https://www.youtube.com/channel/UCsEFTpwYL1z9AA5tLvqyHeg" target="_blank" rel="noreferrer noopener">
+								<img alt="Youtube Icone" class="base_followLinkImg" src="/images/home/youtube.png">
+							</a>
+						</figure>
+						<figure class="base_followLink">
+							<a href="https://github.com/Maxime22" target="_blank" rel="noreferrer noopener">
+								<img alt="Github Icone" class="base_followLinkImg" src="/images/home/github.png">
+							</a>
+						</figure>
 					</div>
-				</footer>
-				{% block javascripts %}{% endblock %}
-			</body>
-		</html>
+					<div class="col-lg-6 col-md-6 base_footer_col">
+						<h4>Liens internes</h4>
+						<div>
+							<a href="/" class="font-weight-bold">Accueil</a>
+						</div>
+						<div>
+							<a href="/logout" class="font-weight-bold">Se déconnecter</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		{% block javascripts %}{% endblock %}
 	</body>
 </html>

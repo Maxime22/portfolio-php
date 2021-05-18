@@ -31,9 +31,7 @@ class AdminBlogPostController extends Controller
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidForm($request)) {
-                // TODO change this 2 lines
-                //$author = $_SESSION['auth'] ?? throw new Exception('Auteur non authentifié');
-                $author = "1";
+                $author = $request->getSession('auth');
                 $creationDate = date('Y-m-d H:i:s');
                 $blogPostManager->insertPost(
                     [

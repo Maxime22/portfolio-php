@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 	<head>
 		<meta charset="UTF-8">
 		<meta content="width=device-width, initial-scale=1" name="viewport">
@@ -16,23 +15,70 @@
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg bg-secondary" id="mainNav">
-				<a class="navbar-brand" href="#">Portfolio</a>
+				<a class="navbar-brand" href="/">Portfolio</a>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/blogPosts">Mes projets</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/login">Connexion</a>
+					</li>
+				</ul>
 			</nav>
 		</header>
 
-		<div class="blogBody">
-		{% block body %}{% endblock %}
-		</div>
-
-		<footer class="footer">
-			<div><a href="/admin">Admin</a><div>
-			{# <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-			<!-- Third party plugin JS-->
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-			<!-- Core theme JS-->
-			<!--<script src="../../public/js/bootstrapJS.js"></script>--> #}
-		</footer>
-		{% block javascripts %}{% endblock %}
-	</body>
-</html>
+		<div class="blogBody"> {% block body %}{% endblock %}
+			</div>
+			<footer class="footer">
+				<div class="container">
+					<div class="row text-center">
+						<div class="col-lg-6 col-md-6 base_footer_col">
+							<h4>Réseaux sociaux</h4>
+							<div class="base_footerLine"></div>
+							<figure class="base_followLink">
+								<a href="https://www.facebook.com/biolibre2/" target="_blank" rel="noreferrer noopener">
+									<img alt="Facebook Icone" class="base_followLinkImg" src="/images/home/facebook.png">
+								</a>
+							</figure>
+							<figure class="base_followLink">
+								<a href="https://www.instagram.com/_biolibre/?hl=fr" target="_blank" rel="noreferrer noopener">
+									<img alt="Instagram Icone" class="base_followLinkImg" src="/images/home/insta.png">
+								</a>
+							</figure>
+							<figure class="base_followLink">
+								<a href="https://www.youtube.com/channel/UCsEFTpwYL1z9AA5tLvqyHeg" target="_blank" rel="noreferrer noopener">
+									<img alt="Youtube Icone" class="base_followLinkImg" src="/images/home/youtube.png">
+								</a>
+							</figure>
+							<figure class="base_followLink">
+								<a href="https://github.com/Maxime22" target="_blank" rel="noreferrer noopener">
+									<img alt="Github Icone" class="base_followLinkImg" src="/images/home/github.png">
+								</a>
+							</figure>
+						</div>
+						<div class="col-lg-6 col-md-6 base_footer_col">
+							<h4>Liens internes</h4>
+							<div>
+								<a href="/" class="font-weight-bold">Accueil</a>
+							</div>
+							{% if auth %}
+								{% if "admin" in userRoles %}
+									<div>
+										<a href="/admin" class="font-weight-bold">Administration</a>
+									</div>
+								{% endif %}
+								<div>
+									<a href="/logout" class="font-weight-bold">Se déconnecter</a>
+								</div>
+							{% else %}
+								<div>
+									<a href="/login" class="font-weight-bold">Connexion</a>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</footer>
+			{% block javascripts %}{% endblock %}
+		</body>
+	</html>

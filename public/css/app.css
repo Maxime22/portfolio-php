@@ -1,14 +1,51 @@
-.blogBody{
-    min-height: 400px;
+.blogBody {
+  min-height: 500px;
 }
-
 
 /* ADMIN */
-.adminPresentationLink{
-    font-size: 34px;
-    text-decoration: none;
+.adminPresentationLink {
+  font-size: 34px;
+  text-decoration: none;
 }
 
-.adminPresentationLink a{
-    text-decoration: none;
+.adminPresentationLink a {
+  text-decoration: none;
+}
+
+/* FOOTER */
+.base_footerLine {
+  height: 1px;
+  width: 22%;
+  background-color: #1abc9c;
+  margin: auto;
+  margin-bottom: 22px;
+}
+
+.base_footer_col {
+  padding-bottom: 1em;
+}
+
+.base_followLinkImg {
+  height: 40px;
+  width: 40px;
+}
+
+.base_followLink {
+  opacity: 0.6;
+  transition-duration: 1s;
+  display: inline-block;
+}
+.base_followLink:hover {
+  opacity: 1;
+}
+
+@media all and (max-width: 991px) {
+  /* FOOTER */
+  .base_footerLine {
+    margin-bottom: 8px;
+  }
+  .base_footer_col {
+    padding-bottom: 0;
+    padding-top: 10px;
+  }
 }

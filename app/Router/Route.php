@@ -23,13 +23,11 @@ class Route
         if (is_string($this->callable)) {
             $explodeCallable = explode("#", $this->callable);
             if (str_contains($this->callable, "Admin")) {
-                // We check if the user is authentificated
-                // TODO : DELETE COMMENTS HERE WHEN CRUD USER IS DONE
-                /* if ($request->getSession('auth')) { */
+                if ($request->getSession('auth') && in_array("admin", $request->getSession('roles'))) {
                     $controllerPath = "Controller\\Admin\\" . $explodeCallable[0];
-                /* }else{
+                }else{
                     throw new ForbiddenException;
-                } */
+                }
             } else {
                 $explodeName = explode("Controller", $this->callable);
                 $controllerPath = "Controller\\" . ucfirst($explodeName[0]) . "\\" . $explodeCallable[0];

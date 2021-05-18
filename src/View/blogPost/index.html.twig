@@ -1,9 +1,22 @@
 {% extends "layouts/base.html.twig" %}
 
 {% block title %}
-    {{ parent() }}
+	{{ parent() }}
 {% endblock %}
 
 {% block body %}
-    <h1>Page articles</h1>
+	<h1>Page articles</h1>
+	<div class="container">
+		<div class="row ">
+			{% for blogPost in blogPosts %}
+				<div class="col-md-4 text-center">
+					<div>
+						<h3>{{ blogPost.title }}</h3>
+						<div>{{ blogPost.headerPost }}</div>
+						<a href="/blogPosts/{{ blogPost.id }}" class="btn btn-primary">Voir l'article</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}
