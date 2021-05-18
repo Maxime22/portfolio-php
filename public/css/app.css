@@ -1,5 +1,12 @@
+/* GENERAL */
 .blogBody {
   min-height: 500px;
+}
+
+.flashMessage {
+  width: 80%;
+  margin : auto;
+  margin-top: 10px;
 }
 
 /* ADMIN */
