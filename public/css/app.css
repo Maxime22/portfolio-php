@@ -1,0 +1,14 @@
+.blogBody{
+    min-height: 400px;
+}
+
+
+/* ADMIN */
+.adminPresentationLink{
+    font-size: 34px;
+    text-decoration: none;
+}
+
+.adminPresentationLink a{
+    text-decoration: none;
+}

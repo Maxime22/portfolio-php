@@ -3,6 +3,8 @@ require '../vendor/autoload.php';
 
 use Symfony\Component\Dotenv\Dotenv;
 use App\Request\HTTPRequest;
+use App\Security\ForbiddenException;
+use App\Router\RouterException;
 
 $httpRequest = new HTTPRequest();
 
@@ -27,6 +29,12 @@ try {
     $response = $router->run();
     // we display the content
     $response->send();
+}  catch (ForbiddenException $e) {
+    header("Location: /login");
+    exit();
+}  catch (RouterException $e) {
+    header("Location: /error404");
+    exit();
 } catch (\Exception $e) {
     echo $e->getMessage();
 }

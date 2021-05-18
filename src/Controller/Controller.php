@@ -51,5 +51,6 @@ class Controller
     protected function redirect(string $routeName, $params = [])
     {
         header("Location: " . $this->router->url($routeName, $params));
+        exit();
     }
 }

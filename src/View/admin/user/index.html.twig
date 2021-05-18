@@ -1,0 +1,45 @@
+{% extends "admin/layouts/adminLayout.html.twig" %}
+
+{% block title %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Gestion des utilisateurs</h1>
+		<div class="mb-2"><a href="/admin/users/create" class="btn btn-primary">Créer un utilisateur</a></div>
+		<table class="table table-striped">
+			<tr>
+				<th>Id</th>
+				<th>Pseudo</th>
+				<th>Mail</th>
+				<th>Rôles</th>
+				<th>Date de création</th>
+				<th>Actions</th>
+			</tr>
+			{% for user in users %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>{{ user.username }}</td>
+					<td>{{ user.mail }}</td>
+					<td>
+						{% for role in user.roles %}
+							<div>{{role}}</div>
+						{% endfor %}
+					</td>
+					<td>{{ user.creationDate|date("m/d/Y") }}</td>
+					<td>
+						<div class="mb-2 mr-2">
+							<a class="btn btn-primary" href="/admin/users/modify/{{ user.id }}">Modifier</a>
+						</div>
+						<div class="mb-2 mr-2">
+							<form method="post" action="/admin/users/delete/{{ user.id }}" onsubmit="return confirm('{{" Etes-vous sûr ?"}}')">
+								<button type="submit" class="btn btn-danger">Supprimer</button>
+							</form>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}

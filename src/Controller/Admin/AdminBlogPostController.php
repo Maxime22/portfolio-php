@@ -12,7 +12,6 @@ class AdminBlogPostController extends Controller
     public function index()
     {
         $request = $this->getRequest();
-        $request->sessionStart();
         $flashMessage = $this->flashMessage($request);
 
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
@@ -31,10 +30,8 @@ class AdminBlogPostController extends Controller
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidForm($request)) {
-                // on insere en bdd en créant les bonnes fonctions dans le manager et on renvoie vers la page des articles
-                // get the id of the user authentificated
-                // TODO : delete 1 here when we have real authentification
-                $author = $_SESSION['auth'] ?? "1";
+                //$author = $_SESSION['auth'] ?? throw new Exception('Auteur non authentifié');
+                $author = "1";
                 $creationDate = date('Y-m-d H:i:s');
                 $blogPostManager->insertPost(
                     [
@@ -91,11 +88,10 @@ class AdminBlogPostController extends Controller
     public function delete($id)
     {
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
-        //if ($request->isAuthentificated()) {
-            $blogPostManager->deletePost($id);
-            // we redirect to the previous page after delete
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-        //}
+        $blogPostManager->deletePost($id);
+        // we redirect to the previous page after delete
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit();
         // if no one was connected we redirect to the homepage
         $this->redirect("homepage");
     }
