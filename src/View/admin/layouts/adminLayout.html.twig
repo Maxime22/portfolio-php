@@ -23,6 +23,9 @@
 			{% if flashMessage %}
 				<div class="alert alert-success">{{ flashMessage }}</div>
 			{% endif %}
+			{% if flashError %}
+				<div class="alert alert-danger">{{ flashError }}</div>
+			{% endif %}
 			{% block body %}{% endblock %}
 		</div>
 

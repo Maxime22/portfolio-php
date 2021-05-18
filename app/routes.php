@@ -24,6 +24,12 @@ $router->post('/admin/users/modify/{id}','AdminUserController#modify', 'admin_us
 $router->post('/admin/users/delete/{id}','AdminUserController#delete', 'admin_users_delete_post');
 $router->get('/admin/users','AdminUserController#index', 'admin_users');
 
+$router->get('/admin/comments/modify/{id}','AdminCommentController#modify', 'admin_comments_modify_get');
+$router->post('/admin/comments/modify/{id}','AdminCommentController#modify', 'admin_comments_modify_post');
+$router->get('/admin/comments/validate/{id}','AdminCommentController#validate', 'admin_comments_validate');
+$router->post('/admin/comments/delete/{id}','AdminCommentController#delete', 'admin_comments_delete_post');
+$router->get('/admin/comments','AdminCommentController#index', 'admin_comments');
+
 // $router->get('/admin/comments','AdminCommentController#index', 'admin_comments');
 
 $router->get('/admin','AdminController#index', 'admin');

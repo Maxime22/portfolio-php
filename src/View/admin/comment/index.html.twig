@@ -1,0 +1,43 @@
+{% extends "admin/layouts/adminLayout.html.twig" %}
+
+{% block title %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Gestion des commentaires</h1>
+		<table class="table table-striped">
+			<tr>
+				<th>Id</th>
+				<th>Titre</th>
+				<th>Validation du commentaire</th>
+				<th>Date de création</th>
+				<th>Actions</th>
+			</tr>
+			{% for comment in comments %}
+				<tr>
+					<td>{{ comment.id }}</td>
+					<td>{{ comment.title }}</td>
+					<td>{{ comment.publicationValidated }}</td>
+					<td>{{ comment.creationDate|date("m/d/Y") }}</td>
+					<td>
+						{% if comment.publicationValidated == 0 %}
+							<div class="mb-2 mr-2">
+								<a class="btn btn-secondary" href="/admin/comments/validate/{{ comment.id }}">Valider</a>
+							</div>
+						{% endif %}
+						<div class="mb-2 mr-2">
+							<a class="btn btn-primary" href="/admin/comments/modify/{{ comment.id }}">Modifier</a>
+						</div>
+						<div class="mb-2 mr-2">
+							<form method="post" action="/admin/comments/delete/{{ comment.id }}" onsubmit="return confirm('{{" etes-vous sûr ?"}}')">
+								<button type="submit" class="btn btn-danger">Supprimer</button>
+							</form>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}

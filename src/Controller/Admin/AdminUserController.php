@@ -13,12 +13,13 @@ class AdminUserController extends Controller
     {
         $request = $this->getRequest();
         $flashMessage = $this->flashMessage($request);
+        $flashError = $this->flashError($request);
 
         $userManager = $this->getDatabase()->getManager(UserManager::class);
 
         $users = $userManager->getUsers();
 
-        return $this->render("admin/user/index.html.twig", ['users' => $users, 'flashMessage' => $flashMessage]);
+        return $this->render("admin/user/index.html.twig", ['users' => $users, 'flashMessage' => $flashMessage, 'flashError' => $flashError]);
     }
 
     public function create()
@@ -81,8 +82,13 @@ class AdminUserController extends Controller
 
     public function delete($id)
     {
+        $request = $this->getRequest();
         $userManager = $this->getDatabase()->getManager(UserManager::class);
+        try{
         $userManager->deleteUser($id);
+        }catch(Exception $e){
+            $request->setSession('flashError',"Problème lors de la suppression, assurez vous de supprimer les commentaires et les articles de l'utilisateur avant de supprimer celui-ci");
+        }
         // we redirect to the previous page after delete
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();

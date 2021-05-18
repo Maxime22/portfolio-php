@@ -13,6 +13,7 @@ class AdminBlogPostController extends Controller
     {
         $request = $this->getRequest();
         $flashMessage = $this->flashMessage($request);
+        $flashError = $this->flashError($request);
 
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
 
@@ -20,7 +21,7 @@ class AdminBlogPostController extends Controller
          * @var BlogPost[]
          */
         $blogPosts = $blogPostManager->getPosts();
-        return $this->render("admin/blogPost/index.html.twig", ['blogPosts' => $blogPosts, 'flashMessage' => $flashMessage]);
+        return $this->render("admin/blogPost/index.html.twig", ['blogPosts' => $blogPosts, 'flashMessage' => $flashMessage, 'flashError' => $flashError]);
     }
 
     public function create()
@@ -30,6 +31,7 @@ class AdminBlogPostController extends Controller
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidForm($request)) {
+                // TODO change this 2 lines
                 //$author = $_SESSION['auth'] ?? throw new Exception('Auteur non authentifié');
                 $author = "1";
                 $creationDate = date('Y-m-d H:i:s');

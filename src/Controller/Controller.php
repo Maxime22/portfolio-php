@@ -48,6 +48,14 @@ class Controller
         return $flashMessage;
     }
 
+    public function flashError($request)
+    {
+        $flashError = $request->getSession('flashError');
+        // we want to display the message only one time
+        $request->unsetSession('flashError');
+        return $flashError;
+    }
+
     protected function redirect(string $routeName, $params = [])
     {
         header("Location: " . $this->router->url($routeName, $params));
