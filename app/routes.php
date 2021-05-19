@@ -43,3 +43,4 @@ $router->post('/blogPosts/{id}', 'BlogPostController#show', 'blogPost_show_post'
 // HOMEPAGE
 $router->get('/error404', 'HomeController#error404', 'error404');
 $router->get('/', 'HomeController#index', 'home');
+$router->post('/', 'HomeController#index', 'home_post');
