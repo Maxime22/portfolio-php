@@ -43,7 +43,7 @@ class UserManager extends Manager
     public function getUserByConfirmationToken($token)
     {
         return $this->queryFetch(
-            "SELECT id, username, confirmation_token as 'confirmationToken' FROM user WHERE confirmation_token=$token",
+            "SELECT id, username, mail, roles, confirmation_token as 'confirmationToken' FROM user WHERE confirmation_token='$token'",
             User::class
         );
     }

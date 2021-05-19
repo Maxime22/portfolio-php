@@ -21,10 +21,10 @@
 
 		<div class="container text-center mt-4 mb-4 blogBody">
 			{% if flashMessage %}
-				<div class="alert alert-success">{{ flashMessage }}</div>
+				<div class="alert alert-success text-center">{{ flashMessage }}</div>
 			{% endif %}
 			{% if flashError %}
-				<div class="alert alert-danger">{{ flashError }}</div>
+				<div class="alert alert-danger text-center">{{ flashError }}</div>
 			{% endif %}
 			{% block body %}{% endblock %}
 		</div>

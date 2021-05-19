@@ -15,6 +15,7 @@ class AuthentificationController extends Controller
         $request = $this->getRequest();
         // errors from otherPages
         $flashError = $this->flashError($request);
+        $flashMessage = $this->flashMessage($request);
         $userManager = $this->getDatabase()->getManager(UserManager::class);
 
         // If the user is already connected, we don't want him to go to the login page
@@ -49,7 +50,7 @@ class AuthentificationController extends Controller
             }
         }
 
-        return $this->render("/login.html.twig", ["errors" => $errors,"flashError"=>$flashError]);
+        return $this->render("/login.html.twig", ["errors" => $errors, "flashError" => $flashError, "flashMessage" => $flashMessage]);
     }
 
     public function subscription()
@@ -57,13 +58,14 @@ class AuthentificationController extends Controller
         $request = $this->getRequest();
         $userManager = $this->getDatabase()->getManager(UserManager::class);
 
-        $errors=[];
+        $errors = [];
         try {
             if ($request->postTableData() && $this->isValidSubscriptionForm($request, $userManager)) {
                 $creationDate = date('Y-m-d H:i:s');
                 $mailer = new Mailer();
                 $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
                 $token = substr(str_shuffle(str_repeat($alphabet, 12)), 0, 12);
+                $tokenLink = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . '/subscriptionValidation/' . $token;
                 $userManager->insertUser(
                     [
                         'username' => $request->postData('username'),
@@ -77,18 +79,18 @@ class AuthentificationController extends Controller
                 $message = (new \Swift_Message('Email pour valider votre compte'))
                     ->setFrom([$_ENV['MAIL_USERNAME']])
                     ->setTo([$request->postData('mail')])
-                    ->setBody('Pour valider votre compte, cliquez sur le lien suivant:'.$_SERVER['SERVER_NAME'].'/subscriptionValidation/'.$token);
+                    ->setBody('Pour valider votre compte, cliquez sur le lien suivant : ' . $tokenLink);
 
                 // Send the message
                 $mailer->send($message);
                 $request->setSession('flashMessage', "Un mail de confirmation vous a été envoyé");
-                $this->redirect('subscription_get');
+                $this->redirect('login');
             }
         } catch (Exception $e) {
             $errors[] = $e->getMessage();
         }
 
-        return $this->render("/subscription.html.twig", ["errors"=>$errors]);
+        return $this->render("/subscription.html.twig", ["errors" => $errors]);
     }
 
     public function subscriptionValidation($token)
@@ -96,19 +98,19 @@ class AuthentificationController extends Controller
         $request = $this->getRequest();
         $userManager = $this->getDatabase()->getManager(UserManager::class);
         $user = $userManager->getUserByConfirmationToken($token);
-        if($user){
+        if ($user) {
             $userManager->updateUser(
                 [
                     'username' => $user->getUsername(),
                     'mail' => $user->getMail(),
-                    'roles' => $user->getRoles(),
+                    'roles' => json_encode($user->getRoles()),
                     'confirmationToken' => null,
                     'isValidated' => 1
                 ],
                 $user->getId()
             );
             $request->setSession('flashMessage', "Inscription validée, vous pouvez vous connecter");
-        }else{
+        } else {
             $request->setSession('flashError', "Le token envoyé n'est pas valide");
         }
         $this->redirect("login");

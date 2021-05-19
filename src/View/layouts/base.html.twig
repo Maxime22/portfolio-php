@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/app.css">
 		<title>
 			{% block title %}
-				Portfolio
+				Maxime Sabouret - Portfolio
 			{% endblock %}
 		</title>
 	</head>
@@ -31,10 +31,10 @@
 
 		<div class="blogBody">
 			{% if flashMessage %}
-				<div class="alert alert-success flashMessage">{{ flashMessage }}</div>
+				<div class="alert alert-success flashMessage text-center">{{ flashMessage }}</div>
 			{% endif %}
 			{% if flashError %}
-				<div class="alert alert-danger">{{ flashError }}</div>
+				<div class="alert alert-danger text-center">{{ flashError }}</div>
 			{% endif %}
 			{% block body %}{% endblock %}
 		</div>
