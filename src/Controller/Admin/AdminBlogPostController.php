@@ -5,6 +5,7 @@ namespace Controller\Admin;
 use Controller\Controller;
 use Exception;
 use Model\Manager\BlogPost\BlogPostManager;
+use Model\Manager\User\UserManager;
 
 class AdminBlogPostController extends Controller
 {
@@ -59,6 +60,17 @@ class AdminBlogPostController extends Controller
         $request = $this->getRequest();
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
         $blogPost = $blogPostManager->getPost($id);
+
+        // HERE WE NEED TO GET ALL THE AUTHORS POSSIBLE AND PUT THEM IN A SELECT IN THE FORM
+        $userManager = $this->getDatabase()->getManager(UserManager::class);
+        $users = $userManager->getUsers();
+        $authors=[];
+        foreach ($users as $user) {
+            if(in_array("admin",$user->getRoles())){
+                $authors[$user->getId()]=$user->getUsername();
+            }
+        }
+
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidForm($request)) {
@@ -67,6 +79,7 @@ class AdminBlogPostController extends Controller
                     [
                         'title' => $request->postData('title'),
                         'headerPost' => $request->postData('headerPost'),
+                        'author' => $request->postData('author'),
                         'content' => $request->postData('content'),
                         'lastModificationDate' => $lastModificationDate
                     ],
@@ -81,7 +94,8 @@ class AdminBlogPostController extends Controller
         return $this->render("admin/blogPost/modify.html.twig", [
             'errors' => $errors,
             'postDatas' => $request->postTableData() ? $request->postTableData() : $blogPost,
-            'articleId' => $id
+            'articleId' => $id,
+            'authors' => $authors
         ]);
     }
 

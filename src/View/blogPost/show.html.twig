@@ -13,6 +13,9 @@
 				<div class="alert alert-danger">{{ error }}</div>
 			{% endfor %}
 		{% endif %}
+        <h2>{{ blogPost.headerPost }}</h2>
+        <p>Ecrit par {{ blogPostAuthorName }}</p>
+        <em>Modifié le : {{ blogPost.lastModificationDate ? blogPost.lastModificationDate|date("m/d/Y") : blogPost.creationDate|date("m/d/Y") }}</em>
 		<div>
 			{{ blogPost.content }}</div>
 		<h3>Commentaires</h3>

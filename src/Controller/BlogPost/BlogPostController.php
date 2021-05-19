@@ -38,6 +38,8 @@ class BlogPostController extends Controller
         }
 
         $blogPost = $blogPostManager->getPost($id);
+        $blogPostAuthorName = $userManager->getUser($blogPost->getAuthor())->getUsername();
+
         // get validated comments
         $comments = $commentManager->getCommentByBlogPost($id);
 
@@ -64,6 +66,8 @@ class BlogPostController extends Controller
             $errors[] = $e->getMessage();
         }
 
+        dump($request->getSession('userRoles'));
+
         return $this->render(
             "blogPost/show.html.twig",
             [
@@ -71,6 +75,7 @@ class BlogPostController extends Controller
                 'comments' => $comments,
                 'currentUser' => $currentUser,
                 'flashMessage' => $flashMessage,
+                'blogPostAuthorName'=> $blogPostAuthorName,
                 'errors' => $errors,
                 'postDatas' => $request->postTableData() ? $request->postTableData() : null
             ]

@@ -14,14 +14,16 @@
 				<th>Titre</th>
 				<th>Chapeau</th>
 				<th>Date de création</th>
+				<th>Date de modification</th>
 				<th>Actions</th>
 			</tr>
 			{% for blogPost in blogPosts %}
 				<tr>
 					<td>{{ blogPost.id }}</td>
-					<td>{{ blogPost.title }}</td>
+					<td><a href="/blogPosts/{{ blogPost.id }}">{{ blogPost.title }}</a></td>
 					<td>{{ blogPost.headerPost }}</td>
 					<td>{{ blogPost.creationDate|date("m/d/Y") }}</td>
+					<td>{{ blogPost.lastModificationDate|date("m/d/Y") }}</td>
 					<td>
 						<div class="mb-2 mr-2">
 							<a class="btn btn-primary" href="/admin/blogPosts/modify/{{ blogPost.id }}">Modifier</a>

@@ -11,7 +11,7 @@ class BlogPostManager extends Manager
     public function getPosts()
     {
         $posts = $this->queryFetchAll(
-            "SELECT id, title, header_post as 'headerPost', user_id as 'author', content, creation_date as 'creationDate', last_modification_date as 'lastModificationDate' FROM blog_post",
+            "SELECT id, title, header_post as 'headerPost', user_id as 'author', content, creation_date as 'creationDate', last_modification_date as 'lastModificationDate' FROM blog_post ORDER BY id DESC",
             BlogPost::class
         );
         return $posts;
@@ -38,7 +38,7 @@ class BlogPostManager extends Manager
     public function updatePost(array $params, $id)
     {
         $this->prepare(
-            "UPDATE blog_post SET title = :title, header_post = :headerPost, content = :content, last_modification_date = :lastModificationDate WHERE id = $id",
+            "UPDATE blog_post SET title = :title, header_post = :headerPost, user_id = :author, content = :content, last_modification_date = :lastModificationDate WHERE id = $id",
             BlogPost::class,
             $params
         );

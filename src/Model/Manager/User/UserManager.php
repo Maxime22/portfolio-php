@@ -27,7 +27,7 @@ class UserManager extends Manager
     public function getUsers()
     {
         return $this->queryFetchAll(
-            "SELECT id, username, mail, password, roles, creation_date as 'creationDate' FROM user",
+            "SELECT id, username, mail, password, roles, creation_date as 'creationDate' FROM user ORDER BY id DESC",
             User::class
         );
     }

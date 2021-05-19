@@ -30,7 +30,7 @@ class AuthentificationController extends Controller
             $user = $userManager->getUserByUsername($username);
             if ($user !== false && $this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
                 $request->setSession('auth', $user->getId());
-                $request->setSession('roles', $user->getRoles());
+                $request->setSession('userRoles', $user->getRoles());
                 if (in_array("admin", $user->getRoles())) {
                     $this->redirect("admin");
                 }else{

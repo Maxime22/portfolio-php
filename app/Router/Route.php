@@ -23,7 +23,7 @@ class Route
         if (is_string($this->callable)) {
             $explodeCallable = explode("#", $this->callable);
             if (str_contains($this->callable, "Admin")) {
-                if ($request->getSession('auth') && in_array("admin", $request->getSession('roles'))) {
+                if ($request->getSession('auth') && in_array("admin", $request->getSession('userRoles'))) {
                     $controllerPath = "Controller\\Admin\\" . $explodeCallable[0];
                 }else{
                     throw new ForbiddenException;

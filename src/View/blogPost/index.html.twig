@@ -13,6 +13,7 @@
 					<div>
 						<h3>{{ blogPost.title }}</h3>
 						<div>{{ blogPost.headerPost }}</div>
+						<em>Modifié le : {{ blogPost.lastModificationDate ? blogPost.lastModificationDate|date("m/d/Y") : blogPost.creationDate|date("m/d/Y") }}</em>
 						<a href="/blogPosts/{{ blogPost.id }}" class="btn btn-primary">Voir l'article</a>
 					</div>
 				</div>

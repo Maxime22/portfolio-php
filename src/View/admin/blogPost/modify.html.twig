@@ -6,7 +6,8 @@
 
 {% block body %}
 	<div class="container">
-		<h1>Modification de l'article {{ articleId }}</h1>
+		<h1>Modification de l'article
+			{{ articleId }}</h1>
 		{% if errors %}
 			{% for error in errors %}
 				<div class="alert alert-danger">{{ error }}</div>
@@ -20,6 +21,14 @@
 			<div class="form-group">
 				<label for="headerPost">Chapô</label>
 				<input class="form-control" type="text" name="headerPost" value={{ postDatas.headerPost|e }}>
+			</div>
+			<div class="form-group">
+				<label for="author">Auteur</label>
+				<select class="form-control" name="author">
+					{% for key, author in authors %}
+						<option value={{key}} {{ (key == postDatas.author) ? 'selected' : '' }}>{{author}}</option>
+					{% endfor %}
+				</select>
 			</div>
 			<div class="form-group">
 				<label for="content">Contenu</label>

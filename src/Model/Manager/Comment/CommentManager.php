@@ -11,7 +11,7 @@ class CommentManager extends Manager
     public function getComments()
     {
         $comments = $this->queryFetchAll(
-            "SELECT id, title, blog_post_id as 'blogPostId', user_id as 'userId', content, creation_date as 'creationDate', publication_validated as 'publicationValidated' FROM comment",
+            "SELECT id, title, blog_post_id as 'blogPostId', user_id as 'userId', content, creation_date as 'creationDate', publication_validated as 'publicationValidated' FROM comment ORDER BY id DESC",
             Comment::class
         );
         return $comments;
