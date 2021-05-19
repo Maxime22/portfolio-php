@@ -6,9 +6,5 @@ Pour installer le projet :
 - Installer composer si vous ne l'avez pas
 - Composer install
 - Créer un fichier .env à la racine du projet pour les différentes variables d'environnement
-APP_ENV= dev (or prod)
-DB_NAME= databasename
-DB_HOST= databasehost
-DB_USERNAME= databaseusername
-DB_PASSWORD= databasepassword
+APP_ENV= dev (or prod), DB_NAME= databasename, DB_HOST= databasehost, DB_USERNAME= databaseusername, DB_PASSWORD= databasepassword, MAIL_USERNAME= mailadresssmtp, MAIL_PASSWORD= mailpassword
 - Lancer le projet avec php -S localhost:8000 ou selon votre configuration server
