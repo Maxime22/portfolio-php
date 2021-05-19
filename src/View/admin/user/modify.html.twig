@@ -28,7 +28,13 @@
 					<option value="admin" {{ ("admin" in postDatas.roles) ? 'selected' : '' }}>Admin</option>
 				</select>
 			</div>
-
+			<div class="form-group">
+				<label for="isValidated">Validation</label>
+				<select class="form-control" name="isValidated">
+					<option value="0" {{ ("0" == postDatas.isValidated) ? 'selected' : '' }}>Non</option>
+					<option value="1" {{ ("1" == postDatas.isValidated) ? 'selected' : '' }}>Oui</option>
+				</select>
+			</div>
 			<button class="btn btn-primary" type="submit">Sauvegarder</button>
 		</form>
 	</div>
