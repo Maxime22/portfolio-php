@@ -36,7 +36,8 @@ class AdminUserController extends Controller
                         'mail' => $request->postData('mail') ? $request->postData('mail') : "",
                         'password' => password_hash($request->postData('password'), PASSWORD_BCRYPT, ["cost" => 12]),
                         'roles' => !empty($request->postData('roles')) ? json_encode($request->postData('roles')) : json_encode(["user"]),
-                        'creationDate' => $creationDate
+                        'creationDate' => $creationDate,
+                        'confirmationToken' => null
                     ]
                 );
                 $request->setSession('flashMessage', "Utilisateur ajouté");
@@ -63,7 +64,9 @@ class AdminUserController extends Controller
                     [
                         'username' => $request->postData('username'),
                         'mail' => $request->postData('mail') ? $request->postData('mail') : "",
-                        'roles' => json_encode($request->postData('roles'))
+                        'roles' => json_encode($request->postData('roles')),
+                        'confirmationToken' => $user->getConfirmationToken(),
+                        'isValidated' => $request->postData('isValidated')
                     ],
                     $id
                 );

@@ -3,6 +3,9 @@
 // LOGIN
 $router->get('/login', 'AuthentificationController#login', 'login');
 $router->post('/login', 'AuthentificationController#login', 'login_post');
+$router->get('/subscription', 'AuthentificationController#subscription', 'subscription_get');
+$router->post('/subscription', 'AuthentificationController#subscription', 'subscription_post');
+$router->get('/subscriptionValidation/{token}', 'AuthentificationController#subscriptionValidation', 'subscriptionValidation_get');
 $router->get('/logout', function () use ($httpRequest){
     $httpRequest->unsetSession('auth');
     session_destroy();

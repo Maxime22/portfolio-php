@@ -11,6 +11,8 @@ class User
     private $password;
     private $creationDate;
     private $roles;
+    private $isValidated;
+    private $confirmationToken;
 
     public function __construct()
     {
@@ -42,5 +44,13 @@ class User
     public function getRoles()
     {
         return $this->roles;
+    }
+    public function getIsValidated()
+    {
+        return $this->isValidated;
+    }
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
     }
 }

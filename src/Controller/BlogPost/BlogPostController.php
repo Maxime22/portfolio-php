@@ -66,8 +66,6 @@ class BlogPostController extends Controller
             $errors[] = $e->getMessage();
         }
 
-        dump($request->getSession('userRoles'));
-
         return $this->render(
             "blogPost/show.html.twig",
             [
