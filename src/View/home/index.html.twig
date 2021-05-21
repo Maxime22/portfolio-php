@@ -20,18 +20,23 @@
 	</div>
 	<div class="text-center">
 		<div class="about">
-			<h3>À PROPOS</h3>
-
-			<div class="text-justify">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus lobortis fermentum. In congue, urna eu consequat blandit, sem velit placerat erat, nec gravida nibh nibh id elit. Nullam non pulvinar ante. Sed laoreet at ligula sit amet commodo. Pellentesque feugiat lorem et maximus facilisis. Suspendisse ornare elementum pellentesque. Nunc bibendum vestibulum ligula commodo tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum mauris magna, id vestibulum nisl elementum sed. Ut nec sollicitudin elit. In fringilla orci vel nisi bibendum gravida. Aenean semper sem vitae augue consequat, ut iaculis nisi blandit. Suspendisse interdum tortor eu massa pharetra, non porta orci scelerisque.
-				<br>
-				Donec sit amet congue magna, in varius metus. Aenean sit amet velit eu dui ullamcorper rhoncus. Aliquam ac sodales purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam varius arcu vitae elit lobortis gravida. Integer orci leo, fermentum vitae nulla in, venenatis pellentesque quam. Integer cursus porttitor arcu, eu luctus mi sollicitudin tincidunt. Vivamus luctus dictum consequat. Sed luctus vitae massa eu interdum. Donec congue ex et tortor dignissim, et sagittis risus condimentum. Duis eros mi, consectetur a cursus quis, bibendum sit amet nulla. In at neque ac magna maximus commodo. Aliquam vel rhoncus metus.<br><br>
-				Sed non pretium leo. Ut convallis, diam sed feugiat lobortis, massa orci suscipit est, quis dapibus neque risus et risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam sodales turpis eu elit accumsan vulputate. Aliquam finibus nec ante vel pulvinar. Suspendisse eget cursus dolor. Nulla posuere dictum risus sit amet sollicitudin. Maecenas neque justo, hendrerit ut nibh eu, cursus porttitor est. Pellentesque lobortis malesuada leo, nec venenatis odio pulvinar vel. Integer interdum erat quis efficitur consectetur. Praesent porttitor nibh est, in blandit massa varius sit amet. Proin non orci non mi egestas ornare. Aenean lectus massa, malesuada eget lorem a, mattis molestie est. Aliquam vel augue tellus. Sed nec ex magna.
+			<div class="mt-3 mb-5">
+				<h3>À PROPOS</h3>
+			</div>
+			<div class="text-center font-weight-bold aboutContent">
+				Double diplômé ingénieur AgroParisTech / ECE Paris puis développeur web à OpenClassRooms. Parlant anglais couramment. Je prends plaisir à apprendre continuellement sur les nouvelles technologies et souhaite travailler pour des projets à forte valeur environnementale, éducative et/ou artistique. Je souhaite mettre ma flexibilité, ma rigueur, mon autonomie et mon sens du contact au service de projets variés, innovants et inspirants.
+				<br><br>
+				Je me suis formé principalement sur les langages PHP (Symfony) et JavaScript (React.js).
+			</div>
+			<div class="col-md-12">
+				<img src="/images/home/about.png" alt="Emoji content">
 			</div>
 
 		</div>
-		<div class="skillsHome text-center mt-3 pt-4 pb-5">
-			<h3>COMPÉTENCES</h3>
+		<div class="skillsHome text-center pt-4 pb-5">
+			<div class="mt-3 mb-5">
+				<h3>COMPÉTENCES</h3>
+			</div>
 			<div class="container mt-4">
 				<div class="row">
 					<div class="col-md-2 mt-3">
@@ -106,38 +111,121 @@
 						</a>
 						<div class="mt-2 skillTitle">Github</div>
 					</div>
+					<div class="col-md-12">
+						<img class="thinkingImg" src="/images/home/thinking.png" alt="Emoji qui pense">
+					</div>
 				</div>
 			</div>
 		</div>
-		<h3>PROJETS</h3>
-
-		<div class="skillsHome text-center mt-3 pt-4 pb-5">
-			<h3>FORMATIONS</h3>
+		<div class="text-center pt-4 pb-5">
+			<div class="mt-3 mb-5">
+				<h3>PROJETS</h3>
+			</div>
+			<div class="container-fluid mt-4">
+				<div class="row">
+					<div class="col-md-6 mt-3">
+						<img class="projectHomeImg" src="/images/home/biolibre.jpg" alt="Image de Biolibre">
+						<a href="/blogPosts/31" class="btn btn-primary mb-3 mt-3">Voir le détail</a>
+					</div>
+					<div class="col-md-6 mt-3">
+						<img class="projectHomeImg" src="/images/home/festivalDuFilm.jpg" alt="Image du projet festival du film">
+						<a href="/blogPosts/2" class="btn btn-primary mb-3 mt-3">Voir le détail</a>
+					</div>
+				</div>
+				<a href="/blogPosts" class="btn btn-primary mb-3 mt-3 font-weight-bold">Voir la liste de tous mes projets</a>
+			</div>
 		</div>
-		<h3>FORMULAIRE DE CONTACT</h3>
-		{% if errors %}
-			{% for error in errors %}
-				<div class="alert alert-danger">{{ error }}</div>
-			{% endfor %}
-		{% endif %}
-		<form action="" method="POST" class="col-md-6 offset-md-3">
-			<div class="form-group">
-				<label for="names">Nom et prénom</label>
-				<input type="text" class="form-control" name="names">
+
+		<div class="schoolHome pt-4 pb-5">
+			<div class="mt-3 text-center">
+				<h3>FORMATIONS</h3>
 			</div>
-			<div class="form-group">
-				<label for="mail">Adresse mail</label>
-				<input type="text" class="form-control" name="mail">
+			<div class="container mt-4">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="row">
+							<div class="col-md-4 mt-3">
+								<img class="schoolHomeImg" src="/images/home/oc.jpg" alt="OpenClassRooms Logo">
+							</div>
+							<div class="col-md-8 pt-3 mt-3 text-left">
+								<div class="font-weight-bold">Diplôme : Développeur d'applications PHP Symfony</div>
+								<div>Etablissement : OpenClassRooms</div>
+								<div>Année d'obtention : En cours</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<img class="schoolHomeImg" src="/images/home/oc.jpg" alt="OpenClassRooms Logo">
+							</div>
+							<div class="col-md-8 pt-3 mt-3 text-left">
+								<div class="font-weight-bold">Diplôme : Développeur web Junior</div>
+								<div>Etablissement : OpenClassRooms</div>
+								<div>Année d'obtention : 2019</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<img class="schoolHomeImg" src="/images/home/agroparistech.png" alt="AgroParisTech Logo">
+							</div>
+							<div class="col-md-8 pt-3 mt-3 text-left">
+								<div class="font-weight-bold">Diplôme : Mastère spécialisé en Gestion de l'Eau</div>
+								<div>Etablissement : AgroParisTech</div>
+								<div>Année d'obtention : 2016</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<img class="schoolHomeImg" src="/images/home/ece.png" alt="ECE Paris Lyon Logo">
+							</div>
+							<div class="col-md-8 pt-3 mt-3 text-left">
+								<div class="font-weight-bold">Diplôme : Ingénieur Environnement/Energie</div>
+								<div>Etablissement : ECE Paris</div>
+								<div>Année d'obtention : 2015</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 mt-3">
+						<img src="/images/home/diplome.png" alt="Diplome web">
+					</div>
+				</div>
+				<div class="text-center mt-3">
+					<a href="/pdf/CV_2021-04-20_Maxime_Sabouret.pdf" class="btn btn-primary mb-3 mt-3 font-weight-bold">Voir mon CV</a>
+					{# <embed src= "/pdf/CV_2021-04-20_Maxime_Sabouret.pdf" width="800" height="500" type="application/pdf"> #}
+				</div>
 			</div>
-			<div class="form-group">
-				<label for="title">Titre</label>
-				<input type="text" class="form-control" name="title">
+		</div>
+		<div class="text-center pt-4 pb-5">
+			<div class="mt-3 mb-3 text-center">
+				<h3>CONTACTS</h3>
 			</div>
-			<div class="form-group">
-				<label for="message">Message</label>
-				<textarea class="form-control" name="message"></textarea>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5">
+						<img src="/images/home/mail.png" alt="Mail emoji">
+					</div>
+					<div class="col-md-7 mt-3 homeFormContact">
+						{% if errors %}
+							{% for error in errors %}
+								<div class="alert alert-danger">{{ error }}</div>
+							{% endfor %}
+						{% endif %}
+						<form action="" method="POST" class="offset-md-2 col-md-8 mb-3 font-weight-bold">
+							<div class="form-group">
+								<label for="names">Nom et prénom</label>
+								<input type="text" class="form-control" name="names">
+							</div>
+							<div class="form-group">
+								<label for="mail">Adresse mail</label>
+								<input type="text" class="form-control" name="mail">
+							</div>
+							<div class="form-group">
+								<label for="title">Titre</label>
+								<input type="text" class="form-control" name="title">
+							</div>
+							<div class="form-group">
+								<label for="message">Message</label>
+								<textarea class="form-control" name="message"></textarea>
+							</div>
+							<button type="submit" class="btn btn-primary mt-3 font-weight-bold">Envoyer</button>
+						</form>
+					</div>
+				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">Envoyer</button>
-		</form>
+
+		</div>
 	</div>
 {% endblock %}

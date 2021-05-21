@@ -34,8 +34,6 @@ $router->get('/admin/comments/validate/{id}','AdminCommentController#validate', 
 $router->post('/admin/comments/delete/{id}','AdminCommentController#delete', 'admin_comments_delete_post');
 $router->get('/admin/comments','AdminCommentController#index', 'admin_comments');
 
-// $router->get('/admin/comments','AdminCommentController#index', 'admin_comments');
-
 $router->get('/admin','AdminController#index', 'admin');
 
 // PAGES

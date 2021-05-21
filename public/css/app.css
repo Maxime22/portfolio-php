@@ -1,6 +1,7 @@
 /* GENERAL */
 .blogBody {
   min-height: 500px;
+  padding-top: 84px;
 }
 
 h1 {
@@ -38,6 +39,19 @@ a.btn:hover {
   color: white !important;
 }
 
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active {
+  background-color: #3d6fac;
+  border-color: #3d6fac;
+}
+
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus {
+  box-shadow: 0 0 0 0.2rem #3e95ffb1;
+}
+
 /* NAV */
 
 #mainNav {
@@ -53,15 +67,25 @@ a.btn:hover {
   color: white !important;
 }
 
+.navbar a:hover {
+  color: #5396e7 !important;
+}
+
 a.navbar-brand:hover {
   color: white !important;
+}
+
+
+.helloImg{
+  height: 60px;
+  width: 60px;
 }
 
 /* HOME */
 
 .titleHome {
   position: relative;
-  height: 500px;
+  height: 400px;
   background-color: #092864;
   color: white;
   margin: 0px 0px 100px 0px;
@@ -85,10 +109,17 @@ a.navbar-brand:hover {
 }
 
 .about {
-  padding: 20px 100px 20px 100px;
+  width: 70%;
+  padding: 20px 100px 0px 100px;
+  margin: auto;
 }
 
-.skillsHome {
+.aboutContent {
+  color: rgb(72, 72, 72);
+}
+
+.skillsHome,
+.schoolHome {
   background-color: #092864;
   color: white;
 }
@@ -104,6 +135,31 @@ a.navbar-brand:hover {
 
 .skillTitle {
   font-size: 16px;
+}
+
+.projectHomeImg {
+  height: 200px;
+  width: 100%;
+  border-radius: 40px;
+  object-fit: cover;
+}
+
+.schoolHomeImg {
+  height: 100px;
+  width: 100px;
+  border-radius: 400px;
+  object-fit: cover;
+}
+
+.thinkingImg{
+  height: 300px;
+  width: 300px;
+}
+
+.homeFormContact{
+  border: 2px rgba(128, 128, 128, 0.421) solid;
+  border-radius:10px;
+  padding:10px 20px 10px 20px;
 }
 
 /* ADMIN */

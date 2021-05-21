@@ -7,7 +7,7 @@
 {% block body %}
 	<div class="container">
 		<h1>Gestion des commentaires</h1>
-		<table class="table table-striped">
+		<table class="table table-striped mt-3">
 			<tr>
 				<th>Id</th>
 				<th>Titre</th>
@@ -22,7 +22,7 @@
 					<td>{{ comment.title }}</td>
 					<td>{{ comment.blogPostId }}</td>
 					<td>{{ comment.publicationValidated }}</td>
-					<td>{{ comment.creationDate|date("m/d/Y") }}</td>
+					<td>{{ comment.creationDate|date("d/m/Y") }}</td>
 					<td>
 						{% if comment.publicationValidated == 0 %}
 							<div class="mb-2 mr-2">
@@ -33,7 +33,7 @@
 							<a class="btn btn-primary" href="/admin/comments/modify/{{ comment.id }}">Modifier</a>
 						</div>
 						<div class="mb-2 mr-2">
-							<form method="post" action="/admin/comments/delete/{{ comment.id }}" onsubmit="return confirm('{{" etes-vous sûr ?"}}')">
+							<form method="post" action="/admin/comments/delete/{{ comment.id }}" onsubmit="return confirm('{{" Etes-vous sûr ?"}}')">
 								<button type="submit" class="btn btn-danger">Supprimer</button>
 							</form>
 						</div>

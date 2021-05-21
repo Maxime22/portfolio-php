@@ -63,4 +63,10 @@ class Controller
         header("Location: " . $this->router->url($routeName, $params));
         exit();
     }
+
+    protected function redirect404()
+    {
+        header("Location: /error404");
+        exit();
+    }
 }

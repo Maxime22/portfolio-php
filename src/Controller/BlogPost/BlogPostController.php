@@ -38,6 +38,9 @@ class BlogPostController extends Controller
         }
 
         $blogPost = $blogPostManager->getPost($id);
+        if($blogPost === false){
+            $this->redirect404();
+        }
         $blogPostAuthorName = $userManager->getUser($blogPost->getAuthor())->getUsername();
 
         // get validated comments

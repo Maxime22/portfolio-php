@@ -5,18 +5,18 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container text-center pt-5 mt-5">
+	<div class="container text-center">
 		<h1 class="pb-4">Mes projets</h1>
 		<div class="row ">
 			{% for blogPost in blogPosts %}
-				<div class="col-md-4 text-center">
+				<div class="col-md-6 text-center">
 					<div class="card mb-3">
 						<div class="card-body">
 							<h3 class="card-title">{{ blogPost.title }}</h3>
 
 							<div>{{ blogPost.headerPost }}</div>
 							<em>Modifié le :
-								{{ blogPost.lastModificationDate ? blogPost.lastModificationDate|date("m/d/Y") : blogPost.creationDate|date("m/d/Y") }}</em>
+								{{ blogPost.lastModificationDate ? blogPost.lastModificationDate|date("d/m/Y") : blogPost.creationDate|date("d/m/Y") }}</em>
 							<div>
 								<a href="/blogPosts/{{ blogPost.id }}" class="btn btn-primary mt-3">Voir l'article</a>
 							</div>
