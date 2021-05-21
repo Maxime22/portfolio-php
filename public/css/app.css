@@ -3,16 +3,114 @@
   min-height: 500px;
 }
 
+h1 {
+  font-size: 60px;
+}
+
+h2 {
+  font-size: 46px;
+}
+
+h3 {
+  font-size: 42px;
+}
+
 .flashMessage {
   width: 80%;
-  margin : auto;
+  margin: auto;
   margin-top: 10px;
+}
+
+a {
+  color: #294971 !important;
+}
+
+a.btn {
+  color: white !important;
+}
+
+a:hover {
+  color: #5396e7 !important;
+  text-decoration: none !important;
+}
+
+a.btn:hover {
+  color: white !important;
+}
+
+/* NAV */
+
+#mainNav {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.navbar {
+  background-color: #182234;
+}
+
+.navbar a {
+  color: white !important;
+}
+
+a.navbar-brand:hover {
+  color: white !important;
+}
+
+/* HOME */
+
+.titleHome {
+  position: relative;
+  height: 500px;
+  background-color: #092864;
+  color: white;
+  margin: 0px 0px 100px 0px;
+}
+
+.titleHomeBlockCentered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.profilePicture {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border-radius: 400px;
+  height: 200px;
+  width: 200px;
+  transform: translate(-50%, -50%);
+}
+
+.about {
+  padding: 20px 100px 20px 100px;
+}
+
+.skillsHome {
+  background-color: #092864;
+  color: white;
+}
+
+.skillsIcon {
+  font-size: 100px;
+}
+
+.formationsHome {
+  background-color: #092864;
+  color: white;
+}
+
+.skillTitle {
+  font-size: 16px;
 }
 
 /* ADMIN */
 .adminPresentationLink {
   font-size: 34px;
   text-decoration: none;
+  color: #294971 !important;
 }
 
 .adminPresentationLink a {
@@ -23,7 +121,7 @@
 .base_footerLine {
   height: 1px;
   width: 22%;
-  background-color: #1abc9c;
+  background-color: #5396e7;
   margin: auto;
   margin-bottom: 22px;
 }
@@ -39,11 +137,15 @@
 
 .base_followLink {
   opacity: 0.6;
-  transition-duration: 1s;
   display: inline-block;
 }
 .base_followLink:hover {
+  transition: opacity 1s;
   opacity: 1;
+}
+
+.footerLink {
+  color: white !important;
 }
 
 @media all and (max-width: 991px) {

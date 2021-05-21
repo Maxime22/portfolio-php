@@ -5,19 +5,21 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container text-center">
-		<h1>Projet
-			{{ blogPost.title }}</h1>
+	<div class="container text-center pt-5 mt-5">
+		<h1>{{ blogPost.title }}</h1>
 		{% if errors %}
 			{% for error in errors %}
 				<div class="alert alert-danger">{{ error }}</div>
 			{% endfor %}
 		{% endif %}
-        <h2>{{ blogPost.headerPost }}</h2>
-        <p>Ecrit par {{ blogPostAuthorName }}</p>
-        <em>Modifié le : {{ blogPost.lastModificationDate ? blogPost.lastModificationDate|date("m/d/Y") : blogPost.creationDate|date("m/d/Y") }}</em>
+		<h2>{{ blogPost.headerPost }}</h2>
+		<div class="text-justify">
+			{{ blogPost.content|raw|nl2br }}</div>
 		<div>
-			{{ blogPost.content }}</div>
+			<em>Ecrit par
+				{{ blogPostAuthorName }}, modifié le :
+				{{ blogPost.lastModificationDate ? blogPost.lastModificationDate|date("m/d/Y") : blogPost.creationDate|date("m/d/Y") }}</em>
+		</div>
 		<h3>Commentaires</h3>
 		<div class="text-left">
 			{% for comment in comments %}
@@ -33,7 +35,7 @@
 			<form action="" method="post" class="col-md-6 offset-md-3">
 				<div class="form-group">
 					<label for="title">Titre</label>
-					<input class="form-control" type="text" name="title" value={{ postDatas['title']|e }}>
+					<input class="form-control" type="text" name="title" value="{{ postDatas['title'] }}">
 				</div>
 				<div class="form-group">
 					<label for="content">Contenu</label>

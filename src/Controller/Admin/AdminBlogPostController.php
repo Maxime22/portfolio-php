@@ -91,6 +91,7 @@ class AdminBlogPostController extends Controller
         } catch (Exception $e) {
             $errors[] = $e->getMessage();
         }
+
         return $this->render("admin/blogPost/modify.html.twig", [
             'errors' => $errors,
             'postDatas' => $request->postTableData() ? $request->postTableData() : $blogPost,
@@ -106,8 +107,6 @@ class AdminBlogPostController extends Controller
         // we redirect to the previous page after delete
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
-        // if no one was connected we redirect to the homepage
-        $this->redirect("homepage");
     }
 
     public function isValidForm($request): bool

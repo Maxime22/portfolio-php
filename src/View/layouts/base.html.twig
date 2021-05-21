@@ -5,6 +5,7 @@
 		<meta content="width=device-width, initial-scale=1" name="viewport">
 		<link rel="stylesheet" type="text/css" href="/css/bootstrapCSS.css">
 		<link rel="stylesheet" type="text/css" href="/css/app.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.11.0/devicon.min.css">
 		<title>
 			{% block title %}
 				Maxime Sabouret - Portfolio
@@ -14,8 +15,8 @@
 
 	<body>
 		<header>
-			<nav class="navbar navbar-expand-lg bg-secondary" id="mainNav">
-				<a class="navbar-brand" href="/">Portfolio</a>
+			<nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+				<a class="navbar-brand" href="/">MS Portfolio</a>
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item">
 						<a class="nav-link" href="/blogPosts">Mes projets</a>
@@ -28,7 +29,6 @@
 				</ul>
 			</nav>
 		</header>
-
 		<div class="blogBody">
 			{% if flashMessage %}
 				<div class="alert alert-success flashMessage text-center">{{ flashMessage }}</div>
@@ -67,21 +67,22 @@
 					</div>
 					<div class="col-lg-6 col-md-6 base_footer_col">
 						<h4>Liens internes</h4>
+						<div class="base_footerLine"></div>
 						<div>
-							<a href="/" class="font-weight-bold">Accueil</a>
+							<a href="/" class="font-weight-bold footerLink">Accueil</a>
 						</div>
 						{% if auth %}
 							{% if "admin" in userRoles %}
 								<div>
-									<a href="/admin" class="font-weight-bold">Administration</a>
+									<a href="/admin" class="font-weight-bold footerLink">Administration</a>
 								</div>
 							{% endif %}
 							<div>
-								<a href="/logout" class="font-weight-bold">Se déconnecter</a>
+								<a href="/logout" class="font-weight-bold footerLink">Se déconnecter</a>
 							</div>
 						{% else %}
 							<div>
-								<a href="/login" class="font-weight-bold">Connexion</a>
+								<a href="/login" class="font-weight-bold footerLink">Connexion</a>
 							</div>
 						{% endif %}
 					</div>

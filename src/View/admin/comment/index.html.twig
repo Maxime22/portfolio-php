@@ -11,6 +11,7 @@
 			<tr>
 				<th>Id</th>
 				<th>Titre</th>
+				<th>BlogPost</th>
 				<th>Validation du commentaire</th>
 				<th>Date de création</th>
 				<th>Actions</th>
@@ -19,6 +20,7 @@
 				<tr>
 					<td>{{ comment.id }}</td>
 					<td>{{ comment.title }}</td>
+					<td>{{ comment.blogPostId }}</td>
 					<td>{{ comment.publicationValidated }}</td>
 					<td>{{ comment.creationDate|date("m/d/Y") }}</td>
 					<td>

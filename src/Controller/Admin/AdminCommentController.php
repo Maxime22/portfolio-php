@@ -72,4 +72,13 @@ class AdminCommentController extends Controller
         }
         return $returnValue;
     }
+
+    public function delete($id)
+    {
+        $commentManager = $this->getDatabase()->getManager(CommentManager::class);
+        $commentManager->deleteComment($id);
+        // we redirect to the previous page after delete
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit();
+    }
 }
