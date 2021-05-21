@@ -61,4 +61,9 @@ class CommentManager extends Manager
             $params
         );
     }
+
+    public function deleteComment($id)
+    {
+        $this->delete("DELETE FROM comment WHERE id = :id", $id);
+    }
 }
