@@ -37,6 +37,11 @@ class AuthentificationController extends Controller
                 if ($user->getIsValidated()) {
                     $request->setSession('auth', $user->getId());
                     $request->setSession('userRoles', $user->getRoles());
+                    // Session Hijacking
+                    $request->setSession('ipAddress', $_SERVER['REMOTE_ADDR']);
+                    $request->setSession('userAgent', $_SERVER['HTTP_USER_AGENT']);
+                    $request->setSession('lastAccess', time());
+
                     if (in_array("admin", $user->getRoles())) {
                         $this->redirect("admin");
                     } else {
