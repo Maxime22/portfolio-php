@@ -69,4 +69,14 @@ class Controller
         header("Location: /error404");
         exit();
     }
+
+    protected function checkCSRF($request){
+        $tokenCSRF = $request->postData('tokenCSRF');
+        // We check if the user in the admin is the same as the one who was previously connected
+        if (($tokenCSRF === null) ||($request->getSession('tokenCSRF') !== $tokenCSRF)) {
+            $request->setSession('flashError', "Le token CSRF est invalide, vous ne pouvez pas supprimer le blogPost");
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit();
+        }
+    }
 }

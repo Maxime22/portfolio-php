@@ -19,7 +19,7 @@ class AdminUserController extends Controller
 
         $users = $userManager->getUsers();
 
-        return $this->render("admin/user/index.html.twig", ['users' => $users, 'flashMessage' => $flashMessage, 'flashError' => $flashError]);
+        return $this->render("admin/user/index.html.twig", ['users' => $users, 'flashMessage' => $flashMessage, 'flashError' => $flashError, 'tokenCSRF' => $request->getSession('tokenCSRF')]);
     }
 
     public function create()
@@ -86,6 +86,7 @@ class AdminUserController extends Controller
     public function delete($id)
     {
         $request = $this->getRequest();
+        $this->checkCSRF($request);
         $userManager = $this->getDatabase()->getManager(UserManager::class);
         try{
         $userManager->deleteUser($id);

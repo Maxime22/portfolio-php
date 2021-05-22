@@ -22,7 +22,7 @@ class AdminBlogPostController extends Controller
          * @var BlogPost[]
          */
         $blogPosts = $blogPostManager->getPosts();
-        return $this->render("admin/blogPost/index.html.twig", ['blogPosts' => $blogPosts, 'flashMessage' => $flashMessage, 'flashError' => $flashError]);
+        return $this->render("admin/blogPost/index.html.twig", ['blogPosts' => $blogPosts, 'flashMessage' => $flashMessage, 'flashError' => $flashError, 'tokenCSRF' => $request->getSession('tokenCSRF')]);
     }
 
     public function create()
@@ -64,10 +64,10 @@ class AdminBlogPostController extends Controller
         // HERE WE NEED TO GET ALL THE AUTHORS POSSIBLE AND PUT THEM IN A SELECT IN THE FORM
         $userManager = $this->getDatabase()->getManager(UserManager::class);
         $users = $userManager->getUsers();
-        $authors=[];
+        $authors = [];
         foreach ($users as $user) {
-            if(in_array("admin",$user->getRoles())){
-                $authors[$user->getId()]=$user->getUsername();
+            if (in_array("admin", $user->getRoles())) {
+                $authors[$user->getId()] = $user->getUsername();
             }
         }
 
@@ -103,12 +103,13 @@ class AdminBlogPostController extends Controller
     public function delete($id)
     {
         $request = $this->getRequest();
+        $this->checkCSRF($request);
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
-        try{
+        try {
             $blogPostManager->deletePost($id);
-            }catch(Exception $e){
-                $request->setSession('flashError',"Problème lors de la suppression, assurez vous de supprimer les commentaires de l'utilisateur avant de supprimer l'article");
-            }
+        } catch (Exception $e) {
+            $request->setSession('flashError', "Problème lors de la suppression, assurez vous de supprimer les commentaires de l'utilisateur avant de supprimer l'article");
+        }
         // we redirect to the previous page after delete
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();

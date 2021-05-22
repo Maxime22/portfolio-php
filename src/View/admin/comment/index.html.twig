@@ -34,6 +34,7 @@
 						</div>
 						<div class="mb-2 mr-2">
 							<form method="post" action="/admin/comments/delete/{{ comment.id }}" onsubmit="return confirm('{{" Etes-vous sûr ?"}}')">
+								<input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}"/>
 								<button type="submit" class="btn btn-danger">Supprimer</button>
 							</form>
 						</div>

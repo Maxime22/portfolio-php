@@ -25,19 +25,19 @@ $httpRequest->sessionStart();
 include dirname(__DIR__) . '/app/routes.php';
 
 // Against Session Hijacking
-if ($_SERVER['REMOTE_ADDR'] != $_SESSION['ipAddress']) {
+if (isset($_SESSION['ipAddress']) && ($_SERVER['REMOTE_ADDR'] !== $_SESSION['ipAddress'])) {
     session_unset();
     session_destroy();
 }
-if ($_SERVER['HTTP_USER_AGENT'] != $_SESSION['userAgent']) {
+if (isset($_SESSION['userAgent']) && ($_SERVER['HTTP_USER_AGENT'] !== $_SESSION['userAgent'])) {
     session_unset();
     session_destroy();
 }
-if (time() > ($_SESSION['lastAccess'] + 3600)) {
+if (isset($_SESSION['lastAccess']) && (time() > ($_SESSION['lastAccess'] + 3600))) {
     session_unset();
     session_destroy();
-} else {
-    $_SESSION['lastAccess'] = time();
+} elseif (isset($_SESSION['lastAccess'])) {
+    $httpRequest->setSession('lastAccess', time());
 }
 
 try {

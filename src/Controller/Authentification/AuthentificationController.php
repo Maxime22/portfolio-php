@@ -41,6 +41,8 @@ class AuthentificationController extends Controller
                     $request->setSession('ipAddress', $_SERVER['REMOTE_ADDR']);
                     $request->setSession('userAgent', $_SERVER['HTTP_USER_AGENT']);
                     $request->setSession('lastAccess', time());
+                    // Token CSRF for each user
+                    $request->setSession('tokenCSRF', bin2hex(random_bytes(16)));
 
                     if (in_array("admin", $user->getRoles())) {
                         $this->redirect("admin");

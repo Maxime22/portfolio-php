@@ -1,4 +1,9 @@
 /* GENERAL */
+
+body{
+  background-color: #f7f7f7 !important;
+}
+
 .blogBody {
   min-height: 500px;
   padding-top: 84px;
@@ -85,10 +90,22 @@ a.navbar-brand:hover {
 
 .titleHome {
   position: relative;
-  height: 400px;
-  background-color: #092864;
+  /* height: 400px; */
+  height: 70vh;
+  /* background-color: #092864; */
   color: white;
   margin: 0px 0px 100px 0px;
+}
+
+.backgroundHomePicture{
+  position: absolute;
+  top: 0%;
+  left:0%;
+  height: 70vh;
+  width: 100%;
+  filter: brightness(50%);
+  object-fit: cover;
+  z-index: -1;
 }
 
 .titleHomeBlockCentered {

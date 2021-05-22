@@ -18,7 +18,7 @@ class AdminCommentController extends Controller
         $commentManager = $this->getDatabase()->getManager(CommentManager::class);
 
         $comments = $commentManager->getComments();
-        return $this->render("admin/comment/index.html.twig", ['comments' => $comments, 'flashMessage' => $flashMessage, 'flashError' => $flashError]);
+        return $this->render("admin/comment/index.html.twig", ['comments' => $comments, 'flashMessage' => $flashMessage, 'flashError' => $flashError, 'tokenCSRF' => $request->getSession('tokenCSRF')]);
     }
 
     public function validate($id)
@@ -75,6 +75,8 @@ class AdminCommentController extends Controller
 
     public function delete($id)
     {
+        $request = $this->getRequest();
+        $this->checkCSRF($request);
         $commentManager = $this->getDatabase()->getManager(CommentManager::class);
         $commentManager->deleteComment($id);
         // we redirect to the previous page after delete
