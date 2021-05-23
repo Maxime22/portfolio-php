@@ -2,8 +2,9 @@
 
 namespace Controller\Admin;
 
-use Controller\Controller;
 use Exception;
+use Controller\Controller;
+use App\Exception\FormException;
 use Model\Manager\User\UserManager;
 
 class AdminUserController extends Controller
@@ -43,7 +44,7 @@ class AdminUserController extends Controller
                 $request->setSession('flashMessage', "Utilisateur ajouté");
                 $this->redirect("admin_users");
             }
-        } catch (Exception $e) {
+        } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
         return $this->render("admin/user/create.html.twig", [
@@ -73,7 +74,7 @@ class AdminUserController extends Controller
                 $request->setSession('flashMessage', "Utilisateur $id modifié");
                 $this->redirect("admin_users");
             }
-        } catch (Exception $e) {
+        } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
         return $this->render("admin/user/modify.html.twig", [
@@ -95,7 +96,6 @@ class AdminUserController extends Controller
         }
         // we redirect to the previous page after delete
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-        die;
     }
 
     public function isValidForm($request, $userManager, $id = null): bool
@@ -105,7 +105,7 @@ class AdminUserController extends Controller
         $password = $request->postData('password');
         $username = $request->postData('username');
         if (!$username || strlen($username) < 4) {
-            throw new Exception('Pseudo trop court');
+            throw new FormException('Pseudo trop court');
             $returnValue = false;
         }
 
@@ -114,22 +114,22 @@ class AdminUserController extends Controller
         if ($id) {
             $users = $userManager->getUsersByUsername($username);
             if (count($users) > 1) {
-                throw new Exception("Ce nom d'utilisateur existe déjà");
+                throw new FormException("Ce nom d'utilisateur existe déjà");
             }elseif (count($users) === 1 && (int)$users[0]->getId() !== (int)$id) {
-                throw new Exception("Ce nom d'utilisateur existe déjà");
+                throw new FormException("Ce nom d'utilisateur existe déjà");
             }
         // if the user is created we just need to check that a user doesn't exists in the database with the username
         } elseif ($user) {
-            throw new Exception("L'utilisateur existe déjà");
+            throw new FormException("L'utilisateur existe déjà");
             $returnValue = false;
         }
         // we don't check the password value if it is a modification ($id exists)
         if (!$id && (!$password || strlen($password) < 4)) {
-            throw new Exception('Mot de passe trop court');
+            throw new FormException('Mot de passe trop court');
             $returnValue = false;
         }
         if ($mail && !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception('Votre mail ne convient pas');
+            throw new FormException('Votre mail ne convient pas');
             $returnValue = false;
         }
         return $returnValue;

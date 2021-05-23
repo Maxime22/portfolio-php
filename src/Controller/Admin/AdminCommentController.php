@@ -3,7 +3,7 @@
 namespace Controller\Admin;
 
 use Controller\Controller;
-use Exception;
+use App\Exception\FormException;
 use Model\Manager\Comment\CommentManager;
 
 class AdminCommentController extends Controller
@@ -26,7 +26,6 @@ class AdminCommentController extends Controller
         $commentManager = $this->getDatabase()->getManager(CommentManager::class);
         $commentManager->validateComment(["id"=>$id]);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-        die;
     }
 
     public function modify($id)
@@ -47,7 +46,7 @@ class AdminCommentController extends Controller
                 $request->setSession('flashMessage', "Commentaire $id modifié");
                 $this->redirect("admin_comments");
             }
-        } catch (Exception $e) {
+        } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
         return $this->render("admin/comment/modify.html.twig", [
@@ -63,11 +62,11 @@ class AdminCommentController extends Controller
         $content = $request->postData('content');
         $returnValue = true;
         if (!$title || strlen($title) < 4) {
-            throw new Exception('Titre trop court');
+            throw new FormException('Titre trop court');
             $returnValue = false;
         }
         if (!$content || strlen($content) < 10) {
-            throw new Exception('Contenu trop court');
+            throw new FormException('Contenu trop court');
             $returnValue = false;
         }
         return $returnValue;
@@ -81,6 +80,5 @@ class AdminCommentController extends Controller
         $commentManager->deleteComment($id);
         // we redirect to the previous page after delete
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-        die;
     }
 }

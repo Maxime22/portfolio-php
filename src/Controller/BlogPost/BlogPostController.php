@@ -2,6 +2,7 @@
 
 namespace Controller\BlogPost;
 
+use App\Exception\FormException;
 use Controller\Controller;
 use Model\Manager\BlogPost\BlogPostManager;
 use Model\Manager\Comment\CommentManager;
@@ -66,7 +67,7 @@ class BlogPostController extends Controller
                 $request->setSession('flashMessage', "Commentaire ajouté, en attente de validation");
                 $this->redirect("blogPost_show_get",["id"=>$id]);
             }
-        } catch (Exception $e) {
+        } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
 
@@ -90,11 +91,11 @@ class BlogPostController extends Controller
         $content = $request->postData('content');
         $returnValue = true;
         if (!$title || strlen($title) < 4) {
-            throw new Exception('Titre trop court');
+            throw new FormException('Titre trop court');
             $returnValue = false;
         }
         if (!$content || strlen($content) < 10) {
-            throw new Exception('Contenu trop court');
+            throw new FormException('Contenu trop court');
             $returnValue = false;
         }
         return $returnValue;

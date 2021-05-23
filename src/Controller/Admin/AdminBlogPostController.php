@@ -2,8 +2,8 @@
 
 namespace Controller\Admin;
 
+use App\Exception\FormException;
 use Controller\Controller;
-use Exception;
 use Model\Manager\BlogPost\BlogPostManager;
 use Model\Manager\User\UserManager;
 
@@ -46,7 +46,7 @@ class AdminBlogPostController extends Controller
                 $request->setSession('flashMessage', "Article ajouté");
                 $this->redirect("admin_blogPosts");
             }
-        } catch (Exception $e) {
+        } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
         return $this->render("admin/blogPost/create.html.twig", [
@@ -88,7 +88,7 @@ class AdminBlogPostController extends Controller
                 $request->setSession('flashMessage', "Article $id modifié");
                 $this->redirect("admin_blogPosts");
             }
-        } catch (Exception $e) {
+        } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
 
@@ -107,12 +107,11 @@ class AdminBlogPostController extends Controller
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
         try {
             $blogPostManager->deletePost($id);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $request->setSession('flashError', "Problème lors de la suppression, assurez vous de supprimer les commentaires de l'utilisateur avant de supprimer l'article");
         }
         // we redirect to the previous page after delete
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-        die;
     }
 
     public function isValidForm($request): bool
@@ -122,15 +121,15 @@ class AdminBlogPostController extends Controller
         $content = $request->postData('content');
         $returnValue = true;
         if (!$title || strlen($title) < 4) {
-            throw new Exception('Titre trop court');
+            throw new FormException('Titre trop court');
             $returnValue = false;
         }
         if (!$headerPost || strlen($headerPost) < 4) {
-            throw new Exception('Chapo trop court');
+            throw new FormException('Chapo trop court');
             $returnValue = false;
         }
         if (!$content || strlen($content) < 10) {
-            throw new Exception('Contenu trop court');
+            throw new FormException('Contenu trop court');
             $returnValue = false;
         }
         return $returnValue;

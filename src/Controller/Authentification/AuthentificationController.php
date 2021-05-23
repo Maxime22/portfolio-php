@@ -3,8 +3,8 @@
 namespace Controller\Authentification;
 
 use App\Mailer\Mailer;
-use Exception;
 use Controller\Controller;
+use App\Exception\FormException;
 use Model\Manager\User\UserManager;
 
 class AuthentificationController extends Controller
@@ -93,7 +93,7 @@ class AuthentificationController extends Controller
                 $request->setSession('flashMessage', "Un mail de confirmation vous a été envoyé");
                 $this->redirect('login');
             }
-        } catch (Exception $e) {
+        } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
 
@@ -137,25 +137,25 @@ class AuthentificationController extends Controller
         $username = $request->postData('username');
 
         if (!$username || strlen($username) < 4) {
-            throw new Exception('Pseudo trop court');
+            throw new FormException('Pseudo trop court');
             $returnValue = false;
         }
 
         $user = $userManager->getUserByUsername(["username" => $username]);
         if ($user) {
-            throw new Exception("L'utilisateur existe déjà, veuillez choisir un autre identifiant");
+            throw new FormException("L'utilisateur existe déjà, veuillez choisir un autre identifiant");
             $returnValue = false;
         }
         if (!$password || strlen($password) < 4) {
-            throw new Exception('Mot de passe trop court');
+            throw new FormException('Mot de passe trop court');
             $returnValue = false;
         }
         if ($password !== $passwordValidation) {
-            throw new Exception('Les deux mots de passe ne sont pas identiques');
+            throw new FormException('Les deux mots de passe ne sont pas identiques');
             $returnValue = false;
         }
         if ($mail && !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception('Votre mail ne convient pas');
+            throw new FormException('Votre mail ne convient pas');
             $returnValue = false;
         }
         return $returnValue;

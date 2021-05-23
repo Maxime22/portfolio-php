@@ -2,9 +2,9 @@
 
 namespace Controller\Home;
 
-use Exception;
 use App\Mailer\Mailer;
 use Controller\Controller;
+use App\Exception\FormException;
 
 class HomeController extends Controller
 {
@@ -28,7 +28,7 @@ class HomeController extends Controller
                 $result = $mailer->send($message);
                 $request->setSession('flashMessage', "Mail envoyé");
             }
-        } catch (Exception $e) {
+        } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
 
@@ -49,19 +49,19 @@ class HomeController extends Controller
         $title = $request->postData('title');
         $message = $request->postData('message');
         if (!$username || strlen($username) < 4) {
-            throw new Exception('Nom et prénom trop courts');
+            throw new FormException('Nom et prénom trop courts');
             $returnValue = false;
         }
         if ($mail && !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception('Votre mail ne convient pas');
+            throw new FormException('Votre mail ne convient pas');
             $returnValue = false;
         }
         if (!$title || strlen($title) < 4) {
-            throw new Exception('Titre trop court');
+            throw new FormException('Titre trop court');
             $returnValue = false;
         }
         if (!$message || strlen($message) < 10) {
-            throw new Exception('Message trop court');
+            throw new FormException('Message trop court');
             $returnValue = false;
         }
 

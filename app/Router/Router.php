@@ -2,6 +2,8 @@
 
 namespace App\Router;
 
+use App\Exception\RouterException;
+
 class Router
 {
 

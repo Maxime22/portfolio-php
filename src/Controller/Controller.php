@@ -6,6 +6,9 @@ use App\Router\Router;
 use App\Database\Database;
 use App\Response\Response;
 use App\Request\HTTPRequest;
+use App\Exception\RedirectionException;
+use App\Exception\RouterException;
+use App\Exception\CSRFException;
 
 class Controller
 {
@@ -60,14 +63,12 @@ class Controller
 
     protected function redirect(string $routeName, $params = [])
     {
-        header("Location: " . $this->router->url($routeName, $params));
-        die;
+        throw new RedirectionException($routeName, $params);
     }
 
     protected function redirect404()
     {
-        header("Location: /error404");
-        die;
+        throw new RouterException();
     }
 
     protected function checkCSRF(HTTPRequest $request){
@@ -75,8 +76,7 @@ class Controller
         // We check if the user in the admin is the same as the one who was previously connected
         if (($tokenCSRF === null) ||($request->getSession('tokenCSRF') !== $tokenCSRF)) {
             $request->setSession('flashError', "Le token CSRF est invalide, vous ne pouvez pas supprimer le blogPost");
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            die;
+            throw new CSRFException();
         }
     }
 }

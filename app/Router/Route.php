@@ -3,7 +3,7 @@
 namespace App\Router;
 
 use App\Request\HTTPRequest;
-use App\Security\ForbiddenException;
+use App\Exception\ForbiddenException;
 
 class Route
 {

@@ -1,10 +1,12 @@
 <?php
 require '../vendor/autoload.php';
 
-use Symfony\Component\Dotenv\Dotenv;
 use App\Request\HTTPRequest;
-use App\Security\ForbiddenException;
-use App\Router\RouterException;
+use App\Exception\RouterException;
+use App\Exception\CSRFException;
+use App\Exception\RedirectionException;
+use App\Exception\ForbiddenException;
+use Symfony\Component\Dotenv\Dotenv;
 
 $httpRequest = new HTTPRequest();
 
@@ -47,10 +49,14 @@ try {
     $response->send();
 } catch (ForbiddenException $e) {
     header("Location: /login");
-    die;
+} catch (CSRFException $e) {
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+} catch (RedirectionException $e) {
+    dd("cououc");
+    header("Location: " . $router->url($e->getRouteName(),$e->getParams()));
 } catch (RouterException $e) {
     header("Location: /error404");
-    die;
 } catch (\Exception $e) {
+    dd("cououc2");
     echo $e->getMessage();
 }
