@@ -1,6 +1,6 @@
 /* GENERAL */
 
-body{
+body {
   background-color: #f7f7f7 !important;
 }
 
@@ -57,6 +57,15 @@ a.btn:hover {
   box-shadow: 0 0 0 0.2rem #3e95ffb1;
 }
 
+.mySeparator {
+  margin: auto;
+  height: 1px;
+  width: 30%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #092864;
+}
+
 /* NAV */
 
 #mainNav {
@@ -80,8 +89,7 @@ a.navbar-brand:hover {
   color: white !important;
 }
 
-
-.helloImg{
+.helloImg {
   height: 60px;
   width: 60px;
 }
@@ -97,10 +105,10 @@ a.navbar-brand:hover {
   margin: 0px 0px 100px 0px;
 }
 
-.backgroundHomePicture{
+.backgroundHomePicture {
   position: absolute;
   top: 0%;
-  left:0%;
+  left: 0%;
   height: 70vh;
   width: 100%;
   filter: brightness(50%);
@@ -154,11 +162,25 @@ a.navbar-brand:hover {
   font-size: 16px;
 }
 
+.projectHomeCard {
+  border:1px gray solid;
+  background-color: white;
+}
+
 .projectHomeImg {
-  height: 200px;
+  height: 130px;
   width: 100%;
-  border-radius: 40px;
   object-fit: cover;
+}
+
+.presentationProjectHome{
+  padding: 20px;
+}
+
+.projectEmoji{
+  height: 150px;
+  width: 150px;
+  margin:auto;
 }
 
 .schoolHomeImg {
@@ -168,15 +190,15 @@ a.navbar-brand:hover {
   object-fit: cover;
 }
 
-.thinkingImg{
+.thinkingImg {
   height: 300px;
   width: 300px;
 }
 
-.homeFormContact{
+.homeFormContact {
   border: 2px rgba(128, 128, 128, 0.421) solid;
-  border-radius:10px;
-  padding:10px 20px 10px 20px;
+  border-radius: 10px;
+  padding: 10px 20px 10px 20px;
 }
 
 /* ADMIN */
