@@ -8,19 +8,21 @@ use Model\Entity\User\User;
 class UserManager extends Manager
 {
 
-    public function getUserByUsername(string $username)
+    public function getUserByUsername(array $params)
     {
         return $this->queryFetch(
-            "SELECT id, username, mail, password, roles, creation_date as 'creationDate', is_validated as 'isValidated' FROM user WHERE username='" . $username . "'",
-            User::class
+            "SELECT id, username, mail, password, roles, creation_date as 'creationDate', is_validated as 'isValidated' FROM user WHERE username= :username",
+            User::class,
+            $params
         );
     }
 
-    public function getUsersByUsername(string $username)
+    public function getUsersByUsername(array $params)
     {
         return $this->queryFetchAll(
-            "SELECT id, username, mail, password, roles, creation_date as 'creationDate', is_validated as 'isValidated' FROM user WHERE username='" . $username . "'",
-            User::class
+            "SELECT id, username, mail, password, roles, creation_date as 'creationDate', is_validated as 'isValidated' FROM user WHERE username= :username",
+            User::class,
+            $params
         );
     }
 
@@ -32,19 +34,21 @@ class UserManager extends Manager
         );
     }
 
-    public function getUser($id)
+    public function getUser(array $params)
     {
         return $this->queryFetch(
-            "SELECT id, username, mail, password, roles, creation_date as 'creationDate', is_validated as 'isValidated' FROM user WHERE id=$id",
-            User::class
+            "SELECT id, username, mail, password, roles, creation_date as 'creationDate', is_validated as 'isValidated' FROM user WHERE id = :id",
+            User::class,
+            $params
         );
     }
 
-    public function getUserByConfirmationToken($token)
+    public function getUserByConfirmationToken(array $params)
     {
         return $this->queryFetch(
-            "SELECT id, username, mail, roles, confirmation_token as 'confirmationToken' FROM user WHERE confirmation_token='$token'",
-            User::class
+            "SELECT id, username, mail, roles, confirmation_token as 'confirmationToken' FROM user WHERE confirmation_token = :confirmationToken",
+            User::class,
+            $params
         );
     }
 
@@ -69,13 +73,5 @@ class UserManager extends Manager
     public function deleteUser($id)
     {
         $this->delete("DELETE FROM user WHERE id = :id", $id);
-    }
-
-    public function getRolesById($id)
-    {
-        $this->queryFetch(
-            "SELECT roles FROM user WHERE id=$id",
-            User::class
-        );
     }
 }

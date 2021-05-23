@@ -24,7 +24,7 @@ class AdminCommentController extends Controller
     public function validate($id)
     {
         $commentManager = $this->getDatabase()->getManager(CommentManager::class);
-        $commentManager->validateComment($id);
+        $commentManager->validateComment(["id"=>$id]);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
     }
@@ -33,16 +33,16 @@ class AdminCommentController extends Controller
     {
         $request = $this->getRequest();
         $commentManager = $this->getDatabase()->getManager(CommentManager::class);
-        $comment = $commentManager->getComment($id);
+        $comment = $commentManager->getComment(["id"=>$id]);
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidForm($request)) {
                 $commentManager->updateComment(
                     [
+                        'id' => $id,
                         'title' => $request->postData('title'),
                         'content' => $request->postData('content'),
-                    ],
-                    $id
+                    ]
                 );
                 $request->setSession('flashMessage', "Commentaire $id modifié");
                 $this->redirect("admin_comments");

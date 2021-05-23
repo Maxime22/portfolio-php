@@ -34,17 +34,18 @@ class BlogPostController extends Controller
 
         $currentUser = null;
         if ($request->getSession('auth')) {
-            $currentUser = $userManager->getUser($request->getSession('auth'));
+            $currentUser = $userManager->getUser(["id"=>$request->getSession('auth')]);
         }
 
-        $blogPost = $blogPostManager->getPost($id);
+        $blogPost = $blogPostManager->getPost(["id"=>$id]);
+        
         if($blogPost === false){
             $this->redirect404();
         }
-        $blogPostAuthorName = $userManager->getUser($blogPost->getAuthor())->getUsername();
-
+        
+        $blogPostAuthorName = $userManager->getUser(["id"=>$blogPost->getAuthor()])->getUsername();
         // get validated comments
-        $comments = $commentManager->getCommentByBlogPost($id);
+        $comments = $commentManager->getCommentByBlogPost(["blogPostId"=>$id]);
 
         // comment form
         $errors = [];

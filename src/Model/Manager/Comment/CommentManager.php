@@ -17,38 +17,41 @@ class CommentManager extends Manager
         return $comments;
     }
 
-    public function getComment(string $id)
+    public function getComment(array $params)
     {
         $comment = $this->queryFetch(
-            "SELECT id, title, blog_post_id as 'blogPostId', user_id as 'userId', content, creation_date as 'creationDate', publication_validated as 'publicationValidated' FROM comment WHERE id=" . $id,
-            Comment::class
+            "SELECT id, title, blog_post_id as 'blogPostId', user_id as 'userId', content, creation_date as 'creationDate', publication_validated as 'publicationValidated' FROM comment WHERE id= :id",
+            Comment::class,
+            $params
         );
         return $comment;
     }
 
-    public function validateComment($id)
+    public function validateComment(array $params)
     {
         $this->prepare(
-            "UPDATE comment SET publication_validated = 1 WHERE id = $id",
-            Comment::class
+            "UPDATE comment SET publication_validated = 1 WHERE id = :id",
+            Comment::class,
+            $params
         );
     }
 
-    public function updateComment(array $params, $id)
+    public function updateComment(array $params)
     {
         $this->prepare(
-            "UPDATE comment SET title = :title, content = :content WHERE id = $id",
+            "UPDATE comment SET title = :title, content = :content WHERE id = :id",
             Comment::class,
             $params
         );
     }
 
     // $id is blogPostId here
-    public function getCommentByBlogPost($id)
+    public function getCommentByBlogPost(array $params)
     {
         $comments = $this->queryFetchAll(
-            "SELECT id, title, blog_post_id as 'blogPostId', user_id as 'userId', content, creation_date as 'creationDate', publication_validated as 'publicationValidated' FROM comment WHERE blog_post_id = $id AND publication_validated = 1",
-            Comment::class
+            "SELECT id, title, blog_post_id as 'blogPostId', user_id as 'userId', content, creation_date as 'creationDate', publication_validated as 'publicationValidated' FROM comment WHERE blog_post_id = :blogPostId AND publication_validated = 1",
+            Comment::class,
+            $params
         );
         return $comments;
     }

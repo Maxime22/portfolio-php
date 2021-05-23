@@ -17,11 +17,12 @@ class BlogPostManager extends Manager
         return $posts;
     }
 
-    public function getPost(string $id)
+    public function getPost(array $params)
     {
         $post = $this->queryFetch(
-            "SELECT id, title, header_post as 'headerPost', user_id as 'author', content, creation_date as 'creationDate', last_modification_date as 'lastModificationDate' FROM blog_post WHERE id=" . $id,
-            BlogPost::class
+            "SELECT id, title, header_post as 'headerPost', user_id as 'author', content, creation_date as 'creationDate', last_modification_date as 'lastModificationDate' FROM blog_post WHERE id = :id",
+            BlogPost::class,
+            $params
         );
         return $post;
     }
@@ -35,10 +36,10 @@ class BlogPostManager extends Manager
         );
     }
 
-    public function updatePost(array $params, $id)
+    public function updatePost(array $params)
     {
         $this->prepare(
-            "UPDATE blog_post SET title = :title, header_post = :headerPost, user_id = :author, content = :content, last_modification_date = :lastModificationDate WHERE id = $id",
+            "UPDATE blog_post SET title = :title, header_post = :headerPost, user_id = :author, content = :content, last_modification_date = :lastModificationDate WHERE id = :id",
             BlogPost::class,
             $params
         );

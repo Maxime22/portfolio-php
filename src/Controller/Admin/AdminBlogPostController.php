@@ -59,7 +59,7 @@ class AdminBlogPostController extends Controller
     {
         $request = $this->getRequest();
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
-        $blogPost = $blogPostManager->getPost($id);
+        $blogPost = $blogPostManager->getPost(["id"=>$id]);
 
         // HERE WE NEED TO GET ALL THE AUTHORS POSSIBLE AND PUT THEM IN A SELECT IN THE FORM
         $userManager = $this->getDatabase()->getManager(UserManager::class);
@@ -77,13 +77,13 @@ class AdminBlogPostController extends Controller
                 $lastModificationDate = date('Y-m-d H:i:s');
                 $blogPostManager->updatePost(
                     [
+                        'id' => $id,
                         'title' => $request->postData('title'),
                         'headerPost' => $request->postData('headerPost'),
                         'author' => $request->postData('author'),
                         'content' => $request->postData('content'),
                         'lastModificationDate' => $lastModificationDate
-                    ],
-                    $id
+                    ]
                 );
                 $request->setSession('flashMessage', "Article $id modifié");
                 $this->redirect("admin_blogPosts");
