@@ -52,11 +52,9 @@ try {
 } catch (CSRFException $e) {
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 } catch (RedirectionException $e) {
-    dd("cououc");
     header("Location: " . $router->url($e->getRouteName(),$e->getParams()));
 } catch (RouterException $e) {
     header("Location: /error404");
 } catch (\Exception $e) {
-    dd("cououc2");
     echo $e->getMessage();
 }
