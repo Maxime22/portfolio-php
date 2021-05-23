@@ -94,7 +94,7 @@ class AdminUserController extends Controller
             $request->setSession('flashError',"Problème lors de la suppression, assurez vous de supprimer les commentaires et les articles de l'utilisateur avant de supprimer celui-ci");
         }
         // we redirect to the previous page after delete
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit(header('Location: ' . $_SERVER['HTTP_REFERER']));
     }
 
     public function isValidForm($request, $userManager, $id = null): bool

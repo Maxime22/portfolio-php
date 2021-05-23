@@ -223,22 +223,22 @@
 								<div class="alert alert-danger">{{ error }}</div>
 							{% endfor %}
 						{% endif %}
-						<form action="" method="POST" class="offset-md-2 col-md-8 mb-3 font-weight-bold">
+						<form action="/" method="POST" class="offset-md-2 col-md-8 mb-3 font-weight-bold">
 							<div class="form-group">
 								<label for="names">Nom et prénom</label>
-								<input type="text" class="form-control" name="names">
+								<input type="text" class="form-control" name="names" id="names">
 							</div>
 							<div class="form-group">
 								<label for="mail">Adresse mail</label>
-								<input type="text" class="form-control" name="mail">
+								<input type="text" class="form-control" name="mail" id="mail">
 							</div>
 							<div class="form-group">
 								<label for="title">Titre</label>
-								<input type="text" class="form-control" name="title">
+								<input type="text" class="form-control" name="title" id="title">
 							</div>
 							<div class="form-group">
 								<label for="message">Message</label>
-								<textarea class="form-control" name="message"></textarea>
+								<textarea class="form-control" name="message" id="message"></textarea>
 							</div>
 							<button type="submit" class="btn btn-primary mt-3 font-weight-bold">Envoyer</button>
 						</form>

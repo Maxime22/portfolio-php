@@ -32,7 +32,7 @@ class AuthentificationController extends Controller
         $errors = [];
         if ($request->postTableData()) {
             $username = $request->postTableData()['username'];
-            $user = $userManager->getUserByUsername(["username"=>$username]);
+            $user = $userManager->getUserByUsername(["username" => $username]);
             if ($user !== false && $this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
                 if ($user->getIsValidated()) {
                     $request->setSession('auth', $user->getId());
@@ -104,7 +104,7 @@ class AuthentificationController extends Controller
     {
         $request = $this->getRequest();
         $userManager = $this->getDatabase()->getManager(UserManager::class);
-        $user = $userManager->getUserByConfirmationToken(["confirmationToken"=>$token]);
+        $user = $userManager->getUserByConfirmationToken(["confirmationToken" => $token]);
         if ($user) {
             $userManager->updateUser(
                 [
@@ -141,7 +141,7 @@ class AuthentificationController extends Controller
             $returnValue = false;
         }
 
-        $user = $userManager->getUserByUsername(["username"=>$username]);
+        $user = $userManager->getUserByUsername(["username" => $username]);
         if ($user) {
             throw new Exception("L'utilisateur existe déjà, veuillez choisir un autre identifiant");
             $returnValue = false;
@@ -159,5 +159,13 @@ class AuthentificationController extends Controller
             $returnValue = false;
         }
         return $returnValue;
+    }
+
+    public function logout()
+    {
+        $request = $this->getRequest();
+        $request->unsetSession('auth');
+        session_destroy();
+        $this->redirect('login');
     }
 }

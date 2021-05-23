@@ -111,7 +111,7 @@ class AdminBlogPostController extends Controller
             $request->setSession('flashError', "Problème lors de la suppression, assurez vous de supprimer les commentaires de l'utilisateur avant de supprimer l'article");
         }
         // we redirect to the previous page after delete
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit(header('Location: ' . $_SERVER['HTTP_REFERER']));
     }
 
     public function isValidForm($request): bool
