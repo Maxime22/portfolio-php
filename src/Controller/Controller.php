@@ -42,7 +42,7 @@ class Controller
         return $this->request;
     }
 
-    public function flashMessage($request)
+    public function flashMessage(HTTPRequest $request)
     {
         $flashMessage = $request->getSession('flashMessage');
         // we want to display the message only one time
@@ -50,7 +50,7 @@ class Controller
         return $flashMessage;
     }
 
-    public function flashError($request)
+    public function flashError(HTTPRequest $request)
     {
         $flashError = $request->getSession('flashError');
         // we want to display the message only one time
@@ -68,7 +68,7 @@ class Controller
         header("Location: /error404");
     }
 
-    protected function checkCSRF($request){
+    protected function checkCSRF(HTTPRequest $request){
         $tokenCSRF = $request->postData('tokenCSRF');
         // We check if the user in the admin is the same as the one who was previously connected
         if (($tokenCSRF === null) ||($request->getSession('tokenCSRF') !== $tokenCSRF)) {

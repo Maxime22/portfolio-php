@@ -2,6 +2,7 @@
 
 namespace App\Router;
 
+use App\Request\HTTPRequest;
 use App\Security\ForbiddenException;
 
 class Route
@@ -17,7 +18,7 @@ class Route
         $this->callable = $callable;
     }
 
-    public function call($request, $router)
+    public function call(HTTPRequest $request, $router)
     {
         // If we request a controller, we call the controller
         if (is_string($this->callable)) {
