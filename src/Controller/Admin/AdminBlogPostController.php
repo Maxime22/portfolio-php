@@ -112,7 +112,6 @@ class AdminBlogPostController extends Controller
         }
         // we redirect to the previous page after delete
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit();
     }
 
     public function isValidForm($request): bool

@@ -10,7 +10,6 @@ $router->get('/logout', function () use ($httpRequest){
     $httpRequest->unsetSession('auth');
     session_destroy();
     header('Location: /login');
-    exit();
 });
 
 // ADMIN

@@ -65,7 +65,7 @@ class UserManager extends Manager
     {
         $this->prepare(
             "UPDATE user SET username = :username, mail = :mail, roles = :roles, confirmation_token = :confirmationToken, is_validated = :isValidated WHERE id = $id",
-            BlogPost::class,
+            User::class,
             $params
         );
     }

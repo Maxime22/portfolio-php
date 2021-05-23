@@ -61,13 +61,11 @@ class Controller
     protected function redirect(string $routeName, $params = [])
     {
         header("Location: " . $this->router->url($routeName, $params));
-        exit();
     }
 
     protected function redirect404()
     {
         header("Location: /error404");
-        exit();
     }
 
     protected function checkCSRF($request){
@@ -76,7 +74,6 @@ class Controller
         if (($tokenCSRF === null) ||($request->getSession('tokenCSRF') !== $tokenCSRF)) {
             $request->setSession('flashError', "Le token CSRF est invalide, vous ne pouvez pas supprimer le blogPost");
             header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit();
         }
     }
 }

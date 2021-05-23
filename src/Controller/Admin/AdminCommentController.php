@@ -26,7 +26,6 @@ class AdminCommentController extends Controller
         $commentManager = $this->getDatabase()->getManager(CommentManager::class);
         $commentManager->validateComment(["id"=>$id]);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit();
     }
 
     public function modify($id)
@@ -81,6 +80,5 @@ class AdminCommentController extends Controller
         $commentManager->deleteComment($id);
         // we redirect to the previous page after delete
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit();
     }
 }

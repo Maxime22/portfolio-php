@@ -47,10 +47,8 @@ try {
     $response->send();
 } catch (ForbiddenException $e) {
     header("Location: /login");
-    exit();
 } catch (RouterException $e) {
     header("Location: /error404");
-    exit();
 } catch (\Exception $e) {
     echo $e->getMessage();
 }
