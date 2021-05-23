@@ -46,9 +46,11 @@ try {
     // we display the content
     $response->send();
 } catch (ForbiddenException $e) {
-    exit(header("Location: /login"));
+    header("Location: /login");
+    die;
 } catch (RouterException $e) {
-    exit(header("Location: /error404"));
+    header("Location: /error404");
+    die;
 } catch (\Exception $e) {
     echo $e->getMessage();
 }
