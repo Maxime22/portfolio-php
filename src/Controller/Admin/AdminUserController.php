@@ -118,7 +118,9 @@ class AdminUserController extends Controller
         // if it is a modification we have to check if the username is in the database and different from the user id
         if ($id!==null) {
             $users = $userManager->getUsersByUsername($username);
-            if ((count($users) > 1) || (count($users) === 1 && (int)$users[0]->getId() !== (int)$id)) {
+            $userCount = count($users);
+            $firstUserId = (int)$users[0]->getId();
+            if (($userCount > 1) || ($userCount === 1 && $firstUserId !== (int)$id)) {
                 throw new FormException("Ce nom d'utilisateur existe déjà");
             }
         // if the user is created we just need to check that a user doesn't exists in the database with the username
