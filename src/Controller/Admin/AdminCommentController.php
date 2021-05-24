@@ -13,7 +13,6 @@ class AdminCommentController extends Controller
     {
         $request = $this->getRequest();
         $commentManager = $this->getDatabase()->getManager(CommentManager::class);
-
         $comments = $commentManager->getComments();
         return $this->render("admin/comment/index.html.twig", ['comments' => $comments, 'flashMessage' => $this->flashMessage($request), 'flashError' => $this->flashError($request), 'tokenCSRF' => $request->getSession('tokenCSRF')]);
     }

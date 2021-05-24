@@ -14,7 +14,6 @@ class AdminBlogPostController extends Controller
     {
         $request = $this->getRequest();
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
-
         /**
          * @var BlogPost[]
          */

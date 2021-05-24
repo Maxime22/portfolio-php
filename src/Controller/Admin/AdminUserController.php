@@ -14,7 +14,6 @@ class AdminUserController extends Controller
     {
         $request = $this->getRequest();
         $userManager = $this->getDatabase()->getManager(UserManager::class);
-
         $users = $userManager->getUsers();
 
         return $this->render("admin/user/index.html.twig", ['users' => $users, 'flashMessage' => $this->flashMessage($request), 'flashError' => $this->flashError($request), 'tokenCSRF' => $request->getSession('tokenCSRF')]);
