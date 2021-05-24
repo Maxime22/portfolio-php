@@ -128,10 +128,13 @@
 						<div class="projectHomeCard mb-3">
 							<img class="projectHomeImg" src="/images/home/biolibre.jpg" alt="Image de Biolibre">
 							<div class="presentationProjectHome">BioLibre est un site plein d'astuces pour apprendre et se simplifier la vie.
-							En lisant BioLibre, on se dit parfois, "tiens ça, j'aurais aimé le savoir avant !".
-							<br> Il est codé avec le framework PHP Symfony 5 et quelques parties en JS.</div>
+															En lisant BioLibre, on se dit parfois, "tiens ça, j'aurais aimé le savoir avant !".
+								<br>
+								Il est codé avec le framework PHP Symfony 5 et quelques parties en JS.</div>
 							<div><img class="projectEmoji" src="/images/home/zen.png" alt="Emoji zen"></div>
-							<div><a href="/blogPosts/31" class="btn btn-primary mb-3 mt-3">Voir le détail</a></div>
+							<div>
+								<a href="/blogPosts/31" class="btn btn-primary mb-3 mt-3">Voir le détail</a>
+							</div>
 						</div>
 					</div>
 					<div class="col-md-4 mt-3">
@@ -139,7 +142,9 @@
 							<img class="projectHomeImg" src="/images/home/festivalDuFilm.jpg" alt="Image du projet festival du film">
 							<div class="presentationProjectHome">Ce site est une maquette CSS/HTML d'exemple pour un festival de film imaginaire.</div>
 							<div><img class="projectEmoji" src="/images/home/filmEmoji.png" alt="Emoji du projet festival du film"></div>
-							<div><a href="/blogPosts/1" class="btn btn-primary mb-3 mt-3">Voir le détail</a></div>
+							<div>
+								<a href="/blogPosts/1" class="btn btn-primary mb-3 mt-3">Voir le détail</a>
+							</div>
 						</div>
 					</div>
 					<div class="col-md-4 mt-3">
@@ -147,7 +152,9 @@
 							<img class="projectHomeImg" src="/images/home/photoAnneSite.jpg" alt="Image du projet festival du film">
 							<div class="presentationProjectHome">Site pour une photographe réalisé en full Javascript. Les technologies utilisées sont Node.js/Express.js pour la partie backend et Angular pour la partie frontend.</div>
 							<div><img class="projectEmoji" src="/images/home/photoSite.png" alt="Emoji photo"></div>
-							<div><a href="/blogPosts/33" class="btn btn-primary mb-3 mt-3">Voir le détail</a></div>
+							<div>
+								<a href="/blogPosts/33" class="btn btn-primary mb-3 mt-3">Voir le détail</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -207,7 +214,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="text-center pt-4 pb-5">
+		<div id="contacts" class="text-center pt-4 pb-5">
 			<div class="mt-3 mb-3 text-center">
 				<h3>CONTACTS</h3>
 			</div>
@@ -217,12 +224,15 @@
 						<img class="mailContactImg" src="/images/home/mail.png" alt="Mail emoji">
 					</div>
 					<div class="col-md-7 mt-3 homeFormContact">
+						{% if flashMessage %}
+							<div class="alert alert-success flashMessage text-center">{{ flashMessage }}</div>
+						{% endif %}
 						{% if errors %}
 							{% for error in errors %}
 								<div class="alert alert-danger">{{ error }}</div>
 							{% endfor %}
 						{% endif %}
-						<form action="/" method="POST" class="offset-md-2 col-md-8 mb-3 font-weight-bold">
+						<form action="#contacts" method="POST" class="offset-md-2 col-md-8 mb-3 font-weight-bold">
 							<div class="form-group">
 								<label for="names">Nom et prénom</label>
 								<input type="text" class="form-control" name="names" id="names">

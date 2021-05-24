@@ -9,6 +9,9 @@
 		<div>
 			<h1>{{ blogPost.title }}</h1>
 		</div>
+		{% if flashMessage %}
+			<div class="alert alert-success flashMessage text-center">{{ flashMessage }}</div>
+		{% endif %}
 		{% if errors %}
 			{% for error in errors %}
 				<div class="alert alert-danger">{{ error }}</div>
