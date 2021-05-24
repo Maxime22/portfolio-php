@@ -84,10 +84,10 @@ class AdminUserController extends Controller
         $request = $this->getRequest();
         $this->checkCSRF($request);
         $userManager = $this->getDatabase()->getManager(UserManager::class);
-        try{
-        $userManager->deleteUser($id);
-        }catch(Exception $e){
-            $request->setSession('flashError',"Problème lors de la suppression, assurez vous de supprimer les commentaires et les articles de l'utilisateur avant de supprimer celui-ci");
+        try {
+            $userManager->deleteUser($id);
+        } catch (Exception $e) {
+            $request->setSession('flashError', "Problème lors de la suppression, assurez vous de supprimer les commentaires et les articles de l'utilisateur avant de supprimer celui-ci");
         }
         // we redirect to the previous page after delete
         $this->redirect("admin_users");
@@ -102,7 +102,7 @@ class AdminUserController extends Controller
             throw new FormException('Pseudo trop court');
         }
 
-        $this->checkIfUserExists($userManager, $username , $id);
+        $this->checkIfUserExists($userManager, $username, $id);
         // we don't check the password value if it is a modification ($id exists)
         if (!$id && (!$password || strlen($password) < 4)) {
             throw new FormException('Mot de passe trop court');
@@ -113,20 +113,26 @@ class AdminUserController extends Controller
         return true;
     }
 
-    private function checkIfUserExists($userManager, $username , $id){
+    private function checkIfUserExists($userManager, $username, $id)
+    {
         $user = $userManager->getUserByUsername($username);
         // if it is a modification we have to check if the username is in the database and different from the user id
-        if ($id!==null) {
+        if ($id !== null) {
             $users = $userManager->getUsersByUsername($username);
-            $userCount = count($users);
-            $firstUserId = (int)$users[0]->getId();
-            if (($userCount > 1) || ($userCount === 1 && $firstUserId !== (int)$id)) {
-                throw new FormException("Ce nom d'utilisateur existe déjà");
-            }
-        // if the user is created we just need to check that a user doesn't exists in the database with the username
+            $this->checkifUserNameExists($users);
         }
+        // if the user is created (id is null) we just need to check that a user doesn't exists in the database with the username
         if ($user) {
             throw new FormException("L'utilisateur existe déjà");
+        }
+    }
+
+    private function checkifUserNameExists($users)
+    {
+        $userCount = count($users);
+        $firstUserId = (int)$users[0]->getId();
+        if (($userCount > 1) || ($userCount === 1 && $firstUserId !== (int)$id)) {
+            throw new FormException("Ce nom d'utilisateur existe déjà");
         }
     }
 }
