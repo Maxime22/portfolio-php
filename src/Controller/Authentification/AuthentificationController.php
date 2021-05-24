@@ -23,7 +23,10 @@ class AuthentificationController extends Controller
         if ($request->postTableData()) {
             $username = $request->postTableData()['username'];
             $user = $userManager->getUserByUsername(["username" => $username]);
+            
+            // redirection is made here if all is ok
             $this->managePostDatas($request, $user);
+
             $errors = $this->checkErrors($user, $request);
         }
         return $this->render("/login.html.twig", ["errors" => $errors, "flashError" => $this->flashError($request), "flashMessage" => $this->flashMessage($request)]);
