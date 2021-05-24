@@ -27,12 +27,7 @@ class AuthentificationController extends Controller
             if ($user !== false && $this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
                 if ($user->getIsValidated()) {
                     $this->setSessions($request, $user);
-
-                    if (in_array("admin", $user->getRoles())) {
-                        $this->redirect("admin");
-                    } else {
-                        $this->redirect("home");
-                    }
+                    $this->checkAdminRole($user);
                 } else {
                     $errors[] = "Vous devez valider votre mail";
                 }
@@ -47,14 +42,18 @@ class AuthentificationController extends Controller
     {
         if ($request->getSession('auth')) {
             $user = $userManager->getUser($request->getSession('auth'));
-            if (in_array("admin", $user->getRoles())) {
-                $this->redirect("admin");
-            } else {
-                $this->redirect("home");
-            }
+            $this->checkAdminRole($user);
             return $user;
         }
         return null;
+    }
+
+    private function checkAdminRole($user){
+        if (in_array("admin", $user->getRoles())) {
+            $this->redirect("admin");
+        } else {
+            $this->redirect("home");
+        }
     }
 
     public function setSessions($request, $user)
