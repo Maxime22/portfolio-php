@@ -32,7 +32,7 @@ class HomeController extends Controller
             $errors[] = $e->getMessage();
         }
 
-        return $this->render("home/index.html.twig", ['errors'=>$errors,'flashMessage'=>$request->getSession('flashMessage')]);
+        return $this->render("home/index.html.twig", ['errors'=>$errors,'flashMessage'=>$this->flashMessage($request)]);
     }
 
     public function error404()
