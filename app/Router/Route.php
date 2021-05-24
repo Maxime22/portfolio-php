@@ -44,7 +44,7 @@ class Route
         return $controllerPath;
     }
 
-    private function getAdminPath($request, $explodeCallable)
+    private function getAdminPath(HTTPRequest $request, $explodeCallable)
     {
         if ($request->getSession('auth') && in_array("admin", $request->getSession('userRoles'))) {
             return "Controller\\Admin\\" . $explodeCallable[0];
