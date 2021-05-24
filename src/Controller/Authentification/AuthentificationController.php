@@ -23,21 +23,28 @@ class AuthentificationController extends Controller
         if ($request->postTableData()) {
             $username = $request->postTableData()['username'];
             $user = $userManager->getUserByUsername(["username" => $username]);
-            $errors = $this->managePostDatas($request,$user);
+            $this->managePostDatas($request, $user);
+            $errors = $this->checkErrors($user, $request);
         }
         return $this->render("/login.html.twig", ["errors" => $errors, "flashError" => $this->flashError($request), "flashMessage" => $this->flashMessage($request)]);
     }
 
-    private function managePostDatas($request,$user){
-        $errors = [];
+    private function managePostDatas($request, $user)
+    {
         if ($user !== false && $this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
             if ($user->getIsValidated()) {
                 $this->setSessions($request, $user);
                 $this->checkAdminRoleAndRedirection($user);
-            } else {
-                $errors[] = "Vous devez valider votre mail";
             }
-        } else {
+        }
+    }
+    private function checkErrors($user, $request)
+    {
+        $errors = [];
+        if (!$user->getIsValidated()) {
+            $errors[] = "Vous devez valider votre mail";
+        }
+        if ($user === false || !$this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
             $errors[] = "Identifiant ou mot de passe incorrect";
         }
         return $errors;
@@ -53,7 +60,8 @@ class AuthentificationController extends Controller
         return null;
     }
 
-    private function checkAdminRoleAndRedirection($user){
+    private function checkAdminRoleAndRedirection($user)
+    {
         if (in_array("admin", $user->getRoles())) {
             $this->redirect("admin");
         } else {
