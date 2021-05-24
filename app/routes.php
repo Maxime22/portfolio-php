@@ -33,8 +33,8 @@ $router->get('/admin','AdminController#index', 'admin');
 
 // PAGES
 $router->get('/blogPosts', 'BlogPostController#index', 'blogPosts');
-$router->get('/blogPosts/{id}', 'BlogPostController#show', 'blogPost_show_get')->with('id', '([0-9]+)')->with('slug', '([a-z\-0-9]+)');
-$router->post('/blogPosts/{id}', 'BlogPostController#show', 'blogPost_show_post')->with('id', '([0-9]+)')->with('slug', '([a-z\-0-9]+)');
+$router->get('/blogPosts/{id}', 'BlogPostController#show', 'blogPost_show_get')->with('id', '([0-9]+)');
+$router->post('/blogPosts/{id}', 'BlogPostController#show', 'blogPost_show_post')->with('id', '([0-9]+)');
 
 // HOMEPAGE
 $router->get('/error404', 'HomeController#error404', 'error404');

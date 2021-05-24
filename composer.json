@@ -3,7 +3,6 @@
     "require": {
         "symfony/dotenv": "^5.2",
         "twig/twig": "3.0",
-        "cocur/slugify": "^4.0",
         "swiftmailer/swiftmailer": "^6.2"
     },
     "autoload": {

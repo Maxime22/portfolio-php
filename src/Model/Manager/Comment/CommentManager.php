@@ -49,7 +49,7 @@ class CommentManager extends Manager
     public function getCommentByBlogPost(array $params)
     {
         $comments = $this->queryFetchAll(
-            "SELECT id, title, blog_post_id as 'blogPostId', user_id as 'userId', content, creation_date as 'creationDate', publication_validated as 'publicationValidated' FROM comment WHERE blog_post_id = :blogPostId AND publication_validated = 1",
+            "SELECT id, title, blog_post_id as 'blogPostId', user_id as 'userId', content, creation_date as 'creationDate', publication_validated as 'publicationValidated' FROM comment WHERE blog_post_id = :blogPostId AND publication_validated = 1 ORDER BY id DESC",
             Comment::class,
             $params
         );

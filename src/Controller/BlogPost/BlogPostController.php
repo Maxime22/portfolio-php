@@ -45,10 +45,10 @@ class BlogPostController extends Controller
         }
         
         $blogPostAuthorName = $userManager->getUser(["id"=>$blogPost->getAuthor()])->getUsername();
-        // get validated comments
+        // Get validated comments
         $comments = $commentManager->getCommentByBlogPost(["blogPostId"=>$id]);
 
-        // comment form
+        // Comment form
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidCommentForm($request)) {

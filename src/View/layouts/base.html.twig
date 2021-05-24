@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta content="width=device-width, initial-scale=1" name="viewport">
-		<link rel="icon" href="favicon.ico" />
+		<link rel="icon" href="favicon.ico"/>
 		<link rel="stylesheet" type="text/css" href="/css/bootstrapCSS.css">
 		<link rel="stylesheet" type="text/css" href="/css/app.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.11.0/devicon.min.css">
@@ -17,17 +17,23 @@
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
-				<a class="navbar-brand" href="/"><img class="helloImg" src="/images/home/hello.png" alt="Emoji qui pense"> MS Portfolio</a>
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="/blogPosts">Mes projets</a>
-					</li>
-					{% if not auth %}
-					<li class="nav-item">
-						<a class="nav-link" href="/login">Connexion</a>
-					</li>
-					{% endif %}
-				</ul>
+				<a class="navbar-brand" href="/"><img class="helloImg" src="/images/home/hello.png" alt="Emoji qui pense">
+					MS Portfolio</a>
+				<button aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarToggler" data-toggle="collapse" type="button">
+					<span class="navbar-toggler-icon"><img class="burgerMenu" src="/images/home/burger.png" alt="Burger Menu"></span>
+				</button>
+				<div class="collapse navbar-collapse text-center" id="navbarToggler">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/blogPosts">Mes projets</a>
+						</li>
+						{% if not auth %}
+							<li class="nav-item">
+								<a class="nav-link" href="/login">Connexion</a>
+							</li>
+						{% endif %}
+					</ul>
+				</div>
 			</nav>
 		</header>
 		<div class="blogBody">
@@ -91,7 +97,9 @@
 			</div>
 		</footer>
 		{% block javascripts %}
-			
+			<!-- Bootstrap core JS-->
+			<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 		{% endblock %}
 	</body>
 </html>

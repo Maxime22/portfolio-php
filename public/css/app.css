@@ -94,13 +94,20 @@ a.navbar-brand:hover {
   width: 60px;
 }
 
+#navbarToggler {
+  color: white;
+}
+
+.burgerMenu {
+  width: 20px;
+  height: 20px;
+}
+
 /* HOME */
 
 .titleHome {
   position: relative;
-  /* height: 400px; */
   height: 70vh;
-  /* background-color: #092864; */
   color: white;
   margin: 0px 0px 100px 0px;
 }
@@ -163,8 +170,9 @@ a.navbar-brand:hover {
 }
 
 .projectHomeCard {
-  border:1px gray solid;
+  border: 1px gray solid;
   background-color: white;
+  min-height: 514px;
 }
 
 .projectHomeImg {
@@ -173,14 +181,14 @@ a.navbar-brand:hover {
   object-fit: cover;
 }
 
-.presentationProjectHome{
+.presentationProjectHome {
   padding: 20px;
 }
 
-.projectEmoji{
+.projectEmoji {
   height: 150px;
   width: 150px;
-  margin:auto;
+  margin: auto;
 }
 
 .schoolHomeImg {
@@ -244,6 +252,15 @@ a.navbar-brand:hover {
 }
 
 @media all and (max-width: 991px) {
+  /* HOME */
+  .webDiploma {
+    width: 250px;
+    height: 250px;
+  }
+  .mailContactImg {
+    width: 250px;
+    height: 250px;
+  }
   /* FOOTER */
   .base_footerLine {
     margin-bottom: 8px;
@@ -252,4 +269,64 @@ a.navbar-brand:hover {
     padding-bottom: 0;
     padding-top: 10px;
   }
+}
+
+@media all and (max-width: 768px) {
+  /* GENERAL */
+  .blogBody {
+    min-height: 300px;
+  }
+  h1 {
+    font-size: 40px;
+  }
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 25px;
+  }
+  /* HOME */
+  .titleHome {
+    height: 50vh;
+    margin: 0px 0px 50px 0px;
+  }
+  .backgroundHomePicture {
+    height: 50vh;
+  }
+  .profilePicture {
+    height: 120px;
+    width: 120px;
+  }
+  .about {
+    width: 90%;
+    padding: 20px 20px 0px 20px;
+    margin: auto;
+    font-size: 16px;
+  }
+  .happyEmoji {
+    width: 200px;
+    height: 200px;
+  }
+  .skillsIcon {
+    font-size: 80px;
+  }
+  .thinkingImg {
+    width: 150px;
+    height: 150px;
+  }
+  .webDiploma {
+    width: 200px;
+    height: 200px;
+  }
+  .mailContactImg {
+    width: 200px;
+    height: 200px;
+  }
+  .homeFormContact {
+    border: none;
+  }
+}
+
+@media all and (max-width: 575px) {
 }
