@@ -55,7 +55,7 @@ class UserManager extends Manager
     public function insertUser(array $params)
     {
         $this->prepare(
-            "INSERT INTO user (username, mail, password, roles, creation_date, is_validated, confirmation_token) VALUES (:username,:mail,:password, :roles, :creationDate, 0, :confirmationToken)",
+            "INSERT INTO user (username, mail, password, roles, creation_date, is_validated, confirmation_token) VALUES (:username,:mail,:password, :roles, :creationDate, 1, :confirmationToken)",
             User::class,
             $params
         );

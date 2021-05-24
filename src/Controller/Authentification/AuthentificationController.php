@@ -19,6 +19,7 @@ class AuthentificationController extends Controller
         // If the user is already connected, we don't want him to go to the login page
         $user = $this->checkAuth($request, $userManager);
 
+        $errors = [];
         // If he sent params, we check the password
         if ($request->postTableData()) {
             $username = $request->postTableData()['username'];
@@ -26,7 +27,6 @@ class AuthentificationController extends Controller
             
             // redirection is made here if all is ok
             $this->managePostDatas($request, $user);
-
             $errors = $this->checkErrors($user, $request);
         }
         return $this->render("/login.html.twig", ["errors" => $errors, "flashError" => $this->flashError($request), "flashMessage" => $this->flashMessage($request)]);
@@ -56,7 +56,7 @@ class AuthentificationController extends Controller
     private function checkAuth($request, $userManager)
     {
         if ($request->getSession('auth')) {
-            $user = $userManager->getUser($request->getSession('auth'));
+            $user = $userManager->getUser(["id" => $request->getSession('auth')]);
             $this->checkAdminRoleAndRedirection($user);
             return $user;
         }

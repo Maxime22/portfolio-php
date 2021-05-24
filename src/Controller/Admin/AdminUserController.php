@@ -52,7 +52,7 @@ class AdminUserController extends Controller
     {
         $request = $this->getRequest();
         $userManager = $this->getDatabase()->getManager(UserManager::class);
-        $user = $userManager->getUser($id);
+        $user = $userManager->getUser(["id" => $id]);
         $errors = [];
         try {
             $this->updateUser($request, $userManager, $user, $id);
@@ -120,7 +120,7 @@ class AdminUserController extends Controller
 
     private function checkIfUserExists($userManager, $username, $id)
     {
-        $user = $userManager->getUserByUsername($username);
+        $user = $userManager->getUserByUsername(["username"=>$username]);
         // if it is a modification we have to check if the username is in the database and different from the user id
         if ($id !== null) {
             $users = $userManager->getUsersByUsername($username);
