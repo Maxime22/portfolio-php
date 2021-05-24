@@ -29,15 +29,13 @@ class AdminBlogPostController extends Controller
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidForm($request)) {
-                $author = $request->getSession('auth');
-                $creationDate = date('Y-m-d H:i:s');
                 $blogPostManager->insertPost(
                     [
                         'title' => $request->postData('title'),
                         'headerPost' => $request->postData('headerPost'),
-                        'author' => $author,
+                        'author' => $request->getSession('auth'),
                         'content' => $request->postData('content'),
-                        'creationDate' => $creationDate
+                        'creationDate' => date('Y-m-d H:i:s')
                     ]
                 );
                 $request->setSession('flashMessage', "Article ajouté");

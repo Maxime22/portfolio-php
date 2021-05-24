@@ -26,14 +26,13 @@ class AdminUserController extends Controller
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidForm($request, $userManager)) {
-                $creationDate = date('Y-m-d H:i:s');
                 $userManager->insertUser(
                     [
                         'username' => $request->postData('username'),
                         'mail' => $request->postData('mail') ? $request->postData('mail') : "",
                         'password' => password_hash($request->postData('password'), PASSWORD_BCRYPT, ["cost" => 12]),
                         'roles' => !empty($request->postData('roles')) ? json_encode($request->postData('roles')) : json_encode(["user"]),
-                        'creationDate' => $creationDate,
+                        'creationDate' => date('Y-m-d H:i:s'),
                         'confirmationToken' => null
                     ]
                 );

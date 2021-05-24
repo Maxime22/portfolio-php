@@ -77,14 +77,13 @@ class BlogPostController extends Controller
     private function insertComment($request, $commentManager, $id)
     {
         if ($request->postTableData() && $this->isValidCommentForm($request)) {
-            $creationDate = date('Y-m-d H:i:s');
             $commentManager->insertComment(
                 [
                     'title' => $request->postData('title'),
                     'content' => $request->postData('content'),
                     'author' => $request->getSession('auth'),
                     'blogPostId' => $id,
-                    'creationDate' => $creationDate
+                    'creationDate' => date('Y-m-d H:i:s')
                 ]
             );
             // we don't want to fullfill the inputs if it is good
