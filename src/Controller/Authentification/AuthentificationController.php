@@ -142,7 +142,6 @@ class AuthentificationController extends Controller
 
     public function isValidSubscriptionForm($request, $userManager): bool
     {
-        $returnValue = true;
         $mail = $request->postData('mail');
         $password = $request->postData('password');
         $passwordValidation = $request->postData('passwordValidation');
@@ -150,27 +149,22 @@ class AuthentificationController extends Controller
 
         if (!$username || strlen($username) < 4) {
             throw new FormException('Pseudo trop court');
-            $returnValue = false;
         }
 
         $user = $userManager->getUserByUsername(["username" => $username]);
         if ($user) {
             throw new FormException("L'utilisateur existe déjà, veuillez choisir un autre identifiant");
-            $returnValue = false;
         }
         if (!$password || strlen($password) < 4) {
             throw new FormException('Mot de passe trop court');
-            $returnValue = false;
         }
         if ($password !== $passwordValidation) {
             throw new FormException('Les deux mots de passe ne sont pas identiques');
-            $returnValue = false;
         }
         if ($mail && !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             throw new FormException('Votre mail ne convient pas');
-            $returnValue = false;
         }
-        return $returnValue;
+        return true;
     }
 
     public function logout()
