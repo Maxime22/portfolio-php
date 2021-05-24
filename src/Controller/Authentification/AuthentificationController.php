@@ -17,7 +17,7 @@ class AuthentificationController extends Controller
         $userManager = $this->getDatabase()->getManager(UserManager::class);
 
         // If the user is already connected, we don't want him to go to the login page
-        $this->checkAuth($request, $userManager);
+        $user = $this->checkAuth($request, $userManager);
 
         // If he sent params, we check the password
         $errors = [];
@@ -52,7 +52,9 @@ class AuthentificationController extends Controller
             } else {
                 $this->redirect("home");
             }
+            return $user;
         }
+        return null;
     }
 
     public function setSessions($request, $user)
