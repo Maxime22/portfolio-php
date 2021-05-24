@@ -20,35 +20,40 @@ class AuthentificationController extends Controller
         $user = $this->checkAuth($request, $userManager);
 
         // If he sent params, we check the password
-        $errors = [];
         if ($request->postTableData()) {
             $username = $request->postTableData()['username'];
             $user = $userManager->getUserByUsername(["username" => $username]);
-            if ($user !== false && $this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
-                if ($user->getIsValidated()) {
-                    $this->setSessions($request, $user);
-                    $this->checkAdminRole($user);
-                } else {
-                    $errors[] = "Vous devez valider votre mail";
-                }
-            } else {
-                $errors[] = "Identifiant ou mot de passe incorrect";
-            }
+            $errors = $this->managePostDatas($request,$user);
         }
         return $this->render("/login.html.twig", ["errors" => $errors, "flashError" => $this->flashError($request), "flashMessage" => $this->flashMessage($request)]);
     }
 
-    public function checkAuth($request, $userManager)
+    private function managePostDatas($request,$user){
+        $errors = [];
+        if ($user !== false && $this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
+            if ($user->getIsValidated()) {
+                $this->setSessions($request, $user);
+                $this->checkAdminRoleAndRedirection($user);
+            } else {
+                $errors[] = "Vous devez valider votre mail";
+            }
+        } else {
+            $errors[] = "Identifiant ou mot de passe incorrect";
+        }
+        return $errors;
+    }
+
+    private function checkAuth($request, $userManager)
     {
         if ($request->getSession('auth')) {
             $user = $userManager->getUser($request->getSession('auth'));
-            $this->checkAdminRole($user);
+            $this->checkAdminRoleAndRedirection($user);
             return $user;
         }
         return null;
     }
 
-    private function checkAdminRole($user){
+    private function checkAdminRoleAndRedirection($user){
         if (in_array("admin", $user->getRoles())) {
             $this->redirect("admin");
         } else {
