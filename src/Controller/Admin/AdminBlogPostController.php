@@ -56,32 +56,11 @@ class AdminBlogPostController extends Controller
         $blogPost = $blogPostManager->getPost(["id" => $id]);
 
         // HERE WE NEED TO GET ALL THE AUTHORS POSSIBLE AND PUT THEM IN A SELECT IN THE FORM
-        $userManager = $this->getDatabase()->getManager(UserManager::class);
-        $users = $userManager->getUsers();
-        $authors = [];
-        foreach ($users as $user) {
-            if (in_array("admin", $user->getRoles())) {
-                $authors[$user->getId()] = $user->getUsername();
-            }
-        }
+        $authors = $this->getAuthors();
 
         $errors = [];
         try {
-            if ($request->postTableData() && $this->isValidForm($request)) {
-                $lastModificationDate = date('Y-m-d H:i:s');
-                $blogPostManager->updatePost(
-                    [
-                        'id' => $id,
-                        'title' => $request->postData('title'),
-                        'headerPost' => $request->postData('headerPost'),
-                        'author' => $request->postData('author'),
-                        'content' => $request->postData('content'),
-                        'lastModificationDate' => $lastModificationDate
-                    ]
-                );
-                $request->setSession('flashMessage', "Article $id modifié");
-                $this->redirect("admin_blogPosts");
-            }
+            $this->updatePost($request, $blogPostManager, $id);
         } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
@@ -92,6 +71,37 @@ class AdminBlogPostController extends Controller
             'articleId' => $id,
             'authors' => $authors
         ]);
+    }
+
+    private function updatePost($request, $blogPostManager, $id)
+    {
+        if ($request->postTableData() && $this->isValidForm($request)) {
+            $blogPostManager->updatePost(
+                [
+                    'id' => $id,
+                    'title' => $request->postData('title'),
+                    'headerPost' => $request->postData('headerPost'),
+                    'author' => $request->postData('author'),
+                    'content' => $request->postData('content'),
+                    'lastModificationDate' => date('Y-m-d H:i:s')
+                ]
+            );
+            $request->setSession('flashMessage', "Article $id modifié");
+            $this->redirect("admin_blogPosts");
+        }
+    }
+
+    private function getAuthors()
+    {
+        $userManager = $this->getDatabase()->getManager(UserManager::class);
+        $users = $userManager->getUsers();
+        $authors = [];
+        foreach ($users as $user) {
+            if (in_array("admin", $user->getRoles())) {
+                $authors[$user->getId()] = $user->getUsername();
+            }
+        }
+        return $authors;
     }
 
     public function delete($id)

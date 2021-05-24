@@ -20,41 +20,53 @@ class AuthentificationController extends Controller
         $user = $this->checkAuth($request, $userManager);
 
         // If he sent params, we check the password
-        $errors = [];
         if ($request->postTableData()) {
             $username = $request->postTableData()['username'];
             $user = $userManager->getUserByUsername(["username" => $username]);
-            if ($user !== false && $this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
-                if ($user->getIsValidated()) {
-                    $this->setSessions($request, $user);
-
-                    if (in_array("admin", $user->getRoles())) {
-                        $this->redirect("admin");
-                    } else {
-                        $this->redirect("home");
-                    }
-                } else {
-                    $errors[] = "Vous devez valider votre mail";
-                }
-            } else {
-                $errors[] = "Identifiant ou mot de passe incorrect";
-            }
+            $this->managePostDatas($request, $user);
+            $errors = $this->checkErrors($user, $request);
         }
         return $this->render("/login.html.twig", ["errors" => $errors, "flashError" => $this->flashError($request), "flashMessage" => $this->flashMessage($request)]);
     }
 
-    public function checkAuth($request, $userManager)
+    private function managePostDatas($request, $user)
+    {
+        if ($user !== false && $this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
+            if ($user->getIsValidated()) {
+                $this->setSessions($request, $user);
+                $this->checkAdminRoleAndRedirection($user);
+            }
+        }
+    }
+    private function checkErrors($user, $request)
+    {
+        $errors = [];
+        if (!$user->getIsValidated()) {
+            $errors[] = "Vous devez valider votre mail";
+        }
+        if ($user === false || !$this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
+            $errors[] = "Identifiant ou mot de passe incorrect";
+        }
+        return $errors;
+    }
+
+    private function checkAuth($request, $userManager)
     {
         if ($request->getSession('auth')) {
             $user = $userManager->getUser($request->getSession('auth'));
-            if (in_array("admin", $user->getRoles())) {
-                $this->redirect("admin");
-            } else {
-                $this->redirect("home");
-            }
+            $this->checkAdminRoleAndRedirection($user);
             return $user;
         }
         return null;
+    }
+
+    private function checkAdminRoleAndRedirection($user)
+    {
+        if (in_array("admin", $user->getRoles())) {
+            $this->redirect("admin");
+        } else {
+            $this->redirect("home");
+        }
     }
 
     public function setSessions($request, $user)
@@ -143,7 +155,6 @@ class AuthentificationController extends Controller
 
     public function isValidSubscriptionForm($request, $userManager): bool
     {
-        $returnValue = true;
         $mail = $request->postData('mail');
         $password = $request->postData('password');
         $passwordValidation = $request->postData('passwordValidation');
@@ -151,27 +162,22 @@ class AuthentificationController extends Controller
 
         if (!$username || strlen($username) < 4) {
             throw new FormException('Pseudo trop court');
-            $returnValue = false;
         }
 
         $user = $userManager->getUserByUsername(["username" => $username]);
         if ($user) {
             throw new FormException("L'utilisateur existe déjà, veuillez choisir un autre identifiant");
-            $returnValue = false;
         }
         if (!$password || strlen($password) < 4) {
             throw new FormException('Mot de passe trop court');
-            $returnValue = false;
         }
         if ($password !== $passwordValidation) {
             throw new FormException('Les deux mots de passe ne sont pas identiques');
-            $returnValue = false;
         }
         if ($mail && !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             throw new FormException('Votre mail ne convient pas');
-            $returnValue = false;
         }
-        return $returnValue;
+        return true;
     }
 
     public function logout()

@@ -55,20 +55,7 @@ class AdminUserController extends Controller
         $user = $userManager->getUser($id);
         $errors = [];
         try {
-            if ($request->postTableData() && $this->isValidForm($request, $userManager, $id)) {
-                $userManager->updateUser(
-                    [
-                        'username' => $request->postData('username'),
-                        'mail' => $request->postData('mail') ? $request->postData('mail') : "",
-                        'roles' => json_encode($request->postData('roles')),
-                        'confirmationToken' => $user->getConfirmationToken(),
-                        'isValidated' => $request->postData('isValidated')
-                    ],
-                    $id
-                );
-                $request->setSession('flashMessage', "Utilisateur $id modifié");
-                $this->redirect("admin_users");
-            }
+            $this->updateUser($request, $userManager, $user, $id);
         } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
@@ -79,15 +66,33 @@ class AdminUserController extends Controller
         ]);
     }
 
+    public function updateUser($request, $userManager, $user, $id)
+    {
+        if ($request->postTableData() && $this->isValidForm($request, $userManager, $id)) {
+            $userManager->updateUser(
+                [
+                    'username' => $request->postData('username'),
+                    'mail' => $request->postData('mail') ? $request->postData('mail') : "",
+                    'roles' => json_encode($request->postData('roles')),
+                    'confirmationToken' => $user->getConfirmationToken(),
+                    'isValidated' => $request->postData('isValidated')
+                ],
+                $id
+            );
+            $request->setSession('flashMessage', "Utilisateur $id modifié");
+            $this->redirect("admin_users");
+        }
+    }
+
     public function delete($id)
     {
         $request = $this->getRequest();
         $this->checkCSRF($request);
         $userManager = $this->getDatabase()->getManager(UserManager::class);
-        try{
-        $userManager->deleteUser($id);
-        }catch(Exception $e){
-            $request->setSession('flashError',"Problème lors de la suppression, assurez vous de supprimer les commentaires et les articles de l'utilisateur avant de supprimer celui-ci");
+        try {
+            $userManager->deleteUser($id);
+        } catch (Exception $e) {
+            $request->setSession('flashError', "Problème lors de la suppression, assurez vous de supprimer les commentaires et les articles de l'utilisateur avant de supprimer celui-ci");
         }
         // we redirect to the previous page after delete
         $this->redirect("admin_users");
@@ -95,38 +100,44 @@ class AdminUserController extends Controller
 
     public function isValidForm($request, $userManager, $id = null): bool
     {
-        $returnValue = true;
         $mail = $request->postData('mail');
         $password = $request->postData('password');
         $username = $request->postData('username');
         if (!$username || strlen($username) < 4) {
             throw new FormException('Pseudo trop court');
-            $returnValue = false;
         }
 
-        $user = $userManager->getUserByUsername($username);
-        // if it is a modification we have to check if the username is in the database and different from the user id
-        if ($id) {
-            $users = $userManager->getUsersByUsername($username);
-            if (count($users) > 1) {
-                throw new FormException("Ce nom d'utilisateur existe déjà");
-            }elseif (count($users) === 1 && (int)$users[0]->getId() !== (int)$id) {
-                throw new FormException("Ce nom d'utilisateur existe déjà");
-            }
-        // if the user is created we just need to check that a user doesn't exists in the database with the username
-        } elseif ($user) {
-            throw new FormException("L'utilisateur existe déjà");
-            $returnValue = false;
-        }
+        $this->checkIfUserExists($userManager, $username, $id);
         // we don't check the password value if it is a modification ($id exists)
         if (!$id && (!$password || strlen($password) < 4)) {
             throw new FormException('Mot de passe trop court');
-            $returnValue = false;
         }
         if ($mail && !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             throw new FormException('Votre mail ne convient pas');
-            $returnValue = false;
         }
-        return $returnValue;
+        return true;
+    }
+
+    private function checkIfUserExists($userManager, $username, $id)
+    {
+        $user = $userManager->getUserByUsername($username);
+        // if it is a modification we have to check if the username is in the database and different from the user id
+        if ($id !== null) {
+            $users = $userManager->getUsersByUsername($username);
+            $this->checkifUserNameExists($users);
+        }
+        // if the user is created (id is null) we just need to check that a user doesn't exists in the database with the username
+        if ($user) {
+            throw new FormException("L'utilisateur existe déjà");
+        }
+    }
+
+    private function checkifUserNameExists($users)
+    {
+        $userCount = count($users);
+        $firstUserId = (int)$users[0]->getId();
+        if (($userCount > 1) || ($userCount === 1 && $firstUserId !== (int)$id)) {
+            throw new FormException("Ce nom d'utilisateur existe déjà");
+        }
     }
 }

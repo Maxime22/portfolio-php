@@ -32,17 +32,9 @@ class BlogPostController extends Controller
         $commentManager = $this->getDatabase()->getManager(CommentManager::class);
         $userManager = $this->getDatabase()->getManager(UserManager::class);
 
-        $currentUser = $this->getCurrentUser($request, $userManager);
-
-        $blogPost = $blogPostManager->getPost(["id" => $id]);
-
-        if ($blogPost === false) {
-            $this->redirect404();
-        }
+        $blogPost = $this->checkIfBlogPostExists($blogPostManager, $id);
 
         $blogPostAuthorName = $userManager->getUser(["id" => $blogPost->getAuthor()])->getUsername();
-        // Get validated comments
-        $comments = $commentManager->getCommentByBlogPost(["blogPostId" => $id]);
 
         // Comment form
         $errors = [];
@@ -56,14 +48,23 @@ class BlogPostController extends Controller
             "blogPost/show.html.twig",
             [
                 'blogPost' => $blogPost,
-                'comments' => $comments,
-                'currentUser' => $currentUser,
+                'comments' => $commentManager->getCommentByBlogPost(["blogPostId" => $id]),
+                'currentUser' => $this->getCurrentUser($request, $userManager),
                 'flashMessage' => $this->flashMessage($request),
                 'blogPostAuthorName' => $blogPostAuthorName,
                 'errors' => $errors,
                 'postDatas' => $request->postTableData() ? $request->postTableData() : null
             ]
         );
+    }
+
+    private function checkIfBlogPostExists($blogPostManager, $id){
+        $blogPost = $blogPostManager->getPost(["id" => $id]);
+
+        if ($blogPost === false) {
+            $this->redirect404();
+        }
+        return $blogPost;
     }
 
     private function getCurrentUser($request, $userManager){
