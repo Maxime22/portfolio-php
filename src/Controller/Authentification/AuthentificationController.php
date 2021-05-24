@@ -14,8 +14,6 @@ class AuthentificationController extends Controller
     {
         $request = $this->getRequest();
         // errors from otherPages
-        $flashError = $this->flashError($request);
-        $flashMessage = $this->flashMessage($request);
         $userManager = $this->getDatabase()->getManager(UserManager::class);
 
         // If the user is already connected, we don't want him to go to the login page
@@ -56,8 +54,7 @@ class AuthentificationController extends Controller
                 $errors[] = "Identifiant ou mot de passe incorrect";
             }
         }
-
-        return $this->render("/login.html.twig", ["errors" => $errors, "flashError" => $flashError, "flashMessage" => $flashMessage]);
+        return $this->render("/login.html.twig", ["errors" => $errors, "flashError" => $this->flashError($request), "flashMessage" => $this->flashMessage($request)]);
     }
 
     public function subscription()

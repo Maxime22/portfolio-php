@@ -13,14 +13,11 @@ class AdminUserController extends Controller
     public function index()
     {
         $request = $this->getRequest();
-        $flashMessage = $this->flashMessage($request);
-        $flashError = $this->flashError($request);
-
         $userManager = $this->getDatabase()->getManager(UserManager::class);
 
         $users = $userManager->getUsers();
 
-        return $this->render("admin/user/index.html.twig", ['users' => $users, 'flashMessage' => $flashMessage, 'flashError' => $flashError, 'tokenCSRF' => $request->getSession('tokenCSRF')]);
+        return $this->render("admin/user/index.html.twig", ['users' => $users, 'flashMessage' => $this->flashMessage($request), 'flashError' => $this->flashError($request), 'tokenCSRF' => $request->getSession('tokenCSRF')]);
     }
 
     public function create()

@@ -13,16 +13,13 @@ class AdminBlogPostController extends Controller
     public function index()
     {
         $request = $this->getRequest();
-        $flashMessage = $this->flashMessage($request);
-        $flashError = $this->flashError($request);
-
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
 
         /**
          * @var BlogPost[]
          */
         $blogPosts = $blogPostManager->getPosts();
-        return $this->render("admin/blogPost/index.html.twig", ['blogPosts' => $blogPosts, 'flashMessage' => $flashMessage, 'flashError' => $flashError, 'tokenCSRF' => $request->getSession('tokenCSRF')]);
+        return $this->render("admin/blogPost/index.html.twig", ['blogPosts' => $blogPosts, 'flashMessage' => $this->flashMessage($request), 'flashError' => $this->flashError($request), 'tokenCSRF' => $request->getSession('tokenCSRF')]);
     }
 
     public function create()
@@ -59,7 +56,7 @@ class AdminBlogPostController extends Controller
     {
         $request = $this->getRequest();
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
-        $blogPost = $blogPostManager->getPost(["id"=>$id]);
+        $blogPost = $blogPostManager->getPost(["id" => $id]);
 
         // HERE WE NEED TO GET ALL THE AUTHORS POSSIBLE AND PUT THEM IN A SELECT IN THE FORM
         $userManager = $this->getDatabase()->getManager(UserManager::class);
@@ -116,19 +113,16 @@ class AdminBlogPostController extends Controller
 
     public function isValidForm($request): bool
     {
-        $title = $request->postData('title');
-        $headerPost = $request->postData('headerPost');
-        $content = $request->postData('content');
         $returnValue = true;
-        if (!$title || strlen($title) < 4) {
+        if (!$request->postData('title') || strlen($request->postData('title')) < 4) {
             throw new FormException('Titre trop court');
             $returnValue = false;
         }
-        if (!$headerPost || strlen($headerPost) < 4) {
+        if (!$request->postData('headerPost') || strlen($request->postData('headerPost')) < 4) {
             throw new FormException('Chapo trop court');
             $returnValue = false;
         }
-        if (!$content || strlen($content) < 10) {
+        if (!$request->postData('content') || strlen($request->postData('content')) < 10) {
             throw new FormException('Contenu trop court');
             $returnValue = false;
         }

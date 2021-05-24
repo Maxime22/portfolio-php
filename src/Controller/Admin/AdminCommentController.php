@@ -12,13 +12,10 @@ class AdminCommentController extends Controller
     public function index()
     {
         $request = $this->getRequest();
-        $flashMessage = $this->flashMessage($request);
-        $flashError = $this->flashError($request);
-
         $commentManager = $this->getDatabase()->getManager(CommentManager::class);
 
         $comments = $commentManager->getComments();
-        return $this->render("admin/comment/index.html.twig", ['comments' => $comments, 'flashMessage' => $flashMessage, 'flashError' => $flashError, 'tokenCSRF' => $request->getSession('tokenCSRF')]);
+        return $this->render("admin/comment/index.html.twig", ['comments' => $comments, 'flashMessage' => $this->flashMessage($request), 'flashError' => $this->flashError($request), 'tokenCSRF' => $request->getSession('tokenCSRF')]);
     }
 
     public function validate($id)
