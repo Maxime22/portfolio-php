@@ -2,9 +2,10 @@
 
 namespace Controller\Admin;
 
+use App\Exception\FormException;
 use Controller\Controller;
-use Exception;
 use Model\Manager\BlogPost\BlogPostManager;
+use Model\Manager\User\UserManager;
 
 class AdminBlogPostController extends Controller
 {
@@ -12,30 +13,26 @@ class AdminBlogPostController extends Controller
     public function index()
     {
         $request = $this->getRequest();
-        $request->sessionStart();
         $flashMessage = $this->flashMessage($request);
+        $flashError = $this->flashError($request);
 
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
 
         /**
          * @var BlogPost[]
          */
-        $posts = $blogPostManager->getPosts();
-        return $this->render("admin/blogPost/index.html.twig", ['posts' => $posts, 'flashMessage' => $flashMessage]);
+        $blogPosts = $blogPostManager->getPosts();
+        return $this->render("admin/blogPost/index.html.twig", ['blogPosts' => $blogPosts, 'flashMessage' => $flashMessage, 'flashError' => $flashError, 'tokenCSRF' => $request->getSession('tokenCSRF')]);
     }
 
     public function create()
     {
         $request = $this->getRequest();
-        $request->sessionStart();
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidForm($request)) {
-                // on insere en bdd en créant les bonnes fonctions dans le manager et on renvoie vers la page des articles
-                // get the id of the user authentificated
-                // TODO : delete 1 here when we have real authentification
-                $author = $_SESSION['auth'] ?? "1";
+                $author = $request->getSession('auth');
                 $creationDate = date('Y-m-d H:i:s');
                 $blogPostManager->insertPost(
                     [
@@ -47,15 +44,74 @@ class AdminBlogPostController extends Controller
                     ]
                 );
                 $request->setSession('flashMessage', "Article ajouté");
-                $this->redirect("/admin/blogPosts");
+                $this->redirect("admin_blogPosts");
             }
-        } catch (Exception $e) {
+        } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
         return $this->render("admin/blogPost/create.html.twig", [
             'errors' => $errors,
             'postDatas' => $request->postTableData() ? $request->postTableData() : null
         ]);
+    }
+
+    public function modify($id)
+    {
+        $request = $this->getRequest();
+        $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
+        $blogPost = $blogPostManager->getPost(["id"=>$id]);
+
+        // HERE WE NEED TO GET ALL THE AUTHORS POSSIBLE AND PUT THEM IN A SELECT IN THE FORM
+        $userManager = $this->getDatabase()->getManager(UserManager::class);
+        $users = $userManager->getUsers();
+        $authors = [];
+        foreach ($users as $user) {
+            if (in_array("admin", $user->getRoles())) {
+                $authors[$user->getId()] = $user->getUsername();
+            }
+        }
+
+        $errors = [];
+        try {
+            if ($request->postTableData() && $this->isValidForm($request)) {
+                $lastModificationDate = date('Y-m-d H:i:s');
+                $blogPostManager->updatePost(
+                    [
+                        'id' => $id,
+                        'title' => $request->postData('title'),
+                        'headerPost' => $request->postData('headerPost'),
+                        'author' => $request->postData('author'),
+                        'content' => $request->postData('content'),
+                        'lastModificationDate' => $lastModificationDate
+                    ]
+                );
+                $request->setSession('flashMessage', "Article $id modifié");
+                $this->redirect("admin_blogPosts");
+            }
+        } catch (FormException $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        return $this->render("admin/blogPost/modify.html.twig", [
+            'errors' => $errors,
+            'postDatas' => $request->postTableData() ? $request->postTableData() : $blogPost,
+            'articleId' => $id,
+            'authors' => $authors
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $request = $this->getRequest();
+        $this->checkCSRF($request);
+        $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
+        try {
+            $blogPostManager->deletePost($id);
+        } catch (\Exception $e) {
+            $request->setSession('flashError', "Problème lors de la suppression, assurez vous de supprimer les commentaires de l'utilisateur avant de supprimer l'article");
+        }
+        // we redirect to the previous page after delete
+        $this->redirect("admin_blogPosts");
     }
 
     public function isValidForm($request): bool
@@ -65,15 +121,15 @@ class AdminBlogPostController extends Controller
         $content = $request->postData('content');
         $returnValue = true;
         if (!$title || strlen($title) < 4) {
-            throw new Exception('Titre trop court');
+            throw new FormException('Titre trop court');
             $returnValue = false;
         }
         if (!$headerPost || strlen($headerPost) < 4) {
-            throw new Exception('Chapo trop court');
+            throw new FormException('Chapo trop court');
             $returnValue = false;
         }
         if (!$content || strlen($content) < 10) {
-            throw new Exception('Contenu trop court');
+            throw new FormException('Contenu trop court');
             $returnValue = false;
         }
         return $returnValue;

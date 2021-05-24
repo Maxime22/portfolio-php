@@ -2,6 +2,9 @@
 
 namespace App\Router;
 
+use App\Request\HTTPRequest;
+use App\Exception\ForbiddenException;
+
 class Route
 {
     private $path; // all the routes we create in index
@@ -15,20 +18,24 @@ class Route
         $this->callable = $callable;
     }
 
-    public function call($request)
+    public function call(HTTPRequest $request, $router)
     {
         // If we request a controller, we call the controller
-        if(is_string($this->callable)){
-            $explodeCallable = explode("#",$this->callable);
-            if(str_contains($this->callable,"Admin")){
-                $controllerPath = "Controller\\Admin\\".$explodeCallable[0];
-            }else{
-                $explodeName = explode("Controller",$this->callable);
-                $controllerPath = "Controller\\".ucfirst($explodeName[0])."\\".$explodeCallable[0];
+        if (is_string($this->callable)) {
+            $explodeCallable = explode("#", $this->callable);
+            if (str_contains($this->callable, "Admin")) {
+                if ($request->getSession('auth') && in_array("admin", $request->getSession('userRoles'))) {
+                    $controllerPath = "Controller\\Admin\\" . $explodeCallable[0];
+                }else{
+                    throw new ForbiddenException;
+                }
+            } else {
+                $explodeName = explode("Controller", $this->callable);
+                $controllerPath = "Controller\\" . ucfirst($explodeName[0]) . "\\" . $explodeCallable[0];
             }
             $action = $explodeCallable[1];
-            $controller = new $controllerPath($request);
-            return call_user_func_array([$controller,$action], $this->matches);
+            $controller = new $controllerPath($request, $router);
+            return call_user_func_array([$controller, $action], $this->matches);
         }
         // call callable
         return call_user_func_array($this->callable, $this->matches);

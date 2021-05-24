@@ -2,23 +2,31 @@
 
 namespace Controller;
 
+use App\Router\Router;
 use App\Database\Database;
 use App\Response\Response;
 use App\Request\HTTPRequest;
+use App\Exception\RedirectionException;
+use App\Exception\RouterException;
+use App\Exception\CSRFException;
 
 class Controller
 {
     private $twig;
     private $database;
     private $request;
+    private $router;
 
-    public function __construct(HTTPRequest $request)
+    public function __construct(HTTPRequest $request, Router $router)
     {
-        $this->request=$request;
-        $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__).DIRECTORY_SEPARATOR.'View');
+        $this->request = $request;
+        $this->router = $router;
+        $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'View');
         $this->twig = new \Twig\Environment($loader, array(
             'cache' => false,
         ));
+        $this->twig->addGlobal('auth', $request->getSession('auth'));
+        $this->twig->addGlobal('userRoles', $request->getSession('userRoles'));
         $this->database = new Database();
     }
 
@@ -27,24 +35,48 @@ class Controller
         return new Response($this->twig->load($fileName)->render($data));
     }
 
-    public function getDatabase(){
+    public function getDatabase()
+    {
         return $this->database;
     }
 
-    public function getRequest(){
+    public function getRequest()
+    {
         return $this->request;
     }
 
-    public function flashMessage($request){
+    public function flashMessage(HTTPRequest $request)
+    {
         $flashMessage = $request->getSession('flashMessage');
         // we want to display the message only one time
         $request->unsetSession('flashMessage');
         return $flashMessage;
     }
 
-    protected function redirect(string $url)
+    public function flashError(HTTPRequest $request)
     {
-        header("Location: ". $url);
+        $flashError = $request->getSession('flashError');
+        // we want to display the message only one time
+        $request->unsetSession('flashError');
+        return $flashError;
     }
 
+    protected function redirect(string $routeName, $params = [])
+    {
+        throw new RedirectionException($routeName, $params);
+    }
+
+    protected function redirect404()
+    {
+        throw new RouterException();
+    }
+
+    protected function checkCSRF(HTTPRequest $request){
+        $tokenCSRF = $request->postData('tokenCSRF');
+        // We check if the user in the admin is the same as the one who was previously connected
+        if (($tokenCSRF === null) ||($request->getSession('tokenCSRF') !== $tokenCSRF)) {
+            $request->setSession('flashError', "Le token CSRF est invalide, vous ne pouvez pas supprimer le blogPost");
+            throw new CSRFException();
+        }
+    }
 }

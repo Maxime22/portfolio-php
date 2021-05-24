@@ -1,0 +1,332 @@
+/* GENERAL */
+
+body {
+  background-color: #f7f7f7 !important;
+}
+
+.blogBody {
+  min-height: 500px;
+  padding-top: 84px;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+h2 {
+  font-size: 46px;
+}
+
+h3 {
+  font-size: 42px;
+}
+
+.flashMessage {
+  width: 80%;
+  margin: auto;
+  margin-top: 10px;
+}
+
+a {
+  color: #294971 !important;
+}
+
+a.btn {
+  color: white !important;
+}
+
+a:hover {
+  color: #5396e7 !important;
+  text-decoration: none !important;
+}
+
+a.btn:hover {
+  color: white !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active {
+  background-color: #3d6fac;
+  border-color: #3d6fac;
+}
+
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus {
+  box-shadow: 0 0 0 0.2rem #3e95ffb1;
+}
+
+.mySeparator {
+  margin: auto;
+  height: 1px;
+  width: 30%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #092864;
+}
+
+/* NAV */
+
+#mainNav {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.navbar {
+  background-color: #182234;
+}
+
+.navbar a {
+  color: white !important;
+}
+
+.navbar a:hover {
+  color: #5396e7 !important;
+}
+
+a.navbar-brand:hover {
+  color: white !important;
+}
+
+.helloImg {
+  height: 60px;
+  width: 60px;
+}
+
+#navbarToggler {
+  color: white;
+}
+
+.burgerMenu {
+  width: 20px;
+  height: 20px;
+}
+
+/* HOME */
+
+.titleHome {
+  position: relative;
+  height: 70vh;
+  color: white;
+  margin: 0px 0px 100px 0px;
+}
+
+.backgroundHomePicture {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 70vh;
+  width: 100%;
+  filter: brightness(50%);
+  object-fit: cover;
+  z-index: -1;
+}
+
+.titleHomeBlockCentered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.profilePicture {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border-radius: 400px;
+  height: 200px;
+  width: 200px;
+  transform: translate(-50%, -50%);
+}
+
+.about {
+  width: 70%;
+  padding: 20px 100px 0px 100px;
+  margin: auto;
+}
+
+.aboutContent {
+  color: rgb(72, 72, 72);
+}
+
+.skillsHome,
+.schoolHome {
+  background-color: #092864;
+  color: white;
+}
+
+.skillsIcon {
+  font-size: 100px;
+}
+
+.formationsHome {
+  background-color: #092864;
+  color: white;
+}
+
+.skillTitle {
+  font-size: 16px;
+}
+
+.projectHomeCard {
+  border: 1px gray solid;
+  background-color: white;
+  min-height: 514px;
+}
+
+.projectHomeImg {
+  height: 130px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.presentationProjectHome {
+  padding: 20px;
+}
+
+.projectEmoji {
+  height: 150px;
+  width: 150px;
+  margin: auto;
+}
+
+.schoolHomeImg {
+  height: 100px;
+  width: 100px;
+  border-radius: 400px;
+  object-fit: cover;
+}
+
+.thinkingImg {
+  height: 300px;
+  width: 300px;
+}
+
+.homeFormContact {
+  border: 2px rgba(128, 128, 128, 0.421) solid;
+  border-radius: 10px;
+  padding: 10px 20px 10px 20px;
+}
+
+/* ADMIN */
+.adminPresentationLink {
+  font-size: 34px;
+  text-decoration: none;
+  color: #294971 !important;
+}
+
+.adminPresentationLink a {
+  text-decoration: none;
+}
+
+/* FOOTER */
+.base_footerLine {
+  height: 1px;
+  width: 22%;
+  background-color: #5396e7;
+  margin: auto;
+  margin-bottom: 22px;
+}
+
+.base_footer_col {
+  padding-bottom: 1em;
+}
+
+.base_followLinkImg {
+  height: 40px;
+  width: 40px;
+}
+
+.base_followLink {
+  opacity: 0.6;
+  display: inline-block;
+}
+.base_followLink:hover {
+  transition: opacity 1s;
+  opacity: 1;
+}
+
+.footerLink {
+  color: white !important;
+}
+
+@media all and (max-width: 991px) {
+  /* HOME */
+  .webDiploma {
+    width: 250px;
+    height: 250px;
+  }
+  .mailContactImg {
+    width: 250px;
+    height: 250px;
+  }
+  /* FOOTER */
+  .base_footerLine {
+    margin-bottom: 8px;
+  }
+  .base_footer_col {
+    padding-bottom: 0;
+    padding-top: 10px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  /* GENERAL */
+  .blogBody {
+    min-height: 300px;
+  }
+  h1 {
+    font-size: 40px;
+  }
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 25px;
+  }
+  /* HOME */
+  .titleHome {
+    height: 50vh;
+    margin: 0px 0px 50px 0px;
+  }
+  .backgroundHomePicture {
+    height: 50vh;
+  }
+  .profilePicture {
+    height: 120px;
+    width: 120px;
+  }
+  .about {
+    width: 90%;
+    padding: 20px 20px 0px 20px;
+    margin: auto;
+    font-size: 16px;
+  }
+  .happyEmoji {
+    width: 200px;
+    height: 200px;
+  }
+  .skillsIcon {
+    font-size: 80px;
+  }
+  .thinkingImg {
+    width: 150px;
+    height: 150px;
+  }
+  .webDiploma {
+    width: 200px;
+    height: 200px;
+  }
+  .mailContactImg {
+    width: 200px;
+    height: 200px;
+  }
+  .homeFormContact {
+    border: none;
+  }
+}
+
+@media all and (max-width: 575px) {
+}

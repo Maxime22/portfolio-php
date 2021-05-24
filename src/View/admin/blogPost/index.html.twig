@@ -7,24 +7,36 @@
 {% block body %}
 	<div class="container">
 		<h1>Gestion des articles</h1>
-		<table class="table table-striped">
+		<div class="mb-2"><a href="/admin/blogPosts/create" class="btn btn-primary">Créer un article</a></div>
+		<table class="table table-striped mt-3">
 			<tr>
 				<th>Id</th>
 				<th>Titre</th>
 				<th>Chapeau</th>
 				<th>Date de création</th>
+				<th>Date de modification</th>
 				<th>Actions</th>
 			</tr>
-			{% for post in posts %}
+			{% for blogPost in blogPosts %}
 				<tr>
-					<td>{{ post.id }}</td>
-					<td>{{ post.title }}</td>
-					<td>{{ post.headerPost }}</td>
-					<td>{{ post.creationDate|date("m/d/Y") }}</td>
-					<td></td>
+					<td>{{ blogPost.id }}</td>
+					<td><a href="/blogPosts/{{ blogPost.id }}">{{ blogPost.title }}</a></td>
+					<td>{{ blogPost.headerPost }}</td>
+					<td>{{ blogPost.creationDate|date("d/m/Y") }}</td>
+					<td>{{ blogPost.lastModificationDate|date("d/m/Y") }}</td>
+					<td>
+						<div class="mb-2 mr-2">
+							<a class="btn btn-primary" href="/admin/blogPosts/modify/{{ blogPost.id }}">Modifier</a>
+						</div>
+						<div class="mb-2 mr-2">
+							<form method="post" action="/admin/blogPosts/delete/{{ blogPost.id }}" onsubmit="return confirm('{{" Etes-vous sûr ?"}}')">
+								<input type="hidden" name="tokenCSRF" value="{{ tokenCSRF }}"/>
+								<button type="submit" class="btn btn-danger">Supprimer</button>
+							</form>
+						</div>
+					</td>
 				</tr>
 			{% endfor %}
 		</table>
-		<a href="/admin/blogPosts/create" class="btn btn-primary">Créer un article</a>
 	</div>
 {% endblock %}

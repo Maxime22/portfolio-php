@@ -5,10 +5,246 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<h1>Homepage</h1>
+	<div class="titleHome text-center">
+		<div class="titleHomeBlockCentered">
+			<div>
+				<h1>Maxime SABOURET</h1>
+			</div>
+			<div>
+				<h2>Développeur web PHP Junior</h2>
+			</div>
+		</div>
+		<img class="backgroundHomePicture" src="/images/home/laptop2.jpg" alt="Photo de clavier d'ordinateur">
+		<div>
+			<img class="profilePicture" src="/images/home/photoProfil.jpg" alt="Photo de Maxime Sabouret">
+		</div>
+	</div>
+	<div class="text-center">
+		<div class="about">
+			<div class="mt-3 mb-5">
+				<h3>À PROPOS</h3>
+			</div>
+			<div class="text-center font-weight-bold aboutContent">
+				Double diplômé ingénieur AgroParisTech / ECE Paris puis diplômé en Développement web avec OpenClassRooms. Je prends plaisir à apprendre continuellement sur les nouvelles technologies et souhaite travailler pour des projets à forte valeur environnementale, éducative et/ou artistique. Je souhaite mettre ma flexibilité, ma rigueur, mon autonomie et mon sens du contact au service de projets variés, innovants et inspirants.
+				<br><br>
+				Je me suis formé principalement sur les langages PHP (Symfony) et JavaScript (React.js). Autrement, je parle aussi couramment anglais =)
+			</div>
+			<div class="col-md-12">
+				<img class="happyEmoji" src="/images/home/about.png" alt="Emoji content">
+			</div>
 
-		<a href="/blogPosts">Articles</a>
+		</div>
+		<div class="skillsHome text-center pt-4 pb-5">
+			<div class="mt-3 mb-5">
+				<h3>COMPÉTENCES</h3>
+			</div>
+			<div class="container mt-4">
+				<div class="row">
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://www.php.net/manual/fr/install.php">
+							<i class="devicon-php-plain colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">PHP</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://developer.mozilla.org/fr/docs/Web/JavaScript">
+							<i class="devicon-javascript-plain colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">Javascript</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://dev.mysql.com/doc/refman/8.0/en/tutorial.html">
+							<i class="devicon-mysql-plain colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">MySQL</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://developer.mozilla.org/fr/docs/Web/HTML">
+							<i class="devicon-html5-plain colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">HTML</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://developer.mozilla.org/fr/docs/Web/CSS">
+							<i class="devicon-css3-plain colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">CSS</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://git-scm.com/docs">
+							<i class="devicon-git-plain colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">Git</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://symfony.com/doc/current/index.html">
+							<i class="devicon-symfony-original colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">Symfony</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://fr.reactjs.org/docs/getting-started.html">
+							<i class="devicon-react-original colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">React.js</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://fr.wordpress.org/txt-install/">
+							<i class="devicon-wordpress-plain colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">Wordpress</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://sass-lang.com/guide">
+							<i class="devicon-sass-original colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">Sass/Scss</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">
+							<i class="devicon-bootstrap-plain colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">Bootstrap</div>
+					</div>
+					<div class="col-md-2 col-4 mt-3">
+						<a href="https://docs.github.com/en/github/getting-started-with-github">
+							<i class="devicon-github-original colored skillsIcon"></i>
+						</a>
+						<div class="mt-2 skillTitle">Github</div>
+					</div>
+					<div class="col-md-12">
+						<img class="thinkingImg" src="/images/home/thinking.png" alt="Emoji qui pense">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="text-center pt-4 pb-5">
+			<div class="mt-3 mb-5">
+				<h3>PROJETS</h3>
+			</div>
+			<div class="container-fluid mt-4">
+				<div class="row">
+					<div class="col-md-4 mt-3">
+						<div class="projectHomeCard mb-3">
+							<img class="projectHomeImg" src="/images/home/biolibre.jpg" alt="Image de Biolibre">
+							<div class="presentationProjectHome">BioLibre est un site plein d'astuces pour apprendre et se simplifier la vie.
+							En lisant BioLibre, on se dit parfois, "tiens ça, j'aurais aimé le savoir avant !".
+							<br> Il est codé avec le framework PHP Symfony 5 et quelques parties en JS.</div>
+							<div><img class="projectEmoji" src="/images/home/zen.png" alt="Emoji zen"></div>
+							<div><a href="/blogPosts/31" class="btn btn-primary mb-3 mt-3">Voir le détail</a></div>
+						</div>
+					</div>
+					<div class="col-md-4 mt-3">
+						<div class="projectHomeCard mb-3">
+							<img class="projectHomeImg" src="/images/home/festivalDuFilm.jpg" alt="Image du projet festival du film">
+							<div class="presentationProjectHome">Ce site est une maquette CSS/HTML d'exemple pour un festival de film imaginaire.</div>
+							<div><img class="projectEmoji" src="/images/home/filmEmoji.png" alt="Emoji du projet festival du film"></div>
+							<div><a href="/blogPosts/1" class="btn btn-primary mb-3 mt-3">Voir le détail</a></div>
+						</div>
+					</div>
+					<div class="col-md-4 mt-3">
+						<div class="projectHomeCard mb-3">
+							<img class="projectHomeImg" src="/images/home/photoAnneSite.jpg" alt="Image du projet festival du film">
+							<div class="presentationProjectHome">Site pour une photographe réalisé en full Javascript. Les technologies utilisées sont Node.js/Express.js pour la partie backend et Angular pour la partie frontend.</div>
+							<div><img class="projectEmoji" src="/images/home/photoSite.png" alt="Emoji photo"></div>
+							<div><a href="/blogPosts/33" class="btn btn-primary mb-3 mt-3">Voir le détail</a></div>
+						</div>
+					</div>
+				</div>
+				<div class="mySeparator"></div>
+				<a href="/blogPosts" class="btn btn-primary mb-3 mt-3 font-weight-bold">Voir la liste de tous mes projets</a>
+			</div>
+		</div>
 
+		<div class="schoolHome pt-4 pb-5">
+			<div class="mt-3 text-center">
+				<h3>FORMATIONS</h3>
+			</div>
+			<div class="container mt-4">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="row">
+							<div class="col-md-4 mt-3">
+								<img class="schoolHomeImg" src="/images/home/oc.jpg" alt="OpenClassRooms Logo">
+							</div>
+							<div class="col-md-8 pt-3 mt-3 text-md-left">
+								<div class="font-weight-bold">Diplôme : Développeur d'applications PHP Symfony</div>
+								<div>Etablissement : OpenClassRooms</div>
+								<div>Année d'obtention : En cours</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<img class="schoolHomeImg" src="/images/home/oc.jpg" alt="OpenClassRooms Logo">
+							</div>
+							<div class="col-md-8 pt-3 mt-3 text-md-left">
+								<div class="font-weight-bold">Diplôme : Développeur web Junior</div>
+								<div>Etablissement : OpenClassRooms</div>
+								<div>Année d'obtention : 2019</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<img class="schoolHomeImg" src="/images/home/agroparistech.png" alt="AgroParisTech Logo">
+							</div>
+							<div class="col-md-8 pt-3 mt-3 text-md-left">
+								<div class="font-weight-bold">Diplôme : Mastère spécialisé en Gestion de l'Eau</div>
+								<div>Etablissement : AgroParisTech</div>
+								<div>Année d'obtention : 2016</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<img class="schoolHomeImg" src="/images/home/ece.png" alt="ECE Paris Lyon Logo">
+							</div>
+							<div class="col-md-8 pt-3 mt-3 text-md-left">
+								<div class="font-weight-bold">Diplôme : Ingénieur Environnement/Energie</div>
+								<div>Etablissement : ECE Paris</div>
+								<div>Année d'obtention : 2015</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 mt-3">
+						<img class="webDiploma" src="/images/home/diplome.png" alt="Diplome web">
+					</div>
+				</div>
+				<div class="text-center mt-3">
+					<a href="/pdf/CV_2021-04-20_Maxime_Sabouret.pdf" class="btn btn-primary mb-3 mt-3 font-weight-bold">Voir mon CV</a>
+				</div>
+			</div>
+		</div>
+		<div class="text-center pt-4 pb-5">
+			<div class="mt-3 mb-3 text-center">
+				<h3>CONTACTS</h3>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5">
+						<img class="mailContactImg" src="/images/home/mail.png" alt="Mail emoji">
+					</div>
+					<div class="col-md-7 mt-3 homeFormContact">
+						{% if errors %}
+							{% for error in errors %}
+								<div class="alert alert-danger">{{ error }}</div>
+							{% endfor %}
+						{% endif %}
+						<form action="/" method="POST" class="offset-md-2 col-md-8 mb-3 font-weight-bold">
+							<div class="form-group">
+								<label for="names">Nom et prénom</label>
+								<input type="text" class="form-control" name="names" id="names">
+							</div>
+							<div class="form-group">
+								<label for="mail">Adresse mail</label>
+								<input type="text" class="form-control" name="mail" id="mail">
+							</div>
+							<div class="form-group">
+								<label for="title">Titre</label>
+								<input type="text" class="form-control" name="title" id="title">
+							</div>
+							<div class="form-group">
+								<label for="message">Message</label>
+								<textarea class="form-control" name="message" id="message"></textarea>
+							</div>
+							<button type="submit" class="btn btn-primary mt-3 font-weight-bold">Envoyer</button>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
 	</div>
 {% endblock %}

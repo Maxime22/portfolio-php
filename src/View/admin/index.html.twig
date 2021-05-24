@@ -1,12 +1,18 @@
 {% extends "admin/layouts/adminLayout.html.twig" %}
 
 {% block title %}
-    {{ parent() }}
+	{{ parent() }}
 {% endblock %}
 
 {% block body %}
-    <h1>Page admin</h1>
-    <div><a href="/admin/blogPosts">Gérer les articles</a></div>
-    <div><a href="/admin/users">Gérer les utilisateurs</a></div>
-    <div><a href="/admin/comments">Gérer les commentaires</a></div>
+	<h1 class="mb-5">Page admin</h1>
+	<div class="mt-3 mb-2">
+		<a href="/admin/blogPosts" class="font-weight-bold adminPresentationLink">📜 Gérer les articles 📜</a>
+	</div>
+	<div class="mb-2">
+		<a href="/admin/users" class="font-weight-bold adminPresentationLink">🧔 Gérer les utilisateurs 👩</a>
+	</div>
+	<div class="mb-2">
+		<a href="/admin/comments" class="font-weight-bold adminPresentationLink">💬 Gérer les commentaires 💬</a>
+	</div>
 {% endblock %}
