@@ -75,36 +75,40 @@ class AuthentificationController extends Controller
         $errors = [];
         try {
             if ($request->postTableData() && $this->isValidSubscriptionForm($request, $userManager)) {
-                $creationDate = date('Y-m-d H:i:s');
-                $mailer = new Mailer();
-                $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-                $token = substr(str_shuffle(str_repeat($alphabet, 12)), 0, 12);
-                $tokenLink = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . '/subscriptionValidation/' . $token;
-                $userManager->insertUser(
-                    [
-                        'username' => $request->postData('username'),
-                        'mail' => $request->postData('mail') ? $request->postData('mail') : "",
-                        'password' => password_hash($request->postData('password'), PASSWORD_BCRYPT, ["cost" => 12]),
-                        'roles' => !empty($request->postData('roles')) ? json_encode($request->postData('roles')) : json_encode(["user"]),
-                        'creationDate' => $creationDate,
-                        'confirmationToken' => $token
-                    ]
-                );
-                $message = (new \Swift_Message('Email pour valider votre compte'))
-                    ->setFrom([$_ENV['MAIL_USERNAME']])
-                    ->setTo([$request->postData('mail')])
-                    ->setBody('Pour valider votre compte, cliquez sur le lien suivant : ' . $tokenLink);
-
-                // Send the message
-                $mailer->send($message);
-                $request->setSession('flashMessage', "Un mail de confirmation vous a été envoyé");
-                $this->redirect('login');
+                $this->sendSubscriptionMail($userManager, $request);
             }
         } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
 
         return $this->render("/subscription.html.twig", ["errors" => $errors]);
+    }
+
+    public function sendSubscriptionMail($userManager, $request)
+    {
+        $mailer = new Mailer();
+        $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+        $token = substr(str_shuffle(str_repeat($alphabet, 12)), 0, 12);
+        $tokenLink = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . '/subscriptionValidation/' . $token;
+        $userManager->insertUser(
+            [
+                'username' => $request->postData('username'),
+                'mail' => $request->postData('mail') ? $request->postData('mail') : "",
+                'password' => password_hash($request->postData('password'), PASSWORD_BCRYPT, ["cost" => 12]),
+                'roles' => !empty($request->postData('roles')) ? json_encode($request->postData('roles')) : json_encode(["user"]),
+                'creationDate' => date('Y-m-d H:i:s'),
+                'confirmationToken' => $token
+            ]
+        );
+        $message = (new \Swift_Message('Email pour valider votre compte'))
+            ->setFrom([$_ENV['MAIL_USERNAME']])
+            ->setTo([$request->postData('mail')])
+            ->setBody('Pour valider votre compte, cliquez sur le lien suivant : ' . $tokenLink);
+
+        // Send the message
+        $mailer->send($message);
+        $request->setSession('flashMessage', "Un mail de confirmation vous a été envoyé");
+        $this->redirect('login');
     }
 
     public function subscriptionValidation($token)

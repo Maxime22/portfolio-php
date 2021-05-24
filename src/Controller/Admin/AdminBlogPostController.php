@@ -13,7 +13,6 @@ class AdminBlogPostController extends Controller
     public function index()
     {
         $request = $this->getRequest();
-
         $blogPostManager = $this->getDatabase()->getManager(BlogPostManager::class);
         /**
          * @var BlogPost[]
