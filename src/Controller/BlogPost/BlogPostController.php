@@ -87,14 +87,12 @@ class BlogPostController extends Controller
 
     public function isValidCommentForm($request): bool
     {
-        $title = $request->postData('title');
-        $content = $request->postData('content');
         $returnValue = true;
-        if (!$title || strlen($title) < 4) {
+        if (!$request->postData('title') || strlen($request->postData('title')) < 4) {
             throw new FormException('Titre trop court');
             $returnValue = false;
         }
-        if (!$content || strlen($content) < 10) {
+        if (!$request->postData('content') || strlen($request->postData('content')) < 10) {
             throw new FormException('Contenu trop court');
             $returnValue = false;
         }
