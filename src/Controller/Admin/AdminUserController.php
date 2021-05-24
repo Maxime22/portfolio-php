@@ -55,20 +55,7 @@ class AdminUserController extends Controller
         $user = $userManager->getUser($id);
         $errors = [];
         try {
-            if ($request->postTableData() && $this->isValidForm($request, $userManager, $id)) {
-                $userManager->updateUser(
-                    [
-                        'username' => $request->postData('username'),
-                        'mail' => $request->postData('mail') ? $request->postData('mail') : "",
-                        'roles' => json_encode($request->postData('roles')),
-                        'confirmationToken' => $user->getConfirmationToken(),
-                        'isValidated' => $request->postData('isValidated')
-                    ],
-                    $id
-                );
-                $request->setSession('flashMessage', "Utilisateur $id modifié");
-                $this->redirect("admin_users");
-            }
+            $this->updateUser($request, $userManager, $user, $id);
         } catch (FormException $e) {
             $errors[] = $e->getMessage();
         }
@@ -77,6 +64,24 @@ class AdminUserController extends Controller
             'postDatas' => $request->postTableData() ? $request->postTableData() : $user,
             'userId' => $id
         ]);
+    }
+
+    public function updateUser($request, $userManager, $user, $id)
+    {
+        if ($request->postTableData() && $this->isValidForm($request, $userManager, $id)) {
+            $userManager->updateUser(
+                [
+                    'username' => $request->postData('username'),
+                    'mail' => $request->postData('mail') ? $request->postData('mail') : "",
+                    'roles' => json_encode($request->postData('roles')),
+                    'confirmationToken' => $user->getConfirmationToken(),
+                    'isValidated' => $request->postData('isValidated')
+                ],
+                $id
+            );
+            $request->setSession('flashMessage', "Utilisateur $id modifié");
+            $this->redirect("admin_users");
+        }
     }
 
     public function delete($id)
