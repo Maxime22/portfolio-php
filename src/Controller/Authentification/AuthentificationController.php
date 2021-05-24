@@ -17,14 +17,7 @@ class AuthentificationController extends Controller
         $userManager = $this->getDatabase()->getManager(UserManager::class);
 
         // If the user is already connected, we don't want him to go to the login page
-        if ($request->getSession('auth')) {
-            $user = $userManager->getUser($request->getSession('auth'));
-            if (in_array("admin", $user->getRoles())) {
-                $this->redirect("admin");
-            } else {
-                $this->redirect("home");
-            }
-        }
+        $this->checkAuth($request, $userManager);
 
         // If he sent params, we check the password
         $errors = [];
@@ -33,14 +26,7 @@ class AuthentificationController extends Controller
             $user = $userManager->getUserByUsername(["username" => $username]);
             if ($user !== false && $this->checkPassword($request->postTableData()['password'], $user->getPassword())) {
                 if ($user->getIsValidated()) {
-                    $request->setSession('auth', $user->getId());
-                    $request->setSession('userRoles', $user->getRoles());
-                    // Session Hijacking
-                    $request->setSession('ipAddress', $_SERVER['REMOTE_ADDR']);
-                    $request->setSession('userAgent', $_SERVER['HTTP_USER_AGENT']);
-                    $request->setSession('lastAccess', time());
-                    // Token CSRF for each user
-                    $request->setSession('tokenCSRF', bin2hex(random_bytes(16)));
+                    $this->setSessions($request, $user);
 
                     if (in_array("admin", $user->getRoles())) {
                         $this->redirect("admin");
@@ -55,6 +41,30 @@ class AuthentificationController extends Controller
             }
         }
         return $this->render("/login.html.twig", ["errors" => $errors, "flashError" => $this->flashError($request), "flashMessage" => $this->flashMessage($request)]);
+    }
+
+    public function checkAuth($request, $userManager)
+    {
+        if ($request->getSession('auth')) {
+            $user = $userManager->getUser($request->getSession('auth'));
+            if (in_array("admin", $user->getRoles())) {
+                $this->redirect("admin");
+            } else {
+                $this->redirect("home");
+            }
+        }
+    }
+
+    public function setSessions($request, $user)
+    {
+        $request->setSession('auth', $user->getId());
+        $request->setSession('userRoles', $user->getRoles());
+        // Session Hijacking
+        $request->setSession('ipAddress', $_SERVER['REMOTE_ADDR']);
+        $request->setSession('userAgent', $_SERVER['HTTP_USER_AGENT']);
+        $request->setSession('lastAccess', time());
+        // Token CSRF for each user
+        $request->setSession('tokenCSRF', bin2hex(random_bytes(16)));
     }
 
     public function subscription()
