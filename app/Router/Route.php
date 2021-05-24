@@ -23,22 +23,34 @@ class Route
         // If we request a controller, we call the controller
         if (is_string($this->callable)) {
             $explodeCallable = explode("#", $this->callable);
-            if (str_contains($this->callable, "Admin")) {
-                if ($request->getSession('auth') && in_array("admin", $request->getSession('userRoles'))) {
-                    $controllerPath = "Controller\\Admin\\" . $explodeCallable[0];
-                }else{
-                    throw new ForbiddenException;
-                }
-            } else {
-                $explodeName = explode("Controller", $this->callable);
-                $controllerPath = "Controller\\" . ucfirst($explodeName[0]) . "\\" . $explodeCallable[0];
-            }
+            $controllerPath = $this->createControllerPath($request, $explodeCallable);
             $action = $explodeCallable[1];
             $controller = new $controllerPath($request, $router);
             return call_user_func_array([$controller, $action], $this->matches);
         }
         // call callable
         return call_user_func_array($this->callable, $this->matches);
+    }
+
+    private function createControllerPath($request, $explodeCallable)
+    {
+        $controllerPath = "";
+        if (str_contains($this->callable, "Admin")) {
+            $controllerPath = $this->getAdminPath($request, $explodeCallable);
+        } else {
+            $explodeName = explode("Controller", $this->callable);
+            $controllerPath = "Controller\\" . ucfirst($explodeName[0]) . "\\" . $explodeCallable[0];
+        }
+        return $controllerPath;
+    }
+
+    private function getAdminPath($request, $explodeCallable)
+    {
+        if ($request->getSession('auth') && in_array("admin", $request->getSession('userRoles'))) {
+            return "Controller\\Admin\\" . $explodeCallable[0];
+        } else {
+            throw new ForbiddenException;
+        }
     }
 
     public function match(string $url): bool
