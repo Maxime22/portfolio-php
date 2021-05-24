@@ -56,14 +56,7 @@ class AdminBlogPostController extends Controller
         $blogPost = $blogPostManager->getPost(["id" => $id]);
 
         // HERE WE NEED TO GET ALL THE AUTHORS POSSIBLE AND PUT THEM IN A SELECT IN THE FORM
-        $userManager = $this->getDatabase()->getManager(UserManager::class);
-        $users = $userManager->getUsers();
-        $authors = [];
-        foreach ($users as $user) {
-            if (in_array("admin", $user->getRoles())) {
-                $authors[$user->getId()] = $user->getUsername();
-            }
-        }
+        $authors = $this->getAuthors();
 
         $errors = [];
         try {
@@ -92,6 +85,18 @@ class AdminBlogPostController extends Controller
             'articleId' => $id,
             'authors' => $authors
         ]);
+    }
+
+    private function getAuthors(){
+        $userManager = $this->getDatabase()->getManager(UserManager::class);
+        $users = $userManager->getUsers();
+        $authors = [];
+        foreach ($users as $user) {
+            if (in_array("admin", $user->getRoles())) {
+                $authors[$user->getId()] = $user->getUsername();
+            }
+        }
+        return $authors;
     }
 
     public function delete($id)

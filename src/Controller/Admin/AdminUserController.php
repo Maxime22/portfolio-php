@@ -95,15 +95,25 @@ class AdminUserController extends Controller
 
     public function isValidForm($request, $userManager, $id = null): bool
     {
-        $returnValue = true;
         $mail = $request->postData('mail');
         $password = $request->postData('password');
         $username = $request->postData('username');
         if (!$username || strlen($username) < 4) {
             throw new FormException('Pseudo trop court');
-            $returnValue = false;
         }
 
+        $this->checkIfUserExists($userManager, $username , $id);
+        // we don't check the password value if it is a modification ($id exists)
+        if (!$id && (!$password || strlen($password) < 4)) {
+            throw new FormException('Mot de passe trop court');
+        }
+        if ($mail && !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+            throw new FormException('Votre mail ne convient pas');
+        }
+        return true;
+    }
+
+    private function checkIfUserExists($userManager, $username , $id){
         $user = $userManager->getUserByUsername($username);
         // if it is a modification we have to check if the username is in the database and different from the user id
         if ($id) {
@@ -116,17 +126,6 @@ class AdminUserController extends Controller
         // if the user is created we just need to check that a user doesn't exists in the database with the username
         } elseif ($user) {
             throw new FormException("L'utilisateur existe déjà");
-            $returnValue = false;
         }
-        // we don't check the password value if it is a modification ($id exists)
-        if (!$id && (!$password || strlen($password) < 4)) {
-            throw new FormException('Mot de passe trop court');
-            $returnValue = false;
-        }
-        if ($mail && !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-            throw new FormException('Votre mail ne convient pas');
-            $returnValue = false;
-        }
-        return $returnValue;
     }
 }
