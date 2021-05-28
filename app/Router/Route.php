@@ -58,6 +58,11 @@ class Route
         if (strlen($url) > 1) {
             $url = rtrim($url, '/');
         }
+        // Manage inappropriate ? in url (facebook)
+        if(str_contains($url,"?")){
+            $explodedUrl = explode("?",$url);
+            $url = $explodedUrl[0];
+        }
         $regex = '/^' . preg_replace('/\//', '\/', $this->path) . '$/';
         $regex = preg_replace_callback('/\{(.+?)\}/', [$this, 'paramMatch'], $regex);
         if (!preg_match($regex, $url, $matches)) {
