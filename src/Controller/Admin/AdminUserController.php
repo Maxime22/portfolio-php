@@ -15,8 +15,9 @@ class AdminUserController extends Controller
         $request = $this->getRequest();
         $userManager = $this->getDatabase()->getManager(UserManager::class);
         $users = $userManager->getUsers();
+        $idAdmin = $request->getSession('auth');
 
-        return $this->render("admin/user/index.html.twig", ['users' => $users, 'flashMessage' => $this->flashMessage($request), 'flashError' => $this->flashError($request), 'tokenCSRF' => $request->getSession('tokenCSRF')]);
+        return $this->render("admin/user/index.html.twig", ['users' => $users, 'flashMessage' => $this->flashMessage($request), 'flashError' => $this->flashError($request), 'tokenCSRF' => $request->getSession('tokenCSRF'), 'idAdmin'=>$idAdmin]);
     }
 
     public function create()
@@ -123,8 +124,8 @@ class AdminUserController extends Controller
         $user = $userManager->getUserByUsername(["username"=>$username]);
         // if it is a modification we have to check if the username is in the database and different from the user id
         if ($id !== null) {
-            $users = $userManager->getUsersByUsername($username);
-            $this->checkifUserNameExists($users);
+            $users = $userManager->getUsersByUsername(["username"=>$username]);
+            $this->checkifUserNameExists($users, $id);
         }
         // if the user is created (id is null) we just need to check that a user doesn't exists in the database with the username
         if ($user) {
@@ -132,7 +133,7 @@ class AdminUserController extends Controller
         }
     }
 
-    private function checkifUserNameExists($users)
+    private function checkifUserNameExists($users, $id)
     {
         $userCount = count($users);
         $firstUserId = (int)$users[0]->getId();

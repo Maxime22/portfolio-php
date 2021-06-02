@@ -11,6 +11,7 @@
 		<table class="table table-striped mt-3">
 			<tr>
 				<th>Id</th>
+				<th>Id auteur</th>
 				<th>Titre</th>
 				<th>Chapeau</th>
 				<th>Date de création</th>
@@ -20,6 +21,7 @@
 			{% for blogPost in blogPosts %}
 				<tr>
 					<td>{{ blogPost.id }}</td>
+					<td>{{ blogPost.author }}</td>
 					<td><a href="/blogPosts/{{ blogPost.id }}">{{ blogPost.title }}</a></td>
 					<td>{{ blogPost.headerPost }}</td>
 					<td>{{ blogPost.creationDate|date("d/m/Y") }}</td>
